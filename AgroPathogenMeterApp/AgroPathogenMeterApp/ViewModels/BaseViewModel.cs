@@ -1,12 +1,10 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
+using AgroPathogenMeterApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
 using Xamarin.Forms;
-
-using AgroPathogenMeterApp.Models;
-using AgroPathogenMeterApp.Services;
 
 namespace AgroPathogenMeterApp.ViewModels
 {

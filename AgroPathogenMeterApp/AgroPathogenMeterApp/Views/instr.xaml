@@ -7,9 +7,39 @@
              x:Class="AgroPathogenMeterApp.Views.instr">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Instructions on how to use the AgroPathogenMeter (APM) App"
+                   FontSize="Large"
+                   Margin="10"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="1. Make sure that the APM is turned on and has full battery"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="2. Turn bluetooth on, and connect your phone to the APM in the settings menu"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="3. Obtain the urine sample and add it to the (incubator)"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="4. Wait for approx. 30 mins until the (incubator) indicates it is finished, then remove sample"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="5. Insert sample into the APM and press run test"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="6. Wait until the scans are complete, then view the results"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
+            <Label Text="7. Save the results using an identifier to review at a later time"
+                   FontSize="Medium"
+                   Margin="10"
+                   HorizontalOptions="StartAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

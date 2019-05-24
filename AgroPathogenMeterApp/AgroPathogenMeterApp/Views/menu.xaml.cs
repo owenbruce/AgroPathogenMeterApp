@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,12 +12,27 @@ namespace AgroPathogenMeterApp.Views
         {
             InitializeComponent();
         }
-    }
-    async void OnRunTestClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new NoteEntryPage
+        async void OnRunTestClicked(object sender, EventArgs e)
         {
-            BindingContext = new Note()
-        });
+            await Navigation.PushAsync(new run1
+            {
+                //BindingContext = new 
+            });
+        }
+        async void OnResultViewClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new dataview
+            {
+                //BindingContext = new 
+            });
+        }
+        async void OnInstrViewClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new instr
+            {
+                //BindingContext = new 
+            });
+        }
     }
+
 }

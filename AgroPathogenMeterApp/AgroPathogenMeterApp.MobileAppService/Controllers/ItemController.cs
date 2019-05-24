@@ -1,7 +1,6 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AspNetCore.Mvc;
-
-using AgroPathogenMeterApp.Models;
+using System;
 
 namespace AgroPathogenMeterApp.Controllers
 {

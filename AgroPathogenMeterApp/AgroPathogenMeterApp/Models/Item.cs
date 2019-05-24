@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AgroPathogenMeterApp.Models
+﻿namespace AgroPathogenMeterApp.Models
 {
     public class Item
     {

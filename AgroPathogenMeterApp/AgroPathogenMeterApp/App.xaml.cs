@@ -1,8 +1,5 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using AgroPathogenMeterApp.Services;
-using AgroPathogenMeterApp.Views;
 
 namespace AgroPathogenMeterApp
 {

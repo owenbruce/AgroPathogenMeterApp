@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using System.Security;
 using UIKit;
 
 namespace AgroPathogenMeterApp.iOS
@@ -20,6 +17,7 @@ namespace AgroPathogenMeterApp.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+        [SecuritySafeCritical]
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
