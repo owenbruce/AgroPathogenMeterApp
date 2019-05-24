@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AgroPathogenMeterApp.Views.dvlp">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="You made it to secret developer land!"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Text="The buttons below allow you to use the development tools, only use these if you know what their purpose is and how to use them."
+                   FontSize="Medium"
+                   HorizontalTextAlignment="Center"/>
+            <Button Text="Manual Test Override"
+                    Clicked="OnManualTestClicked"/>
+            <Button Text="View Raw Data"
+                    Clicked="OnRawDataClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

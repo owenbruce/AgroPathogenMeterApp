@@ -48,7 +48,9 @@ namespace AgroPathogenMeterApp.Services
         public async Task<bool> AddItemAsync(Item item)
         {
             if (item == null || !IsConnected)
+            {
                 return false;
+            }
 
             var serializedItem = JsonConvert.SerializeObject(item);
 
@@ -60,7 +62,9 @@ namespace AgroPathogenMeterApp.Services
         public async Task<bool> UpdateItemAsync(Item item)
         {
             if (item == null || item.Id == null || !IsConnected)
+            {
                 return false;
+            }
 
             var serializedItem = JsonConvert.SerializeObject(item);
             var buffer = Encoding.UTF8.GetBytes(serializedItem);
@@ -74,7 +78,9 @@ namespace AgroPathogenMeterApp.Services
         public async Task<bool> DeleteItemAsync(string id)
         {
             if (string.IsNullOrEmpty(id) && !IsConnected)
+            {
                 return false;
+            }
 
             var response = await client.DeleteAsync($"api/item/{id}");
 

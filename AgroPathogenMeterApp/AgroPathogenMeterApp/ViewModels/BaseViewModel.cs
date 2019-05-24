@@ -31,7 +31,9 @@ namespace AgroPathogenMeterApp.ViewModels
             Action onChanged = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
+            {
                 return false;
+            }
 
             backingStore = value;
             onChanged?.Invoke();
@@ -45,7 +47,9 @@ namespace AgroPathogenMeterApp.ViewModels
         {
             var changed = PropertyChanged;
             if (changed == null)
+            {
                 return;
+            }
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

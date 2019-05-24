@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class dataview : ContentPage
+    public partial class manTest : ContentPage
     {
-        public dataview()
+        public manTest()
         {
             InitializeComponent();
-        }
-        async void OnSaveDataClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new menu { });
         }
     }
 }

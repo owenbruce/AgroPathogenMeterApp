@@ -10,6 +10,7 @@
             <Label Text="Instructions on how to use the AgroPathogenMeter (APM) App"
                    FontSize="Large"
                    Margin="10"
+                   HorizontalTextAlignment="Center"
                    VerticalOptions="Start" 
                    HorizontalOptions="CenterAndExpand" />
             <Label Text="1. Make sure that the APM is turned on and has full battery"

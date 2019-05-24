@@ -30,6 +30,12 @@
                     Margin="10"
                     HorizontalOptions="CenterAndExpand"
                     FontSize="Medium" />
+            <Button Text="Don't Click Pls"
+                    FontSize="Medium"
+                    Clicked="OnDvlpClicked"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="EndAndExpand"
+                    Opacity="0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

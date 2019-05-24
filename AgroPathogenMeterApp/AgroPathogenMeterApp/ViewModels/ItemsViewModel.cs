@@ -30,7 +30,9 @@ namespace AgroPathogenMeterApp.ViewModels
         async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
+            {
                 return;
+            }
 
             IsBusy = true;
 

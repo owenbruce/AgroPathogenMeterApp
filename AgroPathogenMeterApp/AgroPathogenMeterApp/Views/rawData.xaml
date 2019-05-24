@@ -4,16 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AgroPathogenMeterApp.Views.dataview">
+             x:Class="AgroPathogenMeterApp.Views.rawData">
     <ContentPage.Content>
-
         <StackLayout>
-            <Editor Placeholder="Here is data!"
-                    Text="{Binding Text}"
-                    HeightRequest="75" />
-            <Button Text="Save data"
-                    Margin="10"
-                    Clicked="OnSaveDataClicked" />
+            <Label Text="View all of the numbers here!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
