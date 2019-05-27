@@ -8,8 +8,207 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Setup manual tests here!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                   FontSize="Large"
+                   TextColor="BlueViolet"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="Enter Parameters: "
+                   FontSize="Medium"
+                   TextColor="Black"
+                   HorizontalOptions="Start"/>
+            <Picker x:Name="VoltammetryScan"
+                    Title="Scan Types"
+                    TitleColor="Red"
+                    WidthRequest="250"
+                    HorizontalOptions="Start">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Cyclic Voltammetry</x:String>
+                        <x:String>Square Wave Voltammetry</x:String>
+                        <x:String>Linear Voltammetry</x:String>
+                        <x:String>Alternating Current Voltammetry</x:String>
+                        <x:String>Normal Pulse Voltammetry</x:String>
+                        <x:String>Differential Pulse Voltammetry</x:String>
+                        <x:String>Chronoamperometry</x:String>
+                        <x:String>MultiStep Amperometry</x:String>
+                        <x:String>Pulsed Amperometric Detection</x:String>
+                        <x:String>Multiple Pulse Amperometry</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Entry x:Name="Entry1"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Cyclic Voltammetry">
+                        <Setter Property="Placeholder" Value="Starting Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Square Wave Voltammetry">
+                        <Setter Property="Placeholder" Value="Starting Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Linear Voltammetry">
+                        <Setter Property="Placeholder" Value="Starting Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Starting Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Entry x:Name="Entry2"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Cyclic Voltammetry">
+                        <Setter Property="Placeholder" Value="Negative Vertex"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Square Wave Voltammetry">
+                        <Setter Property="Placeholder" Value="Ending Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Linear Voltammetry">
+                        <Setter Property="Placeholder" Value="Ending Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Ending Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Entry x:Name="Entry3"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Cyclic Voltammetry">
+                        <Setter Property="Placeholder" Value="Positive Vertex"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Square Wave Voltammetry">
+                        <Setter Property="Placeholder" Value="Potential Step"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Linear Voltammetry">
+                        <Setter Property="Placeholder" Value="Potential Step"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Potential Step"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Entry x:Name="Entry4"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Cyclic Voltammetry">
+                        <Setter Property="Placeholder" Value="Potential Step"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Square Wave Voltammetry">
+                        <Setter Property="Placeholder" Value="Amplitude"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Linear Voltammetry">
+                        <Setter Property="Placeholder" Value="Scan Rate"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Alternating Current Potential"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Entry x:Name="Entry5"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Cyclic Voltammetry">
+                        <Setter Property="Placeholder" Value="Scan Rate"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Square Wave Voltammetry">
+                        <Setter Property="Placeholder" Value="Frequency"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Scan Rate"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Entry x:Name="Entry6"
+                   Text=""
+                   IsVisible="False"
+                   Placeholder="to be filled">
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
+                                 Value="Alternating Current Voltammetry">
+                        <Setter Property="Placeholder" Value="Frequency"/>
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Button Text="Run Selected Test"
+                    HorizontalOptions="StartAndExpand"
+                    IsVisible="True">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedIndex}"
+                                 Value="-1">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

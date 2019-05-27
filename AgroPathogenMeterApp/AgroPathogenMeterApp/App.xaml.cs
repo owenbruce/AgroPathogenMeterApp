@@ -1,5 +1,6 @@
 ﻿using AgroPathogenMeterApp.Views;
 using Xamarin.Forms;
+using AgroPathogenMeterApp.Data;
 
 namespace AgroPathogenMeterApp
 {
