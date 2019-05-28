@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AgroPathogenMeterApp.Data;
 using AgroPathogenMeterApp.Models;
-using AgroPathogenMeterApp.Data;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -61,7 +58,7 @@ namespace AgroPathogenMeterApp.Views
                 default:
                     break;
             }
-            await App.Database.SaveScanAsync(_database);
+            //await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new testRunning
             {

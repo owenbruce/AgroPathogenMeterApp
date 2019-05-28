@@ -16,21 +16,21 @@ namespace AgroPathogenMeterApp.Views
         {
             await Navigation.PushAsync(new run1
             {
-                
+
             });
         }
         async void OnResultViewClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new dataview
             {
-               
+
             });
         }
         async void OnInstrViewClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new instr
             {
-                
+
             });
         }
         async void OnDvlpClicked(object sender, EventArgs e)

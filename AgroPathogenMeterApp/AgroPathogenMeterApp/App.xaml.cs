@@ -1,8 +1,8 @@
-﻿using AgroPathogenMeterApp.Views;
+﻿using AgroPathogenMeterApp.Data;
+using AgroPathogenMeterApp.Views;
 using System;
 using System.IO;
 using Xamarin.Forms;
-using AgroPathogenMeterApp.Data;
 
 
 namespace AgroPathogenMeterApp
@@ -15,7 +15,7 @@ namespace AgroPathogenMeterApp
         {
             get
             {
-                if(Database == null)
+                if (Database == null)
                 {
                     scanner = new Scanner(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Notes.db3"));
                 }

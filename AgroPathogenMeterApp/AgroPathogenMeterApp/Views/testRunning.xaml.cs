@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgroPathogenMeterApp.Models;
-using AgroPathogenMeterApp.Data;
+﻿using AgroPathogenMeterApp.Models;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,13 +11,15 @@ namespace AgroPathogenMeterApp.Views
         public testRunning()
         {
             InitializeComponent();
-            
+
         }
+        /*
         protected override async void OnAppearing()
         {
             base.OnAppearing();
             ScanDatabase _database = await App.Database.GetScanAsync(0);
         }
+        */
         async void OnRunTestClicked(object sender, EventArgs e)
         {
             //Start test on the APM using parameters from _database
