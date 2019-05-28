@@ -20,13 +20,13 @@ namespace AgroPathogenMeterApp.Data
             return _database.Table<ScanDatabase>().ToListAsync();
         }
 
-        public Task<ScanDatabase> GetNoteAsync(int id)
+        public Task<ScanDatabase> GetScanAsync(int id)
         {
             return _database.Table<ScanDatabase>()
                             .Where(i => i.ID == id)
                             .FirstOrDefaultAsync();
         }
-        public Task<int> SaveNoteAsync(ScanDatabase scan)
+        public Task<int> SaveScanAsync(ScanDatabase scan)
         {
             if (scan.ID != 0)
             {
@@ -37,7 +37,7 @@ namespace AgroPathogenMeterApp.Data
                 return _database.InsertAsync(scan);
             }
         }
-        public Task<int> DeleteNoteAsync(ScanDatabase scan)
+        public Task<int> DeleteScanAsync(ScanDatabase scan)
         {
             return _database.DeleteAsync(scan);
         }

@@ -200,6 +200,7 @@
             </Entry>
             <Button Text="Run Selected Test"
                     HorizontalOptions="StartAndExpand"
+                    Clicked="OnManTestClicked"
                     IsVisible="True">
                 <Button.Triggers>
                     <DataTrigger TargetType="Button"
