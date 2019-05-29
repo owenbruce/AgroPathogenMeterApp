@@ -7,24 +7,20 @@ using Xamarin.Forms.Xaml;
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class manTest : ContentPage
+    public partial class manTest : ContentPage   //Allows you to run tests manually with the PalmSens
     {
         public manTest()
         {
             InitializeComponent();
-            BindingContext = new ScanTypes();
         }
 
-        protected override void OnAppearing()
-        {
-        }
-
-        private async void OnManTestClicked(object sender, EventArgs e)
+        private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
             ScanDatabase _database = new ScanDatabase();
-            _database.VoltamType = VoltammetryScan.SelectedItem.ToString();
+            _database.VoltamType = VoltammetryScan.SelectedItem.ToString();   //Sets the type of voltammetric scan to be run
 
-            switch (_database.VoltamType)
+            #region Parameter Setter
+            switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
             {
                 case "Cyclic Voltammetry":
                     _database.StartingPotential = Convert.ToDouble(Entry1.Text);
@@ -61,6 +57,7 @@ namespace AgroPathogenMeterApp.Views
                 default:
                     break;
             }
+            #endregion
             //await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new testRunning

@@ -6,11 +6,11 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp
 {
-    public partial class App : Application
+    public partial class App : Application   //Contains all information needed by the app
     {
         private static Scanner scanner;
 
-        public static Scanner Database
+        public static Scanner Database   //Creates the main database that will be used
         {
             get
             {

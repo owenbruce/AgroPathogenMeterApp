@@ -9,7 +9,7 @@ using Xamarin.Essentials;
 
 namespace AgroPathogenMeterApp.Services
 {
-    public class AzureDataStore : IDataStore<Item>
+    public class AzureDataStore : IDataStore<Item>   //Azure backup that may be used, probably not since it requires internet connection
     {
         private HttpClient client;
         private IEnumerable<Item> items;

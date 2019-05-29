@@ -1,6 +1,6 @@
 ﻿namespace AgroPathogenMeterApp.Models
 {
-    public enum MenuItemType
+    public enum MenuItemType   //Currently unused, may use file, not code
     {
         Browse,
         About

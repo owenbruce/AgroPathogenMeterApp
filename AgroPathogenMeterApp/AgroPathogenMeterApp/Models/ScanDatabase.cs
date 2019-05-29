@@ -3,7 +3,7 @@ using System;
 
 namespace AgroPathogenMeterApp.Models
 {
-    public class ScanDatabase
+    public class ScanDatabase   //Current SQLite database which contains all of the necessary information for the scan parameters, results, and identifying information
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }

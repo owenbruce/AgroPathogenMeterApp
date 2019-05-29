@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class ItemsViewModel : BaseViewModel   //Yet more stuff not being used, may delete
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }

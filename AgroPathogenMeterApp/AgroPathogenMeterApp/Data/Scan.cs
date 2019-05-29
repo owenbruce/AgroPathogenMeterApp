@@ -9,25 +9,25 @@ namespace AgroPathogenMeterApp.Data
     {
         private readonly SQLiteAsyncConnection _database;
 
-        public Scanner(string dbPath)
+        public Scanner(string dbPath)   //The current running database is saved as a table in the sqlite database
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<ScanDatabase>().Wait();
         }
 
-        public Task<List<ScanDatabase>> GetScanDatabasesAsync()
+        public Task<List<ScanDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"
         {
             return _database.Table<ScanDatabase>().ToListAsync();
         }
 
-        public Task<ScanDatabase> GetScanAsync(int id)
+        public Task<ScanDatabase> GetScanAsync(int id)   //Gets a ceartain scan from the database
         {
             return _database.Table<ScanDatabase>()
                             .Where(i => i.ID == id)
                             .FirstOrDefaultAsync();
         }
 
-        public Task<int> SaveScanAsync(ScanDatabase scan)
+        public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)
             {
@@ -39,7 +39,7 @@ namespace AgroPathogenMeterApp.Data
             }
         }
 
-        public Task<int> DeleteScanAsync(ScanDatabase scan)
+        public Task<int> DeleteScanAsync(ScanDatabase scan)   //Deletes the current scan from the database
         {
             return _database.DeleteAsync(scan);
         }

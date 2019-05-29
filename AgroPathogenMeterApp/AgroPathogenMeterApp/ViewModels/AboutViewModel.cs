@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class AboutViewModel : BaseViewModel   //Info about xamarin
     {
         public AboutViewModel()
         {

@@ -2,7 +2,7 @@
 
 namespace AgroPathogenMeterApp.ViewModels
 {
-    public class ItemDetailViewModel : BaseViewModel
+    public class ItemDetailViewModel : BaseViewModel   //More item viewmodel
     {
         public Item Item { get; set; }
 

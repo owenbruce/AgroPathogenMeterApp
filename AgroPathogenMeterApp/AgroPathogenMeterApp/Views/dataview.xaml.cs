@@ -5,14 +5,14 @@ using Xamarin.Forms.Xaml;
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class dataview : ContentPage
+    public partial class dataview : ContentPage   //Menu for viewing data from the last test run/the selected test
     {
         public dataview()
         {
             InitializeComponent();
         }
 
-        private async void OnSaveDataClicked(object sender, EventArgs e)
+        private async void OnSaveDataClicked(object sender, EventArgs e)   //Saves the data once you press the save button
         {
             await Navigation.PushAsync(new menu { });
         }

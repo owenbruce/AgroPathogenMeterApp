@@ -13,7 +13,7 @@ namespace AgroPathogenMeterApp.Droid
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            using (SentrySdk.Init("https://ff5babeedcd84ec1b2931bacbb4ff712@sentry.io/1469923"))
+            using (SentrySdk.Init("https://ff5babeedcd84ec1b2931bacbb4ff712@sentry.io/1469923"))   //Should start the sentry program running, not working atm
             {
                 TabLayoutResource = Resource.Layout.Tabbar;
                 ToolbarResource = Resource.Layout.Toolbar;

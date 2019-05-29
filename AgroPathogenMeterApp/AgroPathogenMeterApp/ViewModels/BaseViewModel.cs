@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged   //Datastorage for base viewmodel
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
 

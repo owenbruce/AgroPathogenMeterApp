@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Services
 {
-    public class MockDataStore : IDataStore<Item>
+    public class MockDataStore : IDataStore<Item>   //A mock version of datastorage w/ azure
     {
         private List<Item> items;
 
