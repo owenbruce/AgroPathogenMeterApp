@@ -5,6 +5,10 @@ using Android.Runtime;
 using Sentry;
 using System.Security;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 namespace AgroPathogenMeterApp.Droid
 {
     [Activity(Label = "AgroPathogenMeterApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
@@ -15,6 +19,9 @@ namespace AgroPathogenMeterApp.Droid
         {
             using (SentrySdk.Init("https://ff5babeedcd84ec1b2931bacbb4ff712@sentry.io/1469923"))   //Should start the sentry program running, not working atm
             {
+                AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
+                   typeof(Analytics), typeof(Crashes));
+
                 TabLayoutResource = Resource.Layout.Tabbar;
                 ToolbarResource = Resource.Layout.Toolbar;
 

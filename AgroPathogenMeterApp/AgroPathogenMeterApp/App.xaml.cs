@@ -1,5 +1,8 @@
 ﻿using AgroPathogenMeterApp.Data;
 using AgroPathogenMeterApp.Views;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -35,6 +38,10 @@ namespace AgroPathogenMeterApp
 
         protected override void OnStart()
         {
+            AppCenter.Start("android=72a41ccb-483e-4e33-8786-461a3bc1aaac;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios={b2f34a3d-c5ba-4523-92f2-1321a1a55616}",
+                  typeof(Analytics), typeof(Crashes));
             // Handle when your app starts
         }
 
