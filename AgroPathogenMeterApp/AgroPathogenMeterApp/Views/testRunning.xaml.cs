@@ -11,8 +11,8 @@ namespace AgroPathogenMeterApp.Views
         public testRunning()
         {
             InitializeComponent();
-
         }
+
         /*
         protected override async void OnAppearing()
         {
@@ -20,7 +20,8 @@ namespace AgroPathogenMeterApp.Views
             ScanDatabase _database = await App.Database.GetScanAsync(0);
         }
         */
-        async void OnRunTestClicked(object sender, EventArgs e)
+
+        private async void OnRunTestClicked(object sender, EventArgs e)
         {
             //Start test on the APM using parameters from _database
             //Once completed, go to finsh test window, and display results

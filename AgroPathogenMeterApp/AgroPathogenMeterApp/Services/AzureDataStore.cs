@@ -11,8 +11,8 @@ namespace AgroPathogenMeterApp.Services
 {
     public class AzureDataStore : IDataStore<Item>
     {
-        HttpClient client;
-        IEnumerable<Item> items;
+        private HttpClient client;
+        private IEnumerable<Item> items;
 
         public AzureDataStore()
         {
@@ -22,7 +22,8 @@ namespace AgroPathogenMeterApp.Services
             items = new List<Item>();
         }
 
-        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+        private bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh && IsConnected)

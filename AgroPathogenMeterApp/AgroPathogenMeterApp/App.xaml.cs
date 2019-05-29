@@ -4,13 +4,12 @@ using System;
 using System.IO;
 using Xamarin.Forms;
 
-
 namespace AgroPathogenMeterApp
 {
     public partial class App : Application
     {
+        private static Scanner scanner;
 
-        static Scanner scanner;
         public static Scanner Database
         {
             get
@@ -22,8 +21,10 @@ namespace AgroPathogenMeterApp
                 return scanner;
             }
         }
+
         //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         public static string AzureBackendUrl = "http://localhost:5000";
+
         public static bool UseMockDataStore = true;
 
         public App()

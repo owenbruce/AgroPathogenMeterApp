@@ -12,7 +12,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding VoltamType}"
-                    VerticalOptions="StartAndExpand" 
+                    VerticalOptions="StartAndExpand"
                     HorizontalOptions="CenterAndExpand" />
             <Button Text="Run Test"
                     VerticalOptions="CenterAndExpand"

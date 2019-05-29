@@ -11,7 +11,8 @@ namespace AgroPathogenMeterApp.Views
         {
             InitializeComponent();
         }
-        async void OnSaveDataClicked(object sender, EventArgs e)
+
+        private async void OnSaveDataClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new menu { });
         }

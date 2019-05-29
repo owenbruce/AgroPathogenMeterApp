@@ -8,7 +8,7 @@ namespace AgroPathogenMeterApp.Services
 {
     public class MockDataStore : IDataStore<Item>
     {
-        List<Item> items;
+        private List<Item> items;
 
         public MockDataStore()
         {

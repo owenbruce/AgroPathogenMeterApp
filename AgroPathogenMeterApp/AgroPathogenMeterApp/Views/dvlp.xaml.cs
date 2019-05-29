@@ -12,11 +12,13 @@ namespace AgroPathogenMeterApp.Views
         {
             InitializeComponent();
         }
-        async void OnManualTestClicked(object sender, EventArgs e)
+
+        private async void OnManualTestClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new manTest { });
         }
-        async void OnRawDataClicked(object sender, EventArgs e)
+
+        private async void OnRawDataClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new rawData { });
         }

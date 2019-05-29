@@ -7,7 +7,7 @@ namespace AgroPathogenMeterApp.Data
 {
     public class Scanner
     {
-        readonly SQLiteAsyncConnection _database;
+        private readonly SQLiteAsyncConnection _database;
 
         public Scanner(string dbPath)
         {
@@ -26,6 +26,7 @@ namespace AgroPathogenMeterApp.Data
                             .Where(i => i.ID == id)
                             .FirstOrDefaultAsync();
         }
+
         public Task<int> SaveScanAsync(ScanDatabase scan)
         {
             if (scan.ID != 0)
@@ -37,6 +38,7 @@ namespace AgroPathogenMeterApp.Data
                 return _database.InsertAsync(scan);
             }
         }
+
         public Task<int> DeleteScanAsync(ScanDatabase scan)
         {
             return _database.DeleteAsync(scan);

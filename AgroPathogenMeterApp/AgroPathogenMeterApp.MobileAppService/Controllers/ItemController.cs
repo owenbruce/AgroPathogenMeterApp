@@ -7,7 +7,6 @@ namespace AgroPathogenMeterApp.Controllers
     [Route("api/[controller]")]
     public class ItemController : Controller
     {
-
         private readonly IItemRepository ItemRepository;
 
         public ItemController(IItemRepository itemRepository)
@@ -39,7 +38,6 @@ namespace AgroPathogenMeterApp.Controllers
                 }
 
                 ItemRepository.Add(item);
-
             }
             catch (Exception)
             {
