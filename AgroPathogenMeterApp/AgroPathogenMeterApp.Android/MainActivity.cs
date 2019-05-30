@@ -2,12 +2,11 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Sentry;
-using System.Security;
-
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Sentry;
+using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
 {

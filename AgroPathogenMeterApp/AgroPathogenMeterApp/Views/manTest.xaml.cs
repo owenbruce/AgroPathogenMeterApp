@@ -1,6 +1,7 @@
-﻿using AgroPathogenMeterApp.Data;
-using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Crashes;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,50 +15,176 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
+        #region Parameter Range Checkers
+        private bool InPRange(double value)
+        {
+            if (Math.Abs(value) <= 10)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InStepRange(double value)
+        {
+            if (value >= 0.075 && value <= 250)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InScanRateRange(double value)
+        {
+            if (value >= 0.01 && value <= 500000)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InAmplitudeRange(double value)
+        {
+            if (value >= 0.001 && value <= 250)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InFrequencyRange(double value)
+        {
+            if (value >= 1 && value <= 1000)
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
             ScanDatabase _database = new ScanDatabase();
             _database.VoltamType = VoltammetryScan.SelectedItem.ToString();   //Sets the type of voltammetric scan to be run
-
-            #region Parameter Setter
-            switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
+            try
             {
-                case "Cyclic Voltammetry":
-                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                    _database.NegativeVertex = Convert.ToDouble(Entry2.Text);
-                    _database.PositiveVertex = Convert.ToDouble(Entry3.Text);
-                    _database.PotentialStep = Convert.ToDouble(Entry4.Text);
-                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
-                    break;
+                #region Parameter Setter
 
-                case "Square Wave Voltammetry":
-                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                    _database.Amplitude = Convert.ToDouble(Entry4.Text);
-                    _database.Frequency = Convert.ToDouble(Entry5.Text);
-                    break;
+                switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
+                {
+                    case "Cyclic Voltammetry":
+                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1)
+                        {
+                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InPRange(Convert.ToDouble(Entry3.Text)) && InStepRange(Convert.ToDouble(Entry4.Text)) && InScanRateRange(Convert.ToDouble(Entry5.Text)))
+                            {
+                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                _database.NegativeVertex = Convert.ToDouble(Entry2.Text);
+                                _database.PositiveVertex = Convert.ToDouble(Entry3.Text);
+                                _database.PotentialStep = Convert.ToDouble(Entry4.Text);
+                                _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "One of your values is out of range, please confirm you have the correct units", "OK");
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                            //Setup error loop to get proper values
+                        }
+                        break;
 
-                case "Linear Voltammetry":
-                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                    _database.ScanRate = Convert.ToDouble(Entry4.Text);
-                    break;
+                    case "Square Wave Voltammetry":
+                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1)
+                        {
+                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InAmplitudeRange(Convert.ToDouble(Entry4.Text)) && InFrequencyRange(Convert.ToDouble(Entry5.Text)))
+                            {
+                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                _database.Amplitude = Convert.ToDouble(Entry4.Text);
+                                _database.Frequency = Convert.ToDouble(Entry5.Text);
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                        }
+                        break;
 
-                case "Alternating Current Voltammetry":
-                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                    _database.ACPotential = Convert.ToDouble(Entry4.Text);
-                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
-                    _database.Frequency = Convert.ToDouble(Entry6.Text);
-                    break;
+                    case "Linear Voltammetry":
+                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1)
+                        {
+                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InScanRateRange(Convert.ToDouble(Entry4.Text)))
+                            {
+                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                _database.ScanRate = Convert.ToDouble(Entry4.Text);
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                        }
+                        break;
 
-                default:
-                    break;
+                    case "Alternating Current Voltammetry":
+                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1 && Entry6.Text.Length >= 1)
+                        {
+                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InPRange(Convert.ToDouble(Entry4.Text)) && InScanRateRange(Convert.ToDouble(Entry5.Text)) && InFrequencyRange(Convert.ToDouble(Entry6.Text)))
+                            {
+                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                _database.ACPotential = Convert.ToDouble(Entry4.Text);
+                                _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                                _database.Frequency = Convert.ToDouble(Entry6.Text);
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                #endregion Parameter Setter
             }
-            #endregion
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex, new Dictionary<string, string>{
+                    { "Entry 1:", Entry1.Text.ToString()  },
+                    { "Entry 2:", Entry2.Text.ToString()  },
+                    { "Entry 3:", Entry3.Text.ToString()  },
+                    { "Entry 4:", Entry4.Text.ToString()  },
+                    { "Entry 5:", Entry5.Text.ToString()  },
+                    { "Entry 6:", Entry6.Text.ToString()  },
+                });
+            }
             //await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new testRunning
