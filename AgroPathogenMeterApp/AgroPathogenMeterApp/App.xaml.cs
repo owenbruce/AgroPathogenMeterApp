@@ -17,7 +17,7 @@ namespace AgroPathogenMeterApp
         {
             get
             {
-                if (Database == null)
+                if (scanner == null)
                 {
                     scanner = new Scanner(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Notes.db3"));
                 }

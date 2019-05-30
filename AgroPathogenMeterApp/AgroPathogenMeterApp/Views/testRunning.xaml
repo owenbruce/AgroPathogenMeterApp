@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:AgroPathogenMeterApp.Models"
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.testRunning">
-    <ContentPage.BindingContext>
-        <local:ScanDatabase />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding VoltamType}"

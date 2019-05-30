@@ -16,6 +16,7 @@ namespace AgroPathogenMeterApp.Views
         }
 
         #region Parameter Range Checkers
+
         private bool InPRange(double value)
         {
             if (Math.Abs(value) <= 10)
@@ -60,7 +61,71 @@ namespace AgroPathogenMeterApp.Views
             }
             return false;
         }
-        #endregion
+
+        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
+        {
+            if (value1.Equals(".") || 
+                value2.Equals(".") || 
+                value3.Equals(".") || 
+                value4.Equals(".") || 
+                value5.Equals("."))
+            {
+                return false;
+            }
+            else if (value1.Equals("-") || 
+                     value2.Equals("-") || 
+                     value3.Equals("-") || 
+                     value4.Equals("-") || 
+                     value5.Equals("-"))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool OnlyDotDash(string value1, string value2, string value3, string value4)
+        {
+            if (value1.Equals(".") || 
+                value2.Equals(".") || 
+                value3.Equals(".") || 
+                value4.Equals("."))
+            {
+                return false;
+            }
+            else if (value1.Equals("-") || 
+                     value2.Equals("-") || 
+                     value3.Equals("-") || 
+                     value4.Equals("-"))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5, string value6)
+        {
+            if (value1.Equals(".") || 
+                value2.Equals(".") || 
+                value3.Equals(".") || 
+                value4.Equals(".") || 
+                value5.Equals(".") || 
+                value6.Equals("."))
+            {
+                return false;
+            }
+            else if (value1.Equals("-") || 
+                     value2.Equals("-") || 
+                     value3.Equals("-") || 
+                     value4.Equals("-") || 
+                     value5.Equals("-") || 
+                     value6.Equals("-"))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        #endregion Parameter Range Checkers
 
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
@@ -73,19 +138,40 @@ namespace AgroPathogenMeterApp.Views
                 switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
                 {
                     case "Cyclic Voltammetry":
-                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1)
+                        if (Entry1.Text.Length >= 1 && 
+                            Entry2.Text.Length >= 1 && 
+                            Entry3.Text.Length >= 1 && 
+                            Entry4.Text.Length >= 1 && 
+                            Entry5.Text.Length >= 1)
                         {
-                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InPRange(Convert.ToDouble(Entry3.Text)) && InStepRange(Convert.ToDouble(Entry4.Text)) && InScanRateRange(Convert.ToDouble(Entry5.Text)))
+                            if (OnlyDotDash(Entry1.Text.ToString(), 
+                                            Entry2.Text.ToString(), 
+                                            Entry3.Text.ToString(), 
+                                            Entry4.Text.ToString(), 
+                                            Entry5.Text.ToString()))
                             {
-                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                _database.NegativeVertex = Convert.ToDouble(Entry2.Text);
-                                _database.PositiveVertex = Convert.ToDouble(Entry3.Text);
-                                _database.PotentialStep = Convert.ToDouble(Entry4.Text);
-                                _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry3.Text)) && 
+                                    InStepRange(Convert.ToDouble(Entry4.Text)) && 
+                                    InScanRateRange(Convert.ToDouble(Entry5.Text)))
+                                {
+                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.NegativeVertex = Convert.ToDouble(Entry2.Text);
+                                    _database.PositiveVertex = Convert.ToDouble(Entry3.Text);
+                                    _database.PotentialStep = Convert.ToDouble(Entry4.Text);
+                                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
                             }
                             else
                             {
-                                await DisplayAlert("Warning", "One of your values is out of range, please confirm you have the correct units", "OK");
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
+                                return;
                             }
                         }
                         else
@@ -97,19 +183,39 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Square Wave Voltammetry":
-                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1)
+                        if (Entry1.Text.Length >= 1 && 
+                            Entry2.Text.Length >= 1 && 
+                            Entry3.Text.Length >= 1 && 
+                            Entry4.Text.Length >= 1 && 
+                            Entry5.Text.Length >= 1)
                         {
-                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InAmplitudeRange(Convert.ToDouble(Entry4.Text)) && InFrequencyRange(Convert.ToDouble(Entry5.Text)))
+                            if (OnlyDotDash(Entry1.Text.ToString(), 
+                                            Entry2.Text.ToString(), 
+                                            Entry3.Text.ToString(), 
+                                            Entry4.Text.ToString(), 
+                                            Entry5.Text.ToString()))
                             {
-                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                _database.Amplitude = Convert.ToDouble(Entry4.Text);
-                                _database.Frequency = Convert.ToDouble(Entry5.Text);
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
+                                    InAmplitudeRange(Convert.ToDouble(Entry4.Text)) && 
+                                    InFrequencyRange(Convert.ToDouble(Entry5.Text)))
+                                {
+                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    _database.Amplitude = Convert.ToDouble(Entry4.Text);
+                                    _database.Frequency = Convert.ToDouble(Entry5.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
                             }
                             else
                             {
-                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
                                 return;
                             }
                         }
@@ -121,18 +227,35 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Linear Voltammetry":
-                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1)
+                        if (Entry1.Text.Length >= 1 && 
+                            Entry2.Text.Length >= 1 && 
+                            Entry3.Text.Length >= 1 && 
+                            Entry4.Text.Length >= 1)
                         {
-                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InScanRateRange(Convert.ToDouble(Entry4.Text)))
+                            if (OnlyDotDash(Entry1.Text.ToString(), 
+                                            Entry2.Text.ToString(), 
+                                            Entry3.Text.ToString(), 
+                                            Entry4.Text.ToString()))
                             {
-                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                _database.ScanRate = Convert.ToDouble(Entry4.Text);
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
+                                    InScanRateRange(Convert.ToDouble(Entry4.Text)))
+                                {
+                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    _database.ScanRate = Convert.ToDouble(Entry4.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
                             }
                             else
                             {
-                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
                                 return;
                             }
                         }
@@ -144,20 +267,43 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Alternating Current Voltammetry":
-                        if (Entry1.Text.Length >= 1 && Entry2.Text.Length >= 1 && Entry3.Text.Length >= 1 && Entry4.Text.Length >= 1 && Entry5.Text.Length >= 1 && Entry6.Text.Length >= 1)
+                        if (Entry1.Text.Length >= 1 && 
+                            Entry2.Text.Length >= 1 && 
+                            Entry3.Text.Length >= 1 && 
+                            Entry4.Text.Length >= 1 && 
+                            Entry5.Text.Length >= 1 && 
+                            Entry6.Text.Length >= 1)
                         {
-                            if (InPRange(Convert.ToDouble(Entry1.Text)) && InPRange(Convert.ToDouble(Entry2.Text)) && InStepRange(Convert.ToDouble(Entry3.Text)) && InPRange(Convert.ToDouble(Entry4.Text)) && InScanRateRange(Convert.ToDouble(Entry5.Text)) && InFrequencyRange(Convert.ToDouble(Entry6.Text)))
+                            if (OnlyDotDash(Entry1.Text.ToString(), 
+                                            Entry2.Text.ToString(), 
+                                            Entry3.Text.ToString(), 
+                                            Entry4.Text.ToString(), 
+                                            Entry5.Text.ToString(), 
+                                            Entry6.Text.ToString()))
                             {
-                                _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                _database.ACPotential = Convert.ToDouble(Entry4.Text);
-                                _database.ScanRate = Convert.ToDouble(Entry5.Text);
-                                _database.Frequency = Convert.ToDouble(Entry6.Text);
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
+                                    InPRange(Convert.ToDouble(Entry4.Text)) && 
+                                    InScanRateRange(Convert.ToDouble(Entry5.Text)) && 
+                                    InFrequencyRange(Convert.ToDouble(Entry6.Text)))
+                                {
+                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    _database.ACPotential = Convert.ToDouble(Entry4.Text);
+                                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                                    _database.Frequency = Convert.ToDouble(Entry6.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
                             }
                             else
                             {
-                                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
                                 return;
                             }
                         }
@@ -185,7 +331,7 @@ namespace AgroPathogenMeterApp.Views
                     { "Entry 6:", Entry6.Text.ToString()  },
                 });
             }
-            //await App.Database.SaveScanAsync(_database);
+            int x = await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new testRunning
             {
