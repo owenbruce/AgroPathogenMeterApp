@@ -7,8 +7,9 @@
              x:Class="AgroPathogenMeterApp.Views.dvlp">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="You made it to secret developer land!"
+            <Label Text="Developer Menu"
                 VerticalOptions="Start"
+                   FontSize="Large"
                 HorizontalOptions="CenterAndExpand" />
             <Label Text="The buttons below allow you to use the development tools, only use these if you know what their purpose is and how to use them."
                    FontSize="Medium"

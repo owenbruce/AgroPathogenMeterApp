@@ -7,6 +7,30 @@
              x:Class="AgroPathogenMeterApp.Views.menu">
     <ContentPage.Content>
         <StackLayout>
+            <Button Text="View Results" 
+                    BackgroundColor="White" 
+                    TextColor="DarkGray" 
+                    HorizontalOptions="StartAndExpand"
+                    Command="{Binding GoHomeCommand}" />
+            <BoxView HeightRequest="0.5" 
+                     HorizontalOptions="FillAndExpand" 
+                     BackgroundColor="Gray" />
+            <Button Text="View Instructions" 
+                    BackgroundColor="White" 
+                    TextColor="DarkGray" 
+                    HorizontalOptions="StartAndExpand"
+                    Command="{Binding GoSecondCommand}" />
+            <BoxView HeightRequest="0.5" 
+                     HorizontalOptions="FillAndExpand" 
+                     BackgroundColor="Gray" />
+            <Button Text="View Results" 
+                    BackgroundColor="White" 
+                    TextColor="DarkGray" 
+                    HorizontalOptions="StartAndExpand"
+                    Command="{Binding GoThirdCommand}" />
+            <BoxView HeightRequest="0.5" 
+                     HorizontalOptions="FillAndExpand" 
+                     BackgroundColor="Gray" />
             <Label Text="AgroPathogenMeter"
                 VerticalOptions="Start"
                 Margin="30"

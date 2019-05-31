@@ -12,6 +12,9 @@ namespace AgroPathogenMeterApp
     public partial class App : Application   //Contains all information needed by the app
     {
         private static Scanner scanner;
+        public static NavigationPage NavigationPage { get; private set; }
+
+        
 
         public static Scanner Database   //Creates the main database that will be used
         {
@@ -33,7 +36,12 @@ namespace AgroPathogenMeterApp
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new menu());
+            var menuPage = new HomePage();
+            NavigationPage = new NavigationPage(new menu());
+            var rootPage = new RootPage();
+            rootPage.Master = menuPage;
+            rootPage.Detail = NavigationPage;
+            MainPage = rootPage;
         }
 
         protected override void OnStart()

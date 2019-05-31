@@ -9,7 +9,6 @@
         <StackLayout>
             <Label Text="Setup manual tests here!"
                    FontSize="Large"
-                   TextColor="BlueViolet"
                    VerticalOptions="Start"
                    HorizontalOptions="CenterAndExpand" />
             <Label Text="Enter Parameters: "
