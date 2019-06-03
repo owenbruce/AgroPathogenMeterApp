@@ -18,8 +18,6 @@ namespace AgroPathogenMeterApp.Droid
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
-
-            CheckCrash();
             
             AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
                    typeof(Analytics), typeof(Crashes));
@@ -33,17 +31,6 @@ namespace AgroPathogenMeterApp.Droid
                 global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
                 LoadApplication(new App());
             
-        }
-
-        private async void CheckCrash()
-        {
-            ErrorReport crashReport = await Crashes.GetLastSessionCrashReportAsync();
-
-            Exception ex = new Exception("Last Crash Reason");
-
-            Crashes.TrackError(ex, new Dictionary<string, string>{
-                    { "Crash Reason", crashReport.ToString()  },
-                });
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

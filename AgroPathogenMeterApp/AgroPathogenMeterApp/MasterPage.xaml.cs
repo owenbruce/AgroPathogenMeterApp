@@ -1,19 +1,17 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using AgroPathogenMeterApp.Views;
 
-using AgroPathogenMeterApp.Models;
-
-
-namespace AgroPathogenMeterApp.Views
+namespace AgroPathogenMeterApp
 {
     [DesignTimeVisible(false)]
     public partial class MasterPage : MasterDetailPage
     {
-        Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+        private Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+
         public MasterPage()
         {
             InitializeComponent();
@@ -32,6 +30,7 @@ namespace AgroPathogenMeterApp.Views
                     case (int)MenuItemType.Browse:
                         MenuPages.Add(id, new NavigationPage(new instr()));
                         break;
+
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new run1()));
                         break;
