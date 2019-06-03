@@ -19,7 +19,7 @@ namespace AgroPathogenMeterApp.ViewModels
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<menu, Item>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<Xamarin.Forms.Menu, Item>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = item as Item;
                 Items.Add(newItem);

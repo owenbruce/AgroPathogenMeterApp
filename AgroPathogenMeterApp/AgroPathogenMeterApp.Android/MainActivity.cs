@@ -6,6 +6,8 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Sentry;
+using System;
+using System.Collections.Generic;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -16,9 +18,10 @@ namespace AgroPathogenMeterApp.Droid
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            using (SentrySdk.Init("https://ff5babeedcd84ec1b2931bacbb4ff712@sentry.io/1469923"))   //Should start the sentry program running, not working atm
-            {
-                AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
+
+            CheckCrash();
+            
+            AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
                    typeof(Analytics), typeof(Crashes));
 
                 TabLayoutResource = Resource.Layout.Tabbar;
@@ -29,7 +32,18 @@ namespace AgroPathogenMeterApp.Droid
                 Xamarin.Essentials.Platform.Init(this, savedInstanceState);
                 global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
                 LoadApplication(new App());
-            }
+            
+        }
+
+        private async void CheckCrash()
+        {
+            ErrorReport crashReport = await Crashes.GetLastSessionCrashReportAsync();
+
+            Exception ex = new Exception("Last Crash Reason");
+
+            Crashes.TrackError(ex, new Dictionary<string, string>{
+                    { "Crash Reason", crashReport.ToString()  },
+                });
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

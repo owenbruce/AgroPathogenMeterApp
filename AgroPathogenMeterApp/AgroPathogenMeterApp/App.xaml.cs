@@ -33,7 +33,7 @@ namespace AgroPathogenMeterApp
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new menu());
+            MainPage = new MasterPage();
         }
 
         protected override void OnStart()
