@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using OxyPlot.Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.Views
 {
