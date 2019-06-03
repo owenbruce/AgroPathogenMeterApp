@@ -1,5 +1,4 @@
 ﻿using AgroPathogenMeterApp.Data;
-using AgroPathogenMeterApp.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

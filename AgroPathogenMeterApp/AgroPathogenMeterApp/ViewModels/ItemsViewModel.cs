@@ -1,5 +1,4 @@
 ﻿using AgroPathogenMeterApp.Models;
-using AgroPathogenMeterApp.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

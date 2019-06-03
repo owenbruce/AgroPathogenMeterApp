@@ -5,9 +5,6 @@ using Android.Runtime;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Sentry;
-using System;
-using System.Collections.Generic;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -18,19 +15,17 @@ namespace AgroPathogenMeterApp.Droid
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            
             AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
                    typeof(Analytics), typeof(Crashes));
 
-                TabLayoutResource = Resource.Layout.Tabbar;
-                ToolbarResource = Resource.Layout.Toolbar;
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
 
-                base.OnCreate(savedInstanceState);
+            base.OnCreate(savedInstanceState);
 
-                Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-                global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-                LoadApplication(new App());
-            
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            LoadApplication(new App());
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

@@ -1,17 +1,16 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Views
 {
     [DesignTimeVisible(false)]
     public partial class OptionsPage : ContentPage
     {
-        MasterPage RootPage { get => Application.Current.MainPage as MasterPage; }
-        List<HomeMenuItem> menuItems;
+        private MasterPage RootPage { get => Application.Current.MainPage as MasterPage; }
+        private List<HomeMenuItem> menuItems;
+
         public OptionsPage()
         {
             InitializeComponent();
@@ -19,7 +18,10 @@ namespace AgroPathogenMeterApp.Views
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse"},
-                new HomeMenuItem {Id = MenuItemType.About, Title="About"}
+                new HomeMenuItem {Id = MenuItemType.Bluetooth, Title="Bluetooth Settings"},
+                new HomeMenuItem {Id = MenuItemType.About, Title="About"},
+                new HomeMenuItem {Id = MenuItemType.Instructions, Title="Instructions"},
+                new HomeMenuItem {Id = MenuItemType.ViewData, Title="View Data"}
             };
 
             ListViewMenu.ItemsSource = menuItems;

@@ -1,5 +1,4 @@
 ﻿using System;
-using AgroPathogenMeterApp;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +10,6 @@ namespace AgroPathogenMeterApp.Views
         public Menu()
         {
             InitializeComponent();
-
         }
 
         private async void OnRunTestClicked(object sender, EventArgs e)   //Opens the first test running menu

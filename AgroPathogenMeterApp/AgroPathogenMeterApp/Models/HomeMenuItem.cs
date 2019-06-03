@@ -3,7 +3,10 @@
     public enum MenuItemType   //Currently unused, may use file, not code
     {
         Browse,
-        About
+        Bluetooth,
+        About,
+        Instructions,
+        ViewData
     }
 
     public class HomeMenuItem
