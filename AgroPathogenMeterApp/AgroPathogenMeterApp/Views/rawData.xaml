@@ -13,7 +13,8 @@
                 HorizontalOptions="CenterAndExpand" />
             <oxy:PlotView Model="{Binding Model}"
                           VerticalOptions="Center"
-                          HorizontalOptions="Center" />
+                          HorizontalOptions="Center">
+            </oxy:PlotView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

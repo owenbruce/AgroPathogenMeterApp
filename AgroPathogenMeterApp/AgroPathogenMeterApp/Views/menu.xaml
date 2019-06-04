@@ -5,25 +5,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.Menu">
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="AgroPathogenMeter"
-                VerticalOptions="Start"
-                Margin="30"
-                HorizontalOptions="CenterAndExpand"
-                FontSize="Large" />
-            <Button Text="Run Test"
-                    Clicked="OnRunTestClicked"
-                    Padding="20"
+        <RelativeLayout>
+            <Image Source="@drawable/fieldBackground" Opacity="0.6"
+                RelativeLayout.WidthConstraint=
+                  "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                RelativeLayout.HeightConstraint=
+                  "{ConstraintExpression Type=RelativeToParent, Property=Height}" />
+            <Grid RelativeLayout.WidthConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+                <Label Text="AgroPathogenMeter"
+                    VerticalOptions="Start"
+                    Margin="30"
                     HorizontalOptions="CenterAndExpand"
-                    Margin="10"
-                    FontSize="Medium" />
-            <Button Text="Don't Click Pls"
-                    FontSize="Medium"
-                    Clicked="OnDvlpClicked"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="EndAndExpand"
-                    Opacity="0" />
-        </StackLayout>
+                    FontSize="Large" />
+                <Button Text="Run Test"
+                        Clicked="OnRunTestClicked"
+                        Padding="20"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Margin="10"
+                        FontSize="Medium" />
+                <Button Text="Developer Settings"
+                        FontSize="Medium"
+                        Clicked="OnDvlpClicked"
+                        VerticalOptions="EndAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Opacity="0" />
+            </Grid>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>
