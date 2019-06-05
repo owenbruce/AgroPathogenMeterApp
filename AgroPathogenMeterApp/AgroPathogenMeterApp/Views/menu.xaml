@@ -8,20 +8,16 @@
     
     <ContentPage.Content>
         <RelativeLayout>
-            <Image Source="@drawable/fieldBackground" Opacity="0.6"
-                RelativeLayout.WidthConstraint=
-                  "{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                RelativeLayout.HeightConstraint=
-                  "{ConstraintExpression Type=RelativeToParent, Property=Height}" />
             <Grid RelativeLayout.WidthConstraint=
               "{ConstraintExpression Type=RelativeToParent, Property=Width}"
             RelativeLayout.HeightConstraint=
               "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-                <Label Text="AgroPathogenMeter"
-                    VerticalOptions="Start"
-                    Margin="30"
-                    HorizontalOptions="CenterAndExpand"
-                    FontSize="Large" />
+                <Label  Text="AgroPathogenMeter"
+                        VerticalOptions="Start"
+                        Margin="30"
+                        TextColor="Black"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="Large" />
                 <Button Text="Run Test"
                         Clicked="OnRunTestClicked"
                         Padding="20"

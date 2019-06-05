@@ -18,10 +18,10 @@ namespace AgroPathogenMeterApp.Views
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse"},
-                new HomeMenuItem {Id = MenuItemType.Bluetooth, Title="Bluetooth Settings"},
-                new HomeMenuItem {Id = MenuItemType.About, Title="About"},
                 new HomeMenuItem {Id = MenuItemType.Instructions, Title="Instructions"},
-                new HomeMenuItem {Id = MenuItemType.ViewData, Title="View Data"}
+                new HomeMenuItem {Id = MenuItemType.ViewData, Title="View Data"},
+                new HomeMenuItem {Id = MenuItemType.Bluetooth, Title="Bluetooth Settings"},
+                new HomeMenuItem {Id = MenuItemType.About, Title="About"}
             };
 
             ListViewMenu.ItemsSource = menuItems;

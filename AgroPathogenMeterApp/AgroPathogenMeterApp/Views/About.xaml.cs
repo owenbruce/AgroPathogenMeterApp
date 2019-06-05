@@ -16,5 +16,18 @@ namespace AgroPathogenMeterApp.Views
         {
             InitializeComponent();
         }
+
+        private async void OnDarkModeClicked(object sender, EventArgs e)
+        {
+            //Change the color theme to be dark
+            if (colorChange.Text.ToString() == "Enable Dark Mode")
+            {
+                colorChange.Text = "Enable Light Mode";
+            }
+            else if (colorChange.Text.ToString() == "Enable Light Mode")
+            {
+                colorChange.Text = "Enable Dark Mode";
+            }
+        }
     }
 }

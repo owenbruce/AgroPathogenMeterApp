@@ -24,6 +24,11 @@
             <Label VerticalOptions="End"
                    HorizontalOptions="CenterAndExpand"
                    Text="Richa Pandey: APM Designer" />
+            <Button Text="Enable Dark Mode"
+                    x:Name="colorChange"
+                    VerticalOptions="End"
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="OnDarkModeClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
