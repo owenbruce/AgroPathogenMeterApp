@@ -333,7 +333,7 @@ namespace AgroPathogenMeterApp.Views
             }
             int x = await App.Database.SaveScanAsync(_database);
 
-            await Navigation.PushAsync(new testRunning
+            await Navigation.PushAsync(new RunFinal
             {
                 BindingContext = _database
             });

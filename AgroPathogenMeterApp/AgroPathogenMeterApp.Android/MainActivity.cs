@@ -15,6 +15,11 @@ namespace AgroPathogenMeterApp.Droid
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            /*
+            #if ENABLE_TEST_CLOUD
+            Xamarin.Calbash.Start();
+            #endif
+            */
             AppCenter.Start("72a41ccb-483e-4e33-8786-461a3bc1aaac",
                    typeof(Analytics), typeof(Crashes));
 
