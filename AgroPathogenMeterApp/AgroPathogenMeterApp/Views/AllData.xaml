@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AgroPathogenMeterApp.Views.AllData">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding IsInfected}" Grid.Row="0" Grid.Column="0" />
+            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
+            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="2" />
+            <Label Text="{Binding Date}" Grid.Row="1" Grid.Column="0" />
+            <Label Text="{Binding AmountBacteria}" Grid.Row="1" Grid.Column="1" />
+            <Label Text="{Binding ConcentrationBacteria}" Grid.Row="1" Grid.Column="2" />
+            <Label Text="{Binding VoltamType}" Grid.Row="2" Grid.Column="1" />
+            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnNextClicked"/>
+            <Button Text="Next Sample" Grid.Row="3" Grid.Column="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

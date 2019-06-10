@@ -10,7 +10,7 @@ namespace AgroPathogenMeterApp.Models
 
         public string Name { get; set; }
         public string Number { get; set; }
-        public bool Infected { get; set; }
+        public bool IsInfected { get; set; }
         public double AmountBacteria { get; set; }
         public double ConcentrationBacteria { get; set; }
         public DateTime Date { get; set; }

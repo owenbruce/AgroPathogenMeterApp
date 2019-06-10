@@ -8,12 +8,15 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Editor Placeholder="Here is data!"
+            <Editor Placeholder="Testing Data Saving Capabilites"
                     Text="{Binding Text}"
                     HeightRequest="75" />
             <Button Text="Save data"
                     Margin="10"
                     Clicked="OnSaveDataClicked" />
+            <Button Text="View all saved data"
+                    Clicked="OnViewDataClicked"
+                    Margin="10" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

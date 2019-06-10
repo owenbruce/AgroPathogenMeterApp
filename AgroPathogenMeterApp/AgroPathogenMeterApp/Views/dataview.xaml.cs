@@ -16,5 +16,13 @@ namespace AgroPathogenMeterApp.Views
         {
             await Navigation.PopToRootAsync();
         }
+
+        private async void OnViewDataClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AllData
+            {
+
+            });
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
+using AgroPathogenMeterApp.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +19,7 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
+
         private async void OnSaveResultClicked(object sender, EventArgs e)
         {
             //Do stuff
@@ -27,7 +30,7 @@ namespace AgroPathogenMeterApp.Views
         private async void OnMoreInfoClicked(object sender, EventArgs e)
         {
             //Do other stuff
-            await Navigation.PushAsync(new MoreInfo
+            await Navigation.PushAsync(new AllData
             {
 
             });
