@@ -25,8 +25,8 @@
             <Label Text="{Binding AmountBacteria}" Grid.Row="1" Grid.Column="1" />
             <Label Text="{Binding ConcentrationBacteria}" Grid.Row="1" Grid.Column="2" />
             <Label Text="{Binding VoltamType}" Grid.Row="2" Grid.Column="1" />
-            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnNextClicked" />
-            <Button Text="Next Sample" Grid.Row="3" Grid.Column="2" />
+            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnPreviousClicked"/>
+            <Button Text="Next Sample" Grid.Row="3" Grid.Column="2" Clicked="OnNextClicked" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

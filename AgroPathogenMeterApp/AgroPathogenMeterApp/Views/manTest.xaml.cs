@@ -129,8 +129,10 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
-            ScanDatabase _database = new ScanDatabase();
-            _database.VoltamType = VoltammetryScan.SelectedItem.ToString();   //Sets the type of voltammetric scan to be run
+            ScanDatabase _database = new ScanDatabase
+            {
+                VoltamType = VoltammetryScan.SelectedItem.ToString()   //Sets the type of voltammetric scan to be run
+            };
             try
             {
                 #region Parameter Setter

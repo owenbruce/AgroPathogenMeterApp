@@ -36,5 +36,18 @@ namespace AgroPathogenMeterApp.Views
                 Crashes.TrackError(ex);
             }
         }
+
+        private void OnPreviousClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                i--;
+                GetDatabase();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
     }
 }
