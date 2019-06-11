@@ -9,7 +9,7 @@
         <StackLayout>
             <Label Text="Test Results:"
                    FontSize="Large"
-                   VerticalOptions="Start" 
+                   VerticalOptions="Start"
                    HorizontalOptions="CenterAndExpand" />
             <Label Text="{Binding boolPath}"
                    FontSize="Medium"

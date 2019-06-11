@@ -8,11 +8,10 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Here is more information on the selected test:"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand" />
             <!-- Add any necessary sets of data here. -->
             <!-- Add in concentration in blood as well as concentration range of severity -->
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

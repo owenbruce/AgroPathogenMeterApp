@@ -20,12 +20,12 @@
             </Grid.ColumnDefinitions>
             <Label Text="{Binding IsInfected}" Grid.Row="0" Grid.Column="0" />
             <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
-            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="2" />
+            <Label Text="{Binding ID}" Grid.Row="0" Grid.Column="2" />
             <Label Text="{Binding Date}" Grid.Row="1" Grid.Column="0" />
             <Label Text="{Binding AmountBacteria}" Grid.Row="1" Grid.Column="1" />
             <Label Text="{Binding ConcentrationBacteria}" Grid.Row="1" Grid.Column="2" />
             <Label Text="{Binding VoltamType}" Grid.Row="2" Grid.Column="1" />
-            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnNextClicked"/>
+            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnNextClicked" />
             <Button Text="Next Sample" Grid.Row="3" Grid.Column="2" />
         </Grid>
     </ContentPage.Content>

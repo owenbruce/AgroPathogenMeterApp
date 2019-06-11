@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.Menu">
-    
+
     <ContentPage.Content>
         <RelativeLayout>
             <Grid RelativeLayout.WidthConstraint=

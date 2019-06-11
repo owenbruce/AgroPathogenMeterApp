@@ -1,10 +1,6 @@
 ﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Crashes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,22 +9,32 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AllData : ContentPage
     {
-        int i;
+        private int i;
+
         public AllData()
         {
             i = 1;
             InitializeComponent();
             GetDatabase();
         }
+
         private async void GetDatabase()
         {
             ScanDatabase _database = await App.Database.GetScanAsync(i);
             BindingContext = _database;
         }
 
-        private async void OnNextClicked(object sender, EventArgs e)
+        private void OnNextClicked(object sender, EventArgs e)
         {
-            i++;
+            try
+            {
+                i++;
+                GetDatabase();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
     }
 }

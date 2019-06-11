@@ -30,6 +30,7 @@ namespace AgroPathogenMeterApp
                     case (int)MenuItemType.Browse:
                         MenuPages.Add(id, new NavigationPage(new MasterPage()));
                         break;
+
                     case (int)MenuItemType.Bluetooth:
                         MenuPages.Add(id, new NavigationPage(new Bluetooth()));
                         break;
@@ -37,9 +38,11 @@ namespace AgroPathogenMeterApp
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new About()));
                         break;
+
                     case (int)MenuItemType.Instructions:
                         MenuPages.Add(id, new NavigationPage(new instr()));
                         break;
+
                     case (int)MenuItemType.ViewData:
                         MenuPages.Add(id, new NavigationPage(new dataview()));
                         break;

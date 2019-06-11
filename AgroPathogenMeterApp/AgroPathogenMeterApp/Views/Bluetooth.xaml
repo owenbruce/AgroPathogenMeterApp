@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Bluetooth"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>

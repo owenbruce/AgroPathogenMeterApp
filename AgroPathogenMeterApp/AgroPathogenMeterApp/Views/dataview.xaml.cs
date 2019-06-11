@@ -21,7 +21,6 @@ namespace AgroPathogenMeterApp.Views
         {
             await Navigation.PushAsync(new AllData
             {
-
             });
         }
     }
