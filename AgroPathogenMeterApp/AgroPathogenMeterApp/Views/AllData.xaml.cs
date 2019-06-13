@@ -1,11 +1,9 @@
 ﻿using AgroPathogenMeterApp.Models;
-using AgroPathogenMeterApp.Data;
 using Microsoft.AppCenter.Crashes;
-using XamarinUniversity.Infrastructure;
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinUniversity.Infrastructure;
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -35,7 +33,6 @@ namespace AgroPathogenMeterApp.Views
                 else
                 {
                     i--;
-
                 }
             }
             else
@@ -44,7 +41,6 @@ namespace AgroPathogenMeterApp.Views
             }
         }
 
-        
         private void RefreshGui()
         {
             var displayStrings = new ObservableDictionary<string, string>();
@@ -66,14 +62,13 @@ namespace AgroPathogenMeterApp.Views
                 displayStrings.Add("ConcentrationBacteria", "There is " + _database.ConcentrationBacteria + "mol/L of Bacteria in the urine.");
                 displayStrings.Add("VoltamType", "A " + _database.VoltamType + " scan was run.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Crashes.TrackError(ex);
             }
 
             BindingContext = displayStrings;
         }
-        
 
         private void OnNextClicked(object sender, EventArgs e)
         {

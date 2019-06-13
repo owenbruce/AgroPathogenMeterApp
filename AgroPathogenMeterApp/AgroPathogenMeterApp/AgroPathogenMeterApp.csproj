@@ -11,6 +11,8 @@
     <RepositoryType>Private github</RepositoryType>
     <RepositoryUrl>https://github.com/owenbruce/AgroPathogenMeterApp</RepositoryUrl>
     <NeutralLanguage>en-CA</NeutralLanguage>
+    <ApplicationIcon>apmicon_e2D_icon.ico</ApplicationIcon>
+    <Win32Resource />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,6 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="OxyPlot">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Xamarin.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\OxyPlot.Xamarin.Android.dll</HintPath>
+    </Reference>
     <Reference Include="PalmSens.Core">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.dll</HintPath>
     </Reference>
@@ -66,6 +74,9 @@
     <EmbeddedResource Update="Views\dataview.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\DuringRun.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\dvlp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -88,6 +99,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\run1.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Run2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Run3.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RunFinal.xaml">

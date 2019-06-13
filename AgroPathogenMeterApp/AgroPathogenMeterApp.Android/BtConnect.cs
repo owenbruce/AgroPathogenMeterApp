@@ -1,26 +1,22 @@
-﻿using Xamarin.Forms;
-using System;
+﻿using Android.Content;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.PSAndroid.Comm;
-using Xamarin.Forms.Xaml;
+using System;
 using Microsoft.AppCenter.Crashes;
+using System.Threading.Tasks;
 
-namespace AgroPathogenMeterApp.Views
+namespace AgroPathogenMeterApp.Droid
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Bluetooth : ContentPage
+    internal class BtConnect
     {
-        public Bluetooth()
-        {
-            InitializeComponent();
-        }
-
-        private async void OnBtClicked(Object sender, EventArgs e)
+        private async void Connector()
         {
             /*
+            Context context;
+            context = get context
             PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
-            DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(Context);
+            DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
             devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
             deviceDiscoverer.Dispose();
 

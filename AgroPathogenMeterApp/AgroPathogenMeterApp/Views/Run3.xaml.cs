@@ -5,17 +5,18 @@ using Xamarin.Forms.Xaml;
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class run1 : ContentPage   //The first test running menu, will include bluetooth connection and initial instructions
+    public partial class Run3 : ContentPage
     {
-        public run1()
+        public Run3()
         {
             InitializeComponent();
         }
 
-        private async void OnNextClicked(Object sender, EventArgs e)
+        private async void OnRunTestClicked(Object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Run2
+            await Navigation.PushAsync(new DuringRun
             {
+
             });
         }
     }

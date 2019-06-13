@@ -333,7 +333,7 @@ namespace AgroPathogenMeterApp.Views
                     { "Entry 6:", Entry6.Text.ToString()  },
                 });
             }
-            int x = await App.Database.SaveScanAsync(_database);
+            await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new RunFinal
             {

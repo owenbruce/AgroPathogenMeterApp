@@ -7,15 +7,15 @@
              x:Class="AgroPathogenMeterApp.Views.AllData">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Path=[IsInfected]}" Grid.Row="0" Grid.Column="0" />
-            <Label Text="{Binding Path=[Name]}" Grid.Row="0" Grid.Column="1" />
-            <Label Text="{Binding Path=[ID]}" Grid.Row="0" Grid.Column="2" />
-            <Label Text="{Binding Path=[Date]}" Grid.Row="1" Grid.Column="0" />
-            <Label Text="{Binding Path=[AmountBacteria]}" Grid.Row="1" Grid.Column="1" />
-            <Label Text="{Binding Path=[ConcentrationBacteria]}" Grid.Row="1" Grid.Column="2" />
-            <Label Text="{Binding Path=[VoltamType]}" Grid.Row="2" Grid.Column="1" />
-            <Button Text="Previous Sample" Grid.Row="3" Grid.Column="0" Clicked="OnPreviousClicked"/>
-            <Button Text="Next Sample" Grid.Row="3" Grid.Column="2" Clicked="OnNextClicked" />
+            <Label Text="{Binding Path=[IsInfected]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[Name]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[ID]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[Date]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[AmountBacteria]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[ConcentrationBacteria]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[VoltamType]}" FontSize="Medium" />
+            <Button Text="Previous Sample" Clicked="OnPreviousClicked" />
+            <Button Text="Next Sample" Clicked="OnNextClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

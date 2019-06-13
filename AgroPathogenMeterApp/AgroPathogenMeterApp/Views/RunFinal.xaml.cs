@@ -16,6 +16,11 @@ namespace AgroPathogenMeterApp.Views
         private async void OnSaveResultClicked(object sender, EventArgs e)
         {
             //Do stuff
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+            _database.Date = DateTime.Now;
+            await App.Database.SaveScanAsync(_database);
+
             await Navigation.PushAsync(new dataview
             {
             });
