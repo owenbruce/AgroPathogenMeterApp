@@ -24,5 +24,9 @@ namespace AgroPathogenMeterApp.Models
         public double PositiveVertex { get; set; }
         public double ScanRate { get; set; }
         public double ACPotential { get; set; }
+        public double AppliedPotential { get; set; }
+        public double TimeInterval { get; set; }
+        public double RunTime { get; set; }
+        
     }
 }

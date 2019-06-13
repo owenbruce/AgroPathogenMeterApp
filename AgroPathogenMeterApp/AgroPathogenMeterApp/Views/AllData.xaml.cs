@@ -49,10 +49,12 @@ namespace AgroPathogenMeterApp.Views
                 if (_database.IsInfected)
                 {
                     displayStrings.Add("IsInfected", "The sample is infected");
+                    displayStrings.Add("InfectedColor", "Red");
                 }
                 else
                 {
                     displayStrings.Add("IsInfected", "The sample is not infected");
+                    displayStrings.Add("InfectedColor", "Green");
                 }
 
                 displayStrings.Add("Name", "Name: " + _database.Name);

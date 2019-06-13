@@ -7,7 +7,7 @@
              x:Class="AgroPathogenMeterApp.Views.AllData">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Path=[IsInfected]}" FontSize="Medium" />
+            <Label Text="{Binding Path=[IsInfected]}" FontSize="Medium" TextColor="{Binding Path=[InfectedColor]}" />
             <Label Text="{Binding Path=[Name]}" FontSize="Medium" />
             <Label Text="{Binding Path=[ID]}" FontSize="Medium" />
             <Label Text="{Binding Path=[Date]}" FontSize="Medium" />
