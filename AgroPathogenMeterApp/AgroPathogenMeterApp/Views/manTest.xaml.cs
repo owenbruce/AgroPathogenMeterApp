@@ -1,4 +1,7 @@
 ﻿using AgroPathogenMeterApp.Models;
+using PalmSens;
+using PalmSens.Comm;
+using PalmSens.Plottables;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
@@ -62,21 +65,17 @@ namespace AgroPathogenMeterApp.Views
             return false;
         }
 
-        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
+        private bool OnlyDotDash(string value1, string value2, string value3)
         {
             if (value1.Equals(".") ||
                 value2.Equals(".") ||
-                value3.Equals(".") ||
-                value4.Equals(".") ||
-                value5.Equals("."))
+                value3.Equals("."))
             {
                 return false;
             }
             else if (value1.Equals("-") ||
                      value2.Equals("-") ||
-                     value3.Equals("-") ||
-                     value4.Equals("-") ||
-                     value5.Equals("-"))
+                     value3.Equals("-"))
             {
                 return false;
             }
@@ -96,6 +95,26 @@ namespace AgroPathogenMeterApp.Views
                      value2.Equals("-") ||
                      value3.Equals("-") ||
                      value4.Equals("-"))
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
+        {
+            if (value1.Equals(".") ||
+                value2.Equals(".") ||
+                value3.Equals(".") ||
+                value4.Equals(".") ||
+                value5.Equals("."))
+            {
+                return false;
+            }
+            else if (value1.Equals("-") ||
+                     value2.Equals("-") ||
+                     value3.Equals("-") ||
+                     value4.Equals("-") ||
+                     value5.Equals("-"))
             {
                 return false;
             }
@@ -316,6 +335,41 @@ namespace AgroPathogenMeterApp.Views
                         }
                         break;
 
+                    case "Chronoamperometry":
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1)
+                        {
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString()))
+                            {
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry3.Text)))
+                                {
+                                    _database.AppliedPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.TimeInterval = Convert.ToDouble(Entry2.Text);
+                                    _database.RunTime = Convert.ToDouble(Entry3.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -334,6 +388,11 @@ namespace AgroPathogenMeterApp.Views
                 });
             }
             await App.Database.SaveScanAsync(_database);
+
+
+
+            DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
+
 
             await Navigation.PushAsync(new RunFinal
             {
