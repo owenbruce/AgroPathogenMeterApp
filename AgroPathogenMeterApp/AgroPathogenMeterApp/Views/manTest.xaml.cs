@@ -1,7 +1,4 @@
 ﻿using AgroPathogenMeterApp.Models;
-using PalmSens;
-using PalmSens.Comm;
-using PalmSens.Plottables;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
@@ -19,33 +16,6 @@ namespace AgroPathogenMeterApp.Views
         }
 
         #region Parameter Range Checkers
-
-        private bool InPRange(double value)
-        {
-            if (Math.Abs(value) <= 10)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool InStepRange(double value)
-        {
-            if (value >= 0.075 && value <= 250)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool InScanRateRange(double value)
-        {
-            if (value >= 0.01 && value <= 500000)
-            {
-                return true;
-            }
-            return false;
-        }
 
         private bool InAmplitudeRange(double value)
         {
@@ -65,6 +35,32 @@ namespace AgroPathogenMeterApp.Views
             return false;
         }
 
+        private bool InPRange(double value)
+        {
+            if (Math.Abs(value) <= 10)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InScanRateRange(double value)
+        {
+            if (value >= 0.01 && value <= 500000)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InStepRange(double value)
+        {
+            if (value >= 0.075 && value <= 250)
+            {
+                return true;
+            }
+            return false;
+        }
         private bool OnlyDotDash(string value1, string value2, string value3)
         {
             if (value1.Equals(".") ||
@@ -100,6 +96,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return true;
         }
+
         private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
         {
             if (value1.Equals(".") ||
@@ -370,6 +367,7 @@ namespace AgroPathogenMeterApp.Views
                             return;
                         }
                         break;
+
                     default:
                         break;
                 }
@@ -389,10 +387,7 @@ namespace AgroPathogenMeterApp.Views
             }
             await App.Database.SaveScanAsync(_database);
 
-
-
             DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
-
 
             await Navigation.PushAsync(new RunFinal
             {

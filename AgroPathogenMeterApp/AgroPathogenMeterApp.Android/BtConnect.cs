@@ -1,34 +1,33 @@
-﻿using Android.Content;
+﻿using AgroPathogenMeterApp.Droid;
+using AgroPathogenMeterApp.Models;
+using Android.Content;
+using Android.OS;
+using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
-using PalmSens.Devices;
-using PalmSens.Techniques;
-using PalmSens.PSAndroid.Comm;
 using PalmSens.Plottables;
+using PalmSens.PSAndroid.Comm;
+using PalmSens.Techniques;
 using System;
-using Microsoft.AppCenter.Crashes;
-using System.Threading.Tasks;
-using AgroPathogenMeterApp.Droid;
-using AgroPathogenMeterApp.Models;
 using Xamarin.Forms;
-using Android.OS;
 
-[assembly: Dependency (typeof (BtConnect))]
+[assembly: Dependency(typeof(BtConnect))]
+
 namespace AgroPathogenMeterApp.Droid
 {
-    public class BtConnect: BtControl
+    public class BtConnect : BtControl
     {
-        Context context = Android.App.Application.Context;
-        Measurement measurement;
-        Curve _activeCurve;
+        private Curve _activeCurve;
+        private Context context = Android.App.Application.Context;
+        private Measurement measurement;
 
         public async void connect()
         {
             if (IsEmulator())
             {
-                
             }
-            else{ 
+            else
+            {
                 PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
                 DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
                 devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
@@ -47,16 +46,15 @@ namespace AgroPathogenMeterApp.Droid
                     Crashes.TrackError(ex);
                 }
             }
-            
         }
 
         public async void connect(ScanDatabase _database)
         {
             if (IsEmulator())
             {
-
             }
-            else { 
+            else
+            {
                 PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
                 DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
                 devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
@@ -77,6 +75,7 @@ namespace AgroPathogenMeterApp.Droid
                     //Collect all of the information here
 
                     #region Test Switches
+
                     switch (_database.VoltamType)
                     {
                         case "Square Wave Voltammetry":
@@ -84,9 +83,9 @@ namespace AgroPathogenMeterApp.Droid
 
                             squareWave.BeginPotential = (float)_database.StartingPotential;
                             squareWave.EndPotential = (float)_database.EndingPotential;
-                            squareWave.StepPotential = (float)_database.PotentialStep;
-                            squareWave.PulseAmplitude = (float)_database.Amplitude;
                             squareWave.Frequency = (float)_database.Frequency;
+                            squareWave.PulseAmplitude = (float)_database.Amplitude;
+                            squareWave.StepPotential = (float)_database.PotentialStep;
 
                             comm.Measure(squareWave);
 
@@ -97,8 +96,8 @@ namespace AgroPathogenMeterApp.Droid
 
                             linearSweep.BeginPotential = (float)_database.StartingPotential;
                             linearSweep.EndPotential = (float)_database.EndingPotential;
-                            linearSweep.StepPotential = (float)_database.PotentialStep;
                             linearSweep.Scanrate = (float)_database.ScanRate;
+                            linearSweep.StepPotential = (float)_database.PotentialStep;
 
                             comm.Measure(linearSweep);
 
@@ -108,11 +107,11 @@ namespace AgroPathogenMeterApp.Droid
                             CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry();
 
                             cyclicVoltammetry.BeginPotential = (float)_database.StartingPotential;
+                            cyclicVoltammetry.nScans = 1;
+                            cyclicVoltammetry.Scanrate = (float)_database.ScanRate;
+                            cyclicVoltammetry.StepPotential = (float)_database.PotentialStep;
                             cyclicVoltammetry.Vtx1Potential = (float)_database.NegativeVertex;
                             cyclicVoltammetry.Vtx2Potential = (float)_database.PositiveVertex;
-                            cyclicVoltammetry.StepPotential = (float)_database.PotentialStep;
-                            cyclicVoltammetry.Scanrate = (float)_database.ScanRate;
-                            cyclicVoltammetry.nScans = 1;
 
                             comm.Measure(cyclicVoltammetry);
 
@@ -123,23 +122,23 @@ namespace AgroPathogenMeterApp.Droid
 
                             acVoltammetry.BeginPotential = (float)_database.StartingPotential;
                             acVoltammetry.EndPotential = (float)_database.EndingPotential;
-                            acVoltammetry.StepPotential = (float)_database.PotentialStep;
-                            acVoltammetry.SineWaveAmplitude = (float)_database.ACPotential;
-                            acVoltammetry.Scanrate = (float)_database.ScanRate;
                             acVoltammetry.Frequency = (float)_database.Frequency;
+                            acVoltammetry.Scanrate = (float)_database.ScanRate;
+                            acVoltammetry.SineWaveAmplitude = (float)_database.ACPotential;
+                            acVoltammetry.StepPotential = (float)_database.PotentialStep;
 
                             comm.Measure(acVoltammetry);
 
                             break;
 
                         case "Chronoamperometry":
-
-
+                            //run chronoamperometry, not supported currently?
 
                             break;
                     }
 
-                    #endregion
+                    #endregion Test Switches
+
                     comm.Disconnect();
                 }
                 catch (Exception ex)
@@ -152,24 +151,16 @@ namespace AgroPathogenMeterApp.Droid
 
         private static bool IsEmulator()
         {
-            return Build.Fingerprint.StartsWith("generic")
+            return "google_sdk".Equals(Build.Product)
+                || (Build.Brand.StartsWith("generic") && Build.Device.StartsWith("generic"))
                 || Build.Fingerprint.StartsWith("unknown")
-                || Build.Model.Contains("google_sdk")
-                || Build.Model.Contains("Emulator")
-                || Build.Model.Contains("Android SDK built for x86")
-                || Build.Manufacturer.Contains("Genymotion")
                 || Build.Hardware.Contains("goldfish")
                 || Build.Hardware.Contains("ranchu")
-                || (Build.Brand.StartsWith("generic") && Build.Device.StartsWith("generic"))
-                || "google_sdk".Equals(Build.Product);
-        }
-
-        private void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
-        {
-            _activeCurve = e.GetCurve();
-            _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
-            _activeCurve.Finished += _activeCurve_Finished;
-
+                || Build.Manufacturer.Contains("Genymotion")
+                || Build.Model.Contains("Android SDK built for x86")
+                || Build.Model.Contains("Emulator")
+                || Build.Model.Contains("google_sdk")
+                || Build.Fingerprint.StartsWith("generic");
         }
 
         private void _activeCurve_Finished(object sender, Plottable.FinishedEventArgs e)
@@ -189,6 +180,13 @@ namespace AgroPathogenMeterApp.Droid
         private void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
             measurement = newMeasurement;
+        }
+
+        private void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
+        {
+            _activeCurve = e.GetCurve();
+            _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
+            _activeCurve.Finished += _activeCurve_Finished;
         }
 
         private void Comm_ReceiveStatus(Object sender, StatusEventArgs e)

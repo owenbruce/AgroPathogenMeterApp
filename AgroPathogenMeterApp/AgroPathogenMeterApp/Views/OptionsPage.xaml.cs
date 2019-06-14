@@ -8,9 +8,7 @@ namespace AgroPathogenMeterApp.Views
     [DesignTimeVisible(false)]
     public partial class OptionsPage : ContentPage
     {
-        private MasterPage RootPage { get => Application.Current.MainPage as MasterPage; }
         private List<HomeMenuItem> menuItems;
-
         public OptionsPage()
         {
             InitializeComponent();
@@ -30,11 +28,15 @@ namespace AgroPathogenMeterApp.Views
             ListViewMenu.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
+                {
                     return;
+                }
 
                 var id = (int)((HomeMenuItem)e.SelectedItem).Id;
                 await RootPage.NavigateFromMenu(id);
             };
         }
+
+        private MasterPage RootPage { get => Application.Current.MainPage as MasterPage; }
     }
 }

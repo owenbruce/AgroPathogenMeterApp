@@ -10,9 +10,8 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AllData : ContentPage
     {
-        private int i;
         private ScanDatabase _database;
-
+        private int i;
         public AllData()
         {
             i = 1;
@@ -38,6 +37,32 @@ namespace AgroPathogenMeterApp.Views
             else
             {
                 i++;
+            }
+        }
+
+        private void OnNextClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                i++;
+                GetDatabase();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        private void OnPreviousClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                i--;
+                GetDatabase();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
         }
 
@@ -70,32 +95,6 @@ namespace AgroPathogenMeterApp.Views
             }
 
             BindingContext = displayStrings;
-        }
-
-        private void OnNextClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                i++;
-                GetDatabase();
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-            }
-        }
-
-        private void OnPreviousClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                i--;
-                GetDatabase();
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-            }
         }
     }
 }

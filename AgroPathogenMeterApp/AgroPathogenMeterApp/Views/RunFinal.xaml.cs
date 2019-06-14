@@ -13,6 +13,14 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
+        private async void OnMoreInfoClicked(object sender, EventArgs e)
+        {
+            //Do other stuff
+            await Navigation.PushAsync(new AllData
+            {
+            });
+        }
+
         private async void OnSaveResultClicked(object sender, EventArgs e)
         {
             //Do stuff
@@ -22,14 +30,6 @@ namespace AgroPathogenMeterApp.Views
             await App.Database.SaveScanAsync(_database);
 
             await Navigation.PushAsync(new dataview
-            {
-            });
-        }
-
-        private async void OnMoreInfoClicked(object sender, EventArgs e)
-        {
-            //Do other stuff
-            await Navigation.PushAsync(new AllData
             {
             });
         }
