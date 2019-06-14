@@ -7,13 +7,23 @@
              x:Class="AgroPathogenMeterApp.Views.AllData">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Path=[IsInfected]}" FontSize="Medium" TextColor="{Binding Path=[InfectedColor]}" />
+            <Label Text="{Binding Path=[IsInfected]}" x:Name="IsInfected" FontSize="Large" TextColor="{Binding Path=[InfectedColor]}" />
             <Label Text="{Binding Path=[Name]}" FontSize="Medium" />
             <Label Text="{Binding Path=[ID]}" FontSize="Medium" />
             <Label Text="{Binding Path=[Date]}" FontSize="Medium" />
             <Label Text="{Binding Path=[AmountBacteria]}" FontSize="Medium" />
             <Label Text="{Binding Path=[ConcentrationBacteria]}" FontSize="Medium" />
             <Label Text="{Binding Path=[VoltamType]}" FontSize="Medium" />
+            <Label Text="The normal amout of bacteria in urine is less than # cfu." FontSize="Medium" />
+            <Label Text="The sample is within the normal amount with #cfu" FontSize="Medium">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                 Binding="{Binding Source={x:Reference IsInfected}}"
+                                 Value="The sample is infected">
+                        <Setter Property="Text" Value="The sample is above the normal amount with # cfu" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <Button Text="Previous Sample" Clicked="OnPreviousClicked" />
             <Button Text="Next Sample" Clicked="OnNextClicked" />
         </StackLayout>

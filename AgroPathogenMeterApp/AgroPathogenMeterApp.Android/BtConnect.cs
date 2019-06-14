@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AgroPathogenMeterApp.Droid;
 using AgroPathogenMeterApp.Models;
 using Xamarin.Forms;
+using Android.OS;
 
 [assembly: Dependency (typeof (BtConnect))]
 namespace AgroPathogenMeterApp.Droid
@@ -23,119 +24,144 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void connect()
         {
-            PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
-            DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
-            devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
-            deviceDiscoverer.Dispose();
-
-            CommManager comm;
-            PalmSens.Devices.Device device = devices[0];
-            try
+            if (IsEmulator())
             {
-                device.Open();
-                comm = new CommManager(device, 5000);
+                
             }
-            catch (Exception ex)
-            {
-                device.Close();
-                Crashes.TrackError(ex);
+            else{ 
+                PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
+                DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
+                devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
+                deviceDiscoverer.Dispose();
+
+                CommManager comm;
+                PalmSens.Devices.Device device = devices[0];
+                try
+                {
+                    device.Open();
+                    comm = new CommManager(device, 5000);
+                }
+                catch (Exception ex)
+                {
+                    device.Close();
+                    Crashes.TrackError(ex);
+                }
             }
             
         }
 
         public async void connect(ScanDatabase _database)
         {
-            PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
-            DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
-            devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
-            deviceDiscoverer.Dispose();
-
-            CommManager comm;
-            PalmSens.Devices.Device device = devices[0];
-            try
+            if (IsEmulator())
             {
-                device.Open();
-                comm = new CommManager(device, 5000);
-                comm.ReceiveStatus += Comm_ReceiveStatus;
 
-                comm.BeginMeasurement += Comm_BeginMeasurement;
-                //Run all of the setup settings here from _database
+            }
+            else { 
+                PalmSens.Devices.Device[] devices = new PalmSens.Devices.Device[0];
+                DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
+                devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
+                deviceDiscoverer.Dispose();
 
-                comm.BeginReceiveCurve += Comm_BeginReceiveCurve;
-                //Collect all of the information here
-
-                #region Test Switches
-                switch (_database.VoltamType)
+                CommManager comm;
+                PalmSens.Devices.Device device = devices[0];
+                try
                 {
-                    case "Square Wave Voltammetry":
-                        SquareWave squareWave = new SquareWave();
+                    device.Open();
+                    comm = new CommManager(device, 5000);
+                    comm.ReceiveStatus += Comm_ReceiveStatus;
 
-                        squareWave.BeginPotential = (float)_database.StartingPotential;
-                        squareWave.EndPotential = (float)_database.EndingPotential;
-                        squareWave.StepPotential = (float)_database.PotentialStep;
-                        squareWave.PulseAmplitude = (float)_database.Amplitude;
-                        squareWave.Frequency = (float)_database.Frequency;
+                    comm.BeginMeasurement += Comm_BeginMeasurement;
+                    //Run all of the setup settings here from _database
 
-                        comm.Measure(squareWave);
+                    comm.BeginReceiveCurve += Comm_BeginReceiveCurve;
+                    //Collect all of the information here
 
-                        break;
+                    #region Test Switches
+                    switch (_database.VoltamType)
+                    {
+                        case "Square Wave Voltammetry":
+                            SquareWave squareWave = new SquareWave();
 
-                    case "Linear Voltammetry":
-                        LinearSweep linearSweep = new LinearSweep();
+                            squareWave.BeginPotential = (float)_database.StartingPotential;
+                            squareWave.EndPotential = (float)_database.EndingPotential;
+                            squareWave.StepPotential = (float)_database.PotentialStep;
+                            squareWave.PulseAmplitude = (float)_database.Amplitude;
+                            squareWave.Frequency = (float)_database.Frequency;
 
-                        linearSweep.BeginPotential = (float)_database.StartingPotential;
-                        linearSweep.EndPotential = (float)_database.EndingPotential;
-                        linearSweep.StepPotential = (float)_database.PotentialStep;
-                        linearSweep.Scanrate = (float)_database.ScanRate;
+                            comm.Measure(squareWave);
 
-                        comm.Measure(linearSweep);
+                            break;
 
-                        break;
+                        case "Linear Voltammetry":
+                            LinearSweep linearSweep = new LinearSweep();
 
-                    case "Cyclic Voltammetry":
-                        CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry();
+                            linearSweep.BeginPotential = (float)_database.StartingPotential;
+                            linearSweep.EndPotential = (float)_database.EndingPotential;
+                            linearSweep.StepPotential = (float)_database.PotentialStep;
+                            linearSweep.Scanrate = (float)_database.ScanRate;
 
-                        cyclicVoltammetry.BeginPotential = (float)_database.StartingPotential;
-                        cyclicVoltammetry.Vtx1Potential = (float)_database.NegativeVertex;
-                        cyclicVoltammetry.Vtx2Potential = (float)_database.PositiveVertex;
-                        cyclicVoltammetry.StepPotential = (float)_database.PotentialStep;
-                        cyclicVoltammetry.Scanrate = (float)_database.ScanRate;
-                        cyclicVoltammetry.nScans = 1;
+                            comm.Measure(linearSweep);
 
-                        comm.Measure(cyclicVoltammetry);
+                            break;
 
-                        break;
+                        case "Cyclic Voltammetry":
+                            CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry();
 
-                    case "Alternating Current Voltammetry":
-                        ACVoltammetry acVoltammetry = new ACVoltammetry();
+                            cyclicVoltammetry.BeginPotential = (float)_database.StartingPotential;
+                            cyclicVoltammetry.Vtx1Potential = (float)_database.NegativeVertex;
+                            cyclicVoltammetry.Vtx2Potential = (float)_database.PositiveVertex;
+                            cyclicVoltammetry.StepPotential = (float)_database.PotentialStep;
+                            cyclicVoltammetry.Scanrate = (float)_database.ScanRate;
+                            cyclicVoltammetry.nScans = 1;
 
-                        acVoltammetry.BeginPotential = (float)_database.StartingPotential;
-                        acVoltammetry.EndPotential = (float)_database.EndingPotential;
-                        acVoltammetry.StepPotential = (float)_database.PotentialStep;
-                        acVoltammetry.SineWaveAmplitude = (float)_database.ACPotential;
-                        acVoltammetry.Scanrate = (float)_database.ScanRate;
-                        acVoltammetry.Frequency = (float)_database.Frequency;
+                            comm.Measure(cyclicVoltammetry);
 
-                        comm.Measure(acVoltammetry);
+                            break;
 
-                        break;
+                        case "Alternating Current Voltammetry":
+                            ACVoltammetry acVoltammetry = new ACVoltammetry();
 
-                    case "Chronoamperometry":
+                            acVoltammetry.BeginPotential = (float)_database.StartingPotential;
+                            acVoltammetry.EndPotential = (float)_database.EndingPotential;
+                            acVoltammetry.StepPotential = (float)_database.PotentialStep;
+                            acVoltammetry.SineWaveAmplitude = (float)_database.ACPotential;
+                            acVoltammetry.Scanrate = (float)_database.ScanRate;
+                            acVoltammetry.Frequency = (float)_database.Frequency;
 
-                        
+                            comm.Measure(acVoltammetry);
 
-                        break;
+                            break;
+
+                        case "Chronoamperometry":
+
+
+
+                            break;
+                    }
+
+                    #endregion
+                    comm.Disconnect();
                 }
-
-                #endregion
-                comm.Disconnect();
+                catch (Exception ex)
+                {
+                    device.Close();
+                    Crashes.TrackError(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                device.Close();
-                Crashes.TrackError(ex);
-            }
+        }
 
+        private static bool IsEmulator()
+        {
+            return Build.Fingerprint.StartsWith("generic")
+                || Build.Fingerprint.StartsWith("unknown")
+                || Build.Model.Contains("google_sdk")
+                || Build.Model.Contains("Emulator")
+                || Build.Model.Contains("Android SDK built for x86")
+                || Build.Manufacturer.Contains("Genymotion")
+                || Build.Hardware.Contains("goldfish")
+                || Build.Hardware.Contains("ranchu")
+                || (Build.Brand.StartsWith("generic") && Build.Device.StartsWith("generic"))
+                || "google_sdk".Equals(Build.Product);
         }
 
         private void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)

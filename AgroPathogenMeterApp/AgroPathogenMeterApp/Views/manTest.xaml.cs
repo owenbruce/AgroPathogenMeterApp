@@ -389,7 +389,9 @@ namespace AgroPathogenMeterApp.Views
             }
             await App.Database.SaveScanAsync(_database);
 
-            DependencyService.Get<BtControl>().connect(_database);
+
+
+            DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 
 
             await Navigation.PushAsync(new RunFinal

@@ -21,7 +21,7 @@ namespace AgroPathogenMeterApp.Views
 
         }
 
-        private async void OnBtClicked(Object sender, EventArgs e)
+        private void OnBtClicked(Object sender, EventArgs e)
         {
             DependencyService.Get<BtControl>().connect();
 
