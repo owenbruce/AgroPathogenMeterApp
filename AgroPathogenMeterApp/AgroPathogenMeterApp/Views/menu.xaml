@@ -4,62 +4,34 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AgroPathogenMeterApp.Views.menu">
+             x:Class="AgroPathogenMeterApp.Views.Menu">
+
     <ContentPage.Content>
-        <StackLayout>
-            <Button Text="View Results" 
-                    BackgroundColor="White" 
-                    TextColor="DarkGray" 
-                    HorizontalOptions="StartAndExpand"
-                    Command="{Binding GoHomeCommand}" />
-            <BoxView HeightRequest="0.5" 
-                     HorizontalOptions="FillAndExpand" 
-                     BackgroundColor="Gray" />
-            <Button Text="View Instructions" 
-                    BackgroundColor="White" 
-                    TextColor="DarkGray" 
-                    HorizontalOptions="StartAndExpand"
-                    Command="{Binding GoSecondCommand}" />
-            <BoxView HeightRequest="0.5" 
-                     HorizontalOptions="FillAndExpand" 
-                     BackgroundColor="Gray" />
-            <Button Text="View Results" 
-                    BackgroundColor="White" 
-                    TextColor="DarkGray" 
-                    HorizontalOptions="StartAndExpand"
-                    Command="{Binding GoThirdCommand}" />
-            <BoxView HeightRequest="0.5" 
-                     HorizontalOptions="FillAndExpand" 
-                     BackgroundColor="Gray" />
-            <Label Text="AgroPathogenMeter"
-                VerticalOptions="Start"
-                Margin="30"
-                HorizontalOptions="CenterAndExpand"
-                FontSize="Large" />
-            <Button Text="Run Test"
-                    Clicked="OnRunTestClicked"
-                    Padding="20"
-                    HorizontalOptions="CenterAndExpand"
-                    Margin="10"
-                    FontSize="Medium" />
-            <Button Text="View Previous Results"
-                    Clicked="OnResultViewClicked"
-                    Padding="20"
-                    Margin="10"
-                    HorizontalOptions="CenterAndExpand"
-                    FontSize="Medium" />
-            <Button Text="View Instructions"
-                    Clicked="OnInstrViewClicked"
-                    Padding="20"
-                    Margin="10"
-                    HorizontalOptions="CenterAndExpand"
-                    FontSize="Medium" />
-            <Button Text="Don't Click Pls"
-                    FontSize="Medium"
-                    Clicked="OnDvlpClicked"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="EndAndExpand"
-                    Opacity="0" />
-        </StackLayout>
+        <RelativeLayout>
+            <Grid RelativeLayout.WidthConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+                <Label  Text="AgroPathogenMeter"
+                        VerticalOptions="Start"
+                        Margin="30"
+                        TextColor="Black"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="Large" />
+                <Button Text="Run Test"
+                        Clicked="OnRunTestClicked"
+                        Padding="20"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Margin="10"
+                        FontSize="Medium" />
+                <Button Text="Developer Settings"
+                        FontSize="Medium"
+                        Clicked="OnDvlpClicked"
+                        VerticalOptions="EndAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Opacity="0" />
+            </Grid>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

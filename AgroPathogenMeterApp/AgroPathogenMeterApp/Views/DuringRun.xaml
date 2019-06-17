@@ -4,19 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AgroPathogenMeterApp.Views.dataview">
+             x:Class="AgroPathogenMeterApp.Views.DuringRun">
     <ContentPage.Content>
-
         <StackLayout>
-            <Editor Placeholder="Testing Data Saving Capabilites"
-                    Text="{Binding Text}"
-                    HeightRequest="75" />
-            <Button Text="Save data"
-                    Margin="10"
-                    Clicked="OnSaveDataClicked" />
-            <Button Text="View all saved data"
-                    Clicked="OnViewDataClicked"
-                    Margin="10" />
+            <!--Add in a progress bar for while the test is running, potentially also the time remaining if time can be calculated.-->
+            <!--After the test has run, automatically continue onto the RunFinal page.-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

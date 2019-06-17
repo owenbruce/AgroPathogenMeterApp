@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AgroPathogenMeterApp.Views.About">
+    <ContentPage.Content>
+        <StackLayout Padding="10,10,10,10">
+            <Label Text="About the project"
+                VerticalOptions="Start"
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Large" />
+            <Label Text="This app has been created by Owen Bruce working in the Soleymani Lab Group in association with (company). This was designed to work with the APM device in order to provide point-of-care support to farmers. The device is able to measure the concentration of E.Coli in urine within a short amount of time meaning that samples do not need to be sent to a lab for processing, and quick and immediate results can be given to the user."
+                   VerticalOptions="Start"
+                   HorizontalOptions="StartAndExpand"
+                   FontSize="Medium" />
+            <Label VerticalOptions="End"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Owen Bruce: App Designer" />
+            <Label VerticalOptions="End"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Matana Hendrikson: APM Designer" />
+            <Label VerticalOptions="End"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Richa Pandey: APM Designer" />
+            <Button Text="Enable Dark Mode"
+                    x:Name="colorChange"
+                    VerticalOptions="End"
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="OnDarkModeClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

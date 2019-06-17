@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AgroPathogenMeterApp.Views.Run2">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label  Text="This page will run you through how to setup the APM device."
+                    VerticalOptions="Start"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="CenterAndExpand"
+                    FontSize="Large" />
+            <Label  Text="First Step, grab your AgroPathogenMeter(APM) and power it on by holding down the power button on the front until the display lights up." HorizontalOptions="Start" FontSize="Medium" />
+            <Label  Text="Second Step, in settings, make sure that bluetooth is turned on." HorizontalOptions="Start" FontSize="Medium" />
+            <Label  Text="Third Step, select the APM in the blueooth settings and press connect. Wait until the device has connected until continuing." HorizontalOptions="Start" FontSize="Medium" />
+            <Button Text="Next" HorizontalOptions="End" VerticalOptions="End" Clicked="OnNextClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

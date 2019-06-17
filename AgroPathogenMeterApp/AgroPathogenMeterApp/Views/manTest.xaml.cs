@@ -17,33 +17,6 @@ namespace AgroPathogenMeterApp.Views
 
         #region Parameter Range Checkers
 
-        private bool InPRange(double value)
-        {
-            if (Math.Abs(value) <= 10)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool InStepRange(double value)
-        {
-            if (value >= 0.075 && value <= 250)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool InScanRateRange(double value)
-        {
-            if (value >= 0.01 && value <= 500000)
-            {
-                return true;
-            }
-            return false;
-        }
-
         private bool InAmplitudeRange(double value)
         {
             if (value >= 0.001 && value <= 250)
@@ -62,21 +35,43 @@ namespace AgroPathogenMeterApp.Views
             return false;
         }
 
-        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
+        private bool InPRange(double value)
         {
-            if (value1.Equals(".") || 
-                value2.Equals(".") || 
-                value3.Equals(".") || 
-                value4.Equals(".") || 
-                value5.Equals("."))
+            if (Math.Abs(value) <= 10)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InScanRateRange(double value)
+        {
+            if (value >= 0.01 && value <= 500000)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InStepRange(double value)
+        {
+            if (value >= 0.075 && value <= 250)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool OnlyDotDash(string value1, string value2, string value3)
+        {
+            if (value1.Equals(".") ||
+                value2.Equals(".") ||
+                value3.Equals("."))
             {
                 return false;
             }
-            else if (value1.Equals("-") || 
-                     value2.Equals("-") || 
-                     value3.Equals("-") || 
-                     value4.Equals("-") || 
-                     value5.Equals("-"))
+            else if (value1.Equals("-") ||
+                     value2.Equals("-") ||
+                     value3.Equals("-"))
             {
                 return false;
             }
@@ -85,17 +80,38 @@ namespace AgroPathogenMeterApp.Views
 
         private bool OnlyDotDash(string value1, string value2, string value3, string value4)
         {
-            if (value1.Equals(".") || 
-                value2.Equals(".") || 
-                value3.Equals(".") || 
+            if (value1.Equals(".") ||
+                value2.Equals(".") ||
+                value3.Equals(".") ||
                 value4.Equals("."))
             {
                 return false;
             }
-            else if (value1.Equals("-") || 
-                     value2.Equals("-") || 
-                     value3.Equals("-") || 
+            else if (value1.Equals("-") ||
+                     value2.Equals("-") ||
+                     value3.Equals("-") ||
                      value4.Equals("-"))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5)
+        {
+            if (value1.Equals(".") ||
+                value2.Equals(".") ||
+                value3.Equals(".") ||
+                value4.Equals(".") ||
+                value5.Equals("."))
+            {
+                return false;
+            }
+            else if (value1.Equals("-") ||
+                     value2.Equals("-") ||
+                     value3.Equals("-") ||
+                     value4.Equals("-") ||
+                     value5.Equals("-"))
             {
                 return false;
             }
@@ -104,20 +120,20 @@ namespace AgroPathogenMeterApp.Views
 
         private bool OnlyDotDash(string value1, string value2, string value3, string value4, string value5, string value6)
         {
-            if (value1.Equals(".") || 
-                value2.Equals(".") || 
-                value3.Equals(".") || 
-                value4.Equals(".") || 
-                value5.Equals(".") || 
+            if (value1.Equals(".") ||
+                value2.Equals(".") ||
+                value3.Equals(".") ||
+                value4.Equals(".") ||
+                value5.Equals(".") ||
                 value6.Equals("."))
             {
                 return false;
             }
-            else if (value1.Equals("-") || 
-                     value2.Equals("-") || 
-                     value3.Equals("-") || 
-                     value4.Equals("-") || 
-                     value5.Equals("-") || 
+            else if (value1.Equals("-") ||
+                     value2.Equals("-") ||
+                     value3.Equals("-") ||
+                     value4.Equals("-") ||
+                     value5.Equals("-") ||
                      value6.Equals("-"))
             {
                 return false;
@@ -129,8 +145,10 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
-            ScanDatabase _database = new ScanDatabase();
-            _database.VoltamType = VoltammetryScan.SelectedItem.ToString();   //Sets the type of voltammetric scan to be run
+            ScanDatabase _database = new ScanDatabase
+            {
+                VoltamType = VoltammetryScan.SelectedItem.ToString()   //Sets the type of voltammetric scan to be run
+            };
             try
             {
                 #region Parameter Setter
@@ -138,22 +156,22 @@ namespace AgroPathogenMeterApp.Views
                 switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
                 {
                     case "Cyclic Voltammetry":
-                        if (Entry1.Text.Length >= 1 && 
-                            Entry2.Text.Length >= 1 && 
-                            Entry3.Text.Length >= 1 && 
-                            Entry4.Text.Length >= 1 && 
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
                             Entry5.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(), 
-                                            Entry2.Text.ToString(), 
-                                            Entry3.Text.ToString(), 
-                                            Entry4.Text.ToString(), 
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString(),
+                                            Entry4.Text.ToString(),
                                             Entry5.Text.ToString()))
                             {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry3.Text)) && 
-                                    InStepRange(Convert.ToDouble(Entry4.Text)) && 
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry3.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry4.Text)) &&
                                     InScanRateRange(Convert.ToDouble(Entry5.Text)))
                                 {
                                     _database.StartingPotential = Convert.ToDouble(Entry1.Text);
@@ -183,22 +201,22 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Square Wave Voltammetry":
-                        if (Entry1.Text.Length >= 1 && 
-                            Entry2.Text.Length >= 1 && 
-                            Entry3.Text.Length >= 1 && 
-                            Entry4.Text.Length >= 1 && 
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
                             Entry5.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(), 
-                                            Entry2.Text.ToString(), 
-                                            Entry3.Text.ToString(), 
-                                            Entry4.Text.ToString(), 
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString(),
+                                            Entry4.Text.ToString(),
                                             Entry5.Text.ToString()))
                             {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
-                                    InAmplitudeRange(Convert.ToDouble(Entry4.Text)) && 
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
+                                    InAmplitudeRange(Convert.ToDouble(Entry4.Text)) &&
                                     InFrequencyRange(Convert.ToDouble(Entry5.Text)))
                                 {
                                     _database.StartingPotential = Convert.ToDouble(Entry1.Text);
@@ -227,19 +245,19 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Linear Voltammetry":
-                        if (Entry1.Text.Length >= 1 && 
-                            Entry2.Text.Length >= 1 && 
-                            Entry3.Text.Length >= 1 && 
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
                             Entry4.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(), 
-                                            Entry2.Text.ToString(), 
-                                            Entry3.Text.ToString(), 
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString(),
                                             Entry4.Text.ToString()))
                             {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
                                     InScanRateRange(Convert.ToDouble(Entry4.Text)))
                                 {
                                     _database.StartingPotential = Convert.ToDouble(Entry1.Text);
@@ -267,25 +285,25 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Alternating Current Voltammetry":
-                        if (Entry1.Text.Length >= 1 && 
-                            Entry2.Text.Length >= 1 && 
-                            Entry3.Text.Length >= 1 && 
-                            Entry4.Text.Length >= 1 && 
-                            Entry5.Text.Length >= 1 && 
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
+                            Entry5.Text.Length >= 1 &&
                             Entry6.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(), 
-                                            Entry2.Text.ToString(), 
-                                            Entry3.Text.ToString(), 
-                                            Entry4.Text.ToString(), 
-                                            Entry5.Text.ToString(), 
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString(),
+                                            Entry4.Text.ToString(),
+                                            Entry5.Text.ToString(),
                                             Entry6.Text.ToString()))
                             {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry2.Text)) && 
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) && 
-                                    InPRange(Convert.ToDouble(Entry4.Text)) && 
-                                    InScanRateRange(Convert.ToDouble(Entry5.Text)) && 
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry4.Text)) &&
+                                    InScanRateRange(Convert.ToDouble(Entry5.Text)) &&
                                     InFrequencyRange(Convert.ToDouble(Entry6.Text)))
                                 {
                                     _database.StartingPotential = Convert.ToDouble(Entry1.Text);
@@ -294,6 +312,42 @@ namespace AgroPathogenMeterApp.Views
                                     _database.ACPotential = Convert.ToDouble(Entry4.Text);
                                     _database.ScanRate = Convert.ToDouble(Entry5.Text);
                                     _database.Frequency = Convert.ToDouble(Entry6.Text);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                await DisplayAlert("Warning", "You must enter a number", "OK");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                            return;
+                        }
+                        break;
+
+                    case "Chronoamperometry":
+                        if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1)
+                        {
+                            if (OnlyDotDash(Entry1.Text.ToString(),
+                                            Entry2.Text.ToString(),
+                                            Entry3.Text.ToString()))
+                            {
+                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
+                                    InStepRange(Convert.ToDouble(Entry3.Text)))
+                                {
+                                    _database.AppliedPotential = Convert.ToDouble(Entry1.Text);
+                                    _database.TimeInterval = Convert.ToDouble(Entry2.Text);
+                                    _database.RunTime = Convert.ToDouble(Entry3.Text);
                                 }
                                 else
                                 {
@@ -331,9 +385,11 @@ namespace AgroPathogenMeterApp.Views
                     { "Entry 6:", Entry6.Text.ToString()  },
                 });
             }
-            int x = await App.Database.SaveScanAsync(_database);
+            await App.Database.SaveScanAsync(_database);
 
-            await Navigation.PushAsync(new testRunning
+            DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
+
+            await Navigation.PushAsync(new RunFinal
             {
                 BindingContext = _database
             });

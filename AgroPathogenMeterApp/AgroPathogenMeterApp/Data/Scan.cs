@@ -15,9 +15,9 @@ namespace AgroPathogenMeterApp.Data
             _database.CreateTableAsync<ScanDatabase>().Wait();
         }
 
-        public Task<List<ScanDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"
+        public Task<int> DeleteScanAsync(ScanDatabase scan)   //Deletes the current scan from the database
         {
-            return _database.Table<ScanDatabase>().ToListAsync();
+            return _database.DeleteAsync(scan);
         }
 
         public Task<ScanDatabase> GetScanAsync(int id)   //Gets a ceartain scan from the database
@@ -27,6 +27,10 @@ namespace AgroPathogenMeterApp.Data
                             .FirstOrDefaultAsync();
         }
 
+        public Task<List<ScanDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"
+        {
+            return _database.Table<ScanDatabase>().ToListAsync();
+        }
         public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)
@@ -37,11 +41,6 @@ namespace AgroPathogenMeterApp.Data
             {
                 return _database.InsertAsync(scan);
             }
-        }
-
-        public Task<int> DeleteScanAsync(ScanDatabase scan)   //Deletes the current scan from the database
-        {
-            return _database.DeleteAsync(scan);
         }
     }
 }

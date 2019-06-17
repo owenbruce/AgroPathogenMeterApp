@@ -1,5 +1,4 @@
 ﻿using AgroPathogenMeterApp.Data;
-using AgroPathogenMeterApp.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -11,10 +10,20 @@ namespace AgroPathogenMeterApp
 {
     public partial class App : Application   //Contains all information needed by the app
     {
+        //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
+        public static string AzureBackendUrl = "http://localhost:5000";
+
+        public static bool UseMockDataStore = true;
         private static Scanner scanner;
         public static NavigationPage NavigationPage { get; private set; }
 
         
+
+        public App()
+        {
+            InitializeComponent();
+            MainPage = new MasterPage();
+        }
 
         public static Scanner Database   //Creates the main database that will be used
         {
@@ -27,21 +36,16 @@ namespace AgroPathogenMeterApp
                 return scanner;
             }
         }
-
-        //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
-        public static string AzureBackendUrl = "http://localhost:5000";
-
-        public static bool UseMockDataStore = true;
-
-        public App()
+        protected override void OnResume()
         {
-            InitializeComponent();
-            var menuPage = new HomePage();
-            NavigationPage = new NavigationPage(new menu());
-            var rootPage = new RootPage();
-            rootPage.Master = menuPage;
-            rootPage.Detail = NavigationPage;
-            MainPage = rootPage;
+            // Handle when your app resumes
+        }
+
+        protected override void OnSleep()
+        {
+
+            // Handle when your app sleeps
+
         }
 
         protected override void OnStart()
@@ -51,16 +55,6 @@ namespace AgroPathogenMeterApp
                   "ios={b2f34a3d-c5ba-4523-92f2-1321a1a55616}",
                   typeof(Analytics), typeof(Crashes));
             // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
         }
     }
 }

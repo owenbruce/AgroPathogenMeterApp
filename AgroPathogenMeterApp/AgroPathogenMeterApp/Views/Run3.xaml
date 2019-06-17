@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AgroPathogenMeterApp.Views.Run3">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label  Text="This page will walk you through how to run the test."
+                    VerticalOptions="CenterAndExpand"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="CenterAndExpand" />
+            <Label  Text="First Step, (steps for putting the sample on the electrode and then inserting the sample into the APM)." FontSize="Medium" HorizontalOptions="Start" />
+            <Label  Text="Finally, once you press run test below, the test wil begin to run, the test will take approx. ? minutes to run, please do not close the app until the test is completed." FontSize="Medium" HorizontalOptions="Start" />
+            <Button Text="Run Test" Clicked="OnRunTestClicked" HorizontalOptions="End" VerticalOptions="End" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

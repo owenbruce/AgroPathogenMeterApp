@@ -3,20 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
-             x:Class="AgroPathogenMeterApp.Views.dataview">
+             x:Class="AgroPathogenMeterApp.Views.Bluetooth">
     <ContentPage.Content>
-
         <StackLayout>
-            <Editor Placeholder="Testing Data Saving Capabilites"
-                    Text="{Binding Text}"
-                    HeightRequest="75" />
-            <Button Text="Save data"
-                    Margin="10"
-                    Clicked="OnSaveDataClicked" />
-            <Button Text="View all saved data"
-                    Clicked="OnViewDataClicked"
-                    Margin="10" />
+            <Label Text="Welcome to Bluetooth"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand" />
+            <Button Clicked="OnBtClicked" Text="bt" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
