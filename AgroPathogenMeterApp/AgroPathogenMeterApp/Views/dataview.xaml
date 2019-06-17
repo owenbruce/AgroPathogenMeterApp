@@ -9,7 +9,7 @@
 
         <StackLayout>
             <Editor Placeholder="Testing Data Saving Capabilites"
-                    Text="{Binding Text}"
+                    Text="{Binding IsInfected}"
                     HeightRequest="75" />
             <Button Text="Save data"
                     Margin="10"

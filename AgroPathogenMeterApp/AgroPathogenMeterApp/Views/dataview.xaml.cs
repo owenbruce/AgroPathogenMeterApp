@@ -10,6 +10,14 @@ namespace AgroPathogenMeterApp.Views
         public dataview()
         {
             InitializeComponent();
+            GetContext();
+        }
+
+        private async void GetContext()
+        {
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+            BindingContext = _database;
         }
 
         private async void OnSaveDataClicked(object sender, EventArgs e)   //Saves the data once you press the save button
