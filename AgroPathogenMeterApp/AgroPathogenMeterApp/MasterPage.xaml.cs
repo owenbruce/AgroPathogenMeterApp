@@ -10,7 +10,7 @@ namespace AgroPathogenMeterApp
     [DesignTimeVisible(false)]
     public partial class MasterPage : MasterDetailPage
     {
-        private Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+        private readonly Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
 
         public MasterPage()
         {
