@@ -7033,11 +7033,20 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0d000e
 			public const int CardView_Light = 2131558414;
 			
+			// aapt resource value: 0x7f0d019a
+			public const int DrawerArrowStyle = 2131558810;
+			
 			// aapt resource value: 0x7f0d0196
 			public const int MainTheme = 2131558806;
 			
 			// aapt resource value: 0x7f0d0197
 			public const int MainTheme_Base = 2131558807;
+			
+			// aapt resource value: 0x7f0d0199
+			public const int MyTheme = 2131558809;
+			
+			// aapt resource value: 0x7f0d019b
+			public const int MyTheme_Base = 2131558811;
 			
 			// aapt resource value: 0x7f0d002d
 			public const int Platform_AppCompat = 2131558445;

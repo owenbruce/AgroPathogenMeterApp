@@ -15,6 +15,9 @@ namespace AgroPathogenMeterApp
 
         public static bool UseMockDataStore = true;
         private static Scanner scanner;
+        public static NavigationPage NavigationPage { get; private set; }
+
+        
 
         public App()
         {
@@ -40,7 +43,9 @@ namespace AgroPathogenMeterApp
 
         protected override void OnSleep()
         {
+
             // Handle when your app sleeps
+
         }
 
         protected override void OnStart()
