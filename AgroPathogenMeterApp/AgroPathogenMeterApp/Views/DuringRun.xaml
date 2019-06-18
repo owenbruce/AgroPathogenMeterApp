@@ -6,9 +6,32 @@
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.DuringRun">
     <ContentPage.Content>
-        <StackLayout>
-            <!--Add in a progress bar for while the test is running, potentially also the time remaining if time can be calculated.-->
-            <!--After the test has run, automatically continue onto the RunFinal page.-->
-        </StackLayout>
+        <RelativeLayout>
+            <Grid RelativeLayout.WidthConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint=
+              "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+                <!--Add in a progress bar for while the test is running, potentially also the time remaining if time can be calculated.-->
+                <!--After the test has run, automatically continue onto the RunFinal page.-->
+                <Label Text="Test Running..."
+                       TextColor="Black"
+                       FontSize="Large"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Start"/>
+                <ProgressBar IsVisible="True"
+                             HeightRequest="23"
+                             WidthRequest="400"
+                             Progress="0.5"
+                             ProgressColor="Green"
+                             HorizontalOptions="Center"
+                             VerticalOptions="CenterAndExpand"/>
+                <Button Text="Continue"
+                        IsEnabled="False"
+                        IsVisible="False"
+                        Clicked="OnContinueClicked"
+                        FontSize="Medium"
+                        VerticalOptions="Center"/>
+            </Grid>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

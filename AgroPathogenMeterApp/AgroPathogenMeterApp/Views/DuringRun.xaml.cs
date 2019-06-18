@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace AgroPathogenMeterApp.Views
@@ -9,6 +10,14 @@ namespace AgroPathogenMeterApp.Views
         public DuringRun()
         {
             InitializeComponent();
+        }
+
+        private async void OnContinueClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RunFinal
+            {
+
+            });
         }
     }
 }
