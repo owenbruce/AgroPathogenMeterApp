@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
@@ -26,40 +27,47 @@ namespace AgroPathogenMeterApp.Views
         private async void OnSaveResultClicked(object sender, EventArgs e)
         {
             List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
-            //Do stuff
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
             try
             {
-                ScanDatabase _database;
-                    try
-                    {
-                        _database = await App.Database.GetScanAsync(allDb.Count);
-                        _database.Date = DateTime.Now;
-                        await App.Database.SaveScanAsync(_database);
-                    }
-                    catch (Exception ex)
-                    {
-                        Crashes.TrackError(ex, new Dictionary<string, string>
-                        {
-                            {"allDb.Count:" , allDb.Count.ToString()}
-                        }
-                        );
-                    }
+                double startingPotential = _database.StartingPotential;
             }
             catch(Exception ex)
             {
-
                 Crashes.TrackError(ex, new Dictionary<string, string>
                 {
-                    {"allDb.Count:" , allDb.Count.ToString()}
+                    {"AllDb Count:", _database.ToString()}
+                });
+            }
+            //Do stuff
+            /*
+            ScanDatabase _database;
+            try
+            {
+                string boolPath;
+                _database = await App.Database.GetScanAsync(allDb.Count());
+
+                if (_database.IsInfected)
+                {
+                    boolPath = "The sample is infected";
                 }
-                );
+                else
+                {
+                    boolPath = "The sample isn't infected";
+                }
+
+                BindingContext = boolPath;
+            }
+            catch(Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
             
-            
-
+                    
             await Navigation.PushAsync(new dataview
             {
             });
+            */
         }
     }
 }

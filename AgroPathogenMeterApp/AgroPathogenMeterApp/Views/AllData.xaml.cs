@@ -10,7 +10,7 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AllData : ContentPage
     {
-        private ScanDatabase _database;
+        ScanDatabase _database;
         private int i;
         public AllData()
         {
@@ -68,7 +68,7 @@ namespace AgroPathogenMeterApp.Views
 
         private void RefreshGui()
         {
-            var displayStrings = new ObservableDictionary<string, string>();
+            ObservableDictionary<string, string> displayStrings = new ObservableDictionary<string, string>();
             try
             {
                 if (_database.IsInfected)

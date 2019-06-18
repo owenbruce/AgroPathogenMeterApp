@@ -147,7 +147,8 @@ namespace AgroPathogenMeterApp.Views
         {
             ScanDatabase _database = new ScanDatabase
             {
-                VoltamType = VoltammetryScan.SelectedItem.ToString()   //Sets the type of voltammetric scan to be run
+                VoltamType = VoltammetryScan.SelectedItem.ToString(),   //Sets the type of voltammetric scan to be run
+                IsInfected = false   //Sets isinfected to false temporarily
             };
             try
             {
@@ -385,9 +386,10 @@ namespace AgroPathogenMeterApp.Views
                     { "Entry 6:", Entry6.Text.ToString()  },
                 });
             }
-            await App.Database.SaveScanAsync(_database);
+            _database.Date = DateTime.Now;
+            _ = App.Database.SaveScanAsync(_database);
 
-            DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
+            //DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 
             await Navigation.PushAsync(new RunFinal
             {
