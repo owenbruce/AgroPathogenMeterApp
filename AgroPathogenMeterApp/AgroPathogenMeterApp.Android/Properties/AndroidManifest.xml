@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="apm.agropathogenmeter.AgroPathogenMeterApp" android:installLocation="preferExternal">
-	<uses-sdk android:targetSdkVersion="26" />
+	<uses-sdk android:targetSdkVersion="26" android:minSdkVersion="28" />
 	<application android:label="AgroPathogenMeterApp.Android" android:icon="@mipmap/APMIconM"></application>
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

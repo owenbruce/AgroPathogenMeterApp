@@ -11,7 +11,7 @@ namespace AgroPathogenMeterApp.Data
 {
     public class Scanner
     {
-        private readonly SQLiteAsyncConnection _database;
+        readonly SQLiteAsyncConnection _database;
 
         public Scanner(string dbPath)   //The current running database is saved as a table in the sqlite database
         {
