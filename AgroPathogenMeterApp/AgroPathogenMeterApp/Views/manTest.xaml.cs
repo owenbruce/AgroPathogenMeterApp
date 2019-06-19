@@ -61,6 +61,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return false;
         }
+
         private bool OnlyDotDash(string value1, string value2, string value3)
         {
             if (value1.Equals(".") ||

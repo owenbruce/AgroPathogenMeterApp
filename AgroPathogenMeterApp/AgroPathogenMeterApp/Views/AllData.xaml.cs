@@ -12,6 +12,7 @@ namespace AgroPathogenMeterApp.Views
     {
         private ScanDatabase _database;
         private int i;
+
         public AllData()
         {
             i = 1;

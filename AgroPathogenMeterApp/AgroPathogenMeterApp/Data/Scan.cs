@@ -31,6 +31,7 @@ namespace AgroPathogenMeterApp.Data
         {
             return _database.Table<ScanDatabase>().ToListAsync();
         }
+
         public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)
