@@ -1,13 +1,17 @@
 ﻿using AgroPathogenMeterApp.Models;
+using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp.Data
 {
     public class Scanner
     {
-        private SQLiteAsyncConnection _database;
+        private readonly SQLiteAsyncConnection _database;
 
         public Scanner(string dbPath)   //The current running database is saved as a table in the sqlite database
         {
@@ -31,6 +35,7 @@ namespace AgroPathogenMeterApp.Data
         {
             return _database.Table<ScanDatabase>().ToListAsync();
         }
+
         public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)

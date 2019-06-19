@@ -9,6 +9,7 @@ namespace AgroPathogenMeterApp.Views
     public partial class OptionsPage : ContentPage
     {
         private readonly List<HomeMenuItem> menuItems;
+
         public OptionsPage()
         {
             InitializeComponent();

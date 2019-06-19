@@ -20,6 +20,12 @@ namespace AgroPathogenMeterApp.Droid
         private Curve _activeCurve;
         private Context context = Android.App.Application.Context;
         private Measurement measurement;
+        //private static Scanner scanner;
+        /*
+        public Scanner getScan()
+        {
+        }
+        */
 
         public async void connect()
         {
@@ -79,53 +85,57 @@ namespace AgroPathogenMeterApp.Droid
                     switch (_database.VoltamType)
                     {
                         case "Square Wave Voltammetry":
-                            SquareWave squareWave = new SquareWave();
-
-                            squareWave.BeginPotential = (float)_database.StartingPotential;
-                            squareWave.EndPotential = (float)_database.EndingPotential;
-                            squareWave.Frequency = (float)_database.Frequency;
-                            squareWave.PulseAmplitude = (float)_database.Amplitude;
-                            squareWave.StepPotential = (float)_database.PotentialStep;
+                            SquareWave squareWave = new SquareWave
+                            {
+                                BeginPotential = (float)_database.StartingPotential,
+                                EndPotential = (float)_database.EndingPotential,
+                                Frequency = (float)_database.Frequency,
+                                PulseAmplitude = (float)_database.Amplitude,
+                                StepPotential = (float)_database.PotentialStep
+                            };
 
                             comm.Measure(squareWave);
 
                             break;
 
                         case "Linear Voltammetry":
-                            LinearSweep linearSweep = new LinearSweep();
-
-                            linearSweep.BeginPotential = (float)_database.StartingPotential;
-                            linearSweep.EndPotential = (float)_database.EndingPotential;
-                            linearSweep.Scanrate = (float)_database.ScanRate;
-                            linearSweep.StepPotential = (float)_database.PotentialStep;
+                            LinearSweep linearSweep = new LinearSweep
+                            {
+                                BeginPotential = (float)_database.StartingPotential,
+                                EndPotential = (float)_database.EndingPotential,
+                                Scanrate = (float)_database.ScanRate,
+                                StepPotential = (float)_database.PotentialStep
+                            };
 
                             comm.Measure(linearSweep);
 
                             break;
 
                         case "Cyclic Voltammetry":
-                            CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry();
-
-                            cyclicVoltammetry.BeginPotential = (float)_database.StartingPotential;
-                            cyclicVoltammetry.nScans = 1;
-                            cyclicVoltammetry.Scanrate = (float)_database.ScanRate;
-                            cyclicVoltammetry.StepPotential = (float)_database.PotentialStep;
-                            cyclicVoltammetry.Vtx1Potential = (float)_database.NegativeVertex;
-                            cyclicVoltammetry.Vtx2Potential = (float)_database.PositiveVertex;
+                            CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry
+                            {
+                                BeginPotential = (float)_database.StartingPotential,
+                                nScans = 1,
+                                Scanrate = (float)_database.ScanRate,
+                                StepPotential = (float)_database.PotentialStep,
+                                Vtx1Potential = (float)_database.NegativeVertex,
+                                Vtx2Potential = (float)_database.PositiveVertex
+                            };
 
                             comm.Measure(cyclicVoltammetry);
 
                             break;
 
                         case "Alternating Current Voltammetry":
-                            ACVoltammetry acVoltammetry = new ACVoltammetry();
-
-                            acVoltammetry.BeginPotential = (float)_database.StartingPotential;
-                            acVoltammetry.EndPotential = (float)_database.EndingPotential;
-                            acVoltammetry.Frequency = (float)_database.Frequency;
-                            acVoltammetry.Scanrate = (float)_database.ScanRate;
-                            acVoltammetry.SineWaveAmplitude = (float)_database.ACPotential;
-                            acVoltammetry.StepPotential = (float)_database.PotentialStep;
+                            ACVoltammetry acVoltammetry = new ACVoltammetry
+                            {
+                                BeginPotential = (float)_database.StartingPotential,
+                                EndPotential = (float)_database.EndingPotential,
+                                Frequency = (float)_database.Frequency,
+                                Scanrate = (float)_database.ScanRate,
+                                SineWaveAmplitude = (float)_database.ACPotential,
+                                StepPotential = (float)_database.PotentialStep
+                            };
 
                             comm.Measure(acVoltammetry);
 

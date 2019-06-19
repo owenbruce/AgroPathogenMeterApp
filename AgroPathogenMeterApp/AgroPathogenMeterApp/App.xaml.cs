@@ -2,9 +2,12 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
 using System.IO;
 using Xamarin.Forms;
+
+[assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp
 {
@@ -16,8 +19,6 @@ namespace AgroPathogenMeterApp
         public static bool UseMockDataStore = true;
         private static Scanner scanner;
         public static NavigationPage NavigationPage { get; private set; }
-
-        
 
         public App()
         {
@@ -36,6 +37,7 @@ namespace AgroPathogenMeterApp
                 return scanner;
             }
         }
+
         protected override void OnResume()
         {
             // Handle when your app resumes
@@ -43,9 +45,7 @@ namespace AgroPathogenMeterApp
 
         protected override void OnSleep()
         {
-
             // Handle when your app sleeps
-
         }
 
         protected override void OnStart()

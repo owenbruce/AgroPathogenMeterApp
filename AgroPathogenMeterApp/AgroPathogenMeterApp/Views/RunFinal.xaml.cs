@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
+using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,7 +31,7 @@ namespace AgroPathogenMeterApp.Views
             {
                 double startingPotential = _database.StartingPotential;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Crashes.TrackError(ex, new Dictionary<string, string>
                 {
@@ -62,8 +61,7 @@ namespace AgroPathogenMeterApp.Views
             {
                 Crashes.TrackError(ex);
             }
-            
-                    
+
             await Navigation.PushAsync(new dataview
             {
             });

@@ -61,6 +61,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return false;
         }
+
         private bool OnlyDotDash(string value1, string value2, string value3)
         {
             if (value1.Equals(".") ||
@@ -148,8 +149,10 @@ namespace AgroPathogenMeterApp.Views
             ScanDatabase _database = new ScanDatabase
             {
                 VoltamType = VoltammetryScan.SelectedItem.ToString(),   //Sets the type of voltammetric scan to be run
-                IsInfected = false   //Sets isinfected to false temporarily
+                IsInfected = false,   //Sets isinfected to false temporarily
+                ID = 1
             };
+            await App.Database.SaveScanAsync(_database);
             try
             {
                 #region Parameter Setter
@@ -387,7 +390,7 @@ namespace AgroPathogenMeterApp.Views
                 });
             }
             _database.Date = DateTime.Now;
-            _ = App.Database.SaveScanAsync(_database);
+            await App.Database.SaveScanAsync(_database);
 
             //DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 

@@ -1,5 +1,9 @@
-﻿using SQLite;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
+using SQLite;
 using System;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp.Models
 {
@@ -7,6 +11,7 @@ namespace AgroPathogenMeterApp.Models
     {
         [PrimaryKey, AutoIncrement]
         public bool IsInfected { get; set; }
+
         public DateTime Date { get; set; }
         public double ACPotential { get; set; }
         public double AmountBacteria { get; set; }

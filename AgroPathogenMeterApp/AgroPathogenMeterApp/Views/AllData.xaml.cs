@@ -1,17 +1,23 @@
 ﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinUniversity.Infrastructure;
+
+[assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AllData : ContentPage
     {
-        ScanDatabase _database;
+        private ScanDatabase _database;
+        private List<ScanDatabase> allDB;
         private int i;
+
         public AllData()
         {
             i = 1;
@@ -23,7 +29,7 @@ namespace AgroPathogenMeterApp.Views
         {
             if (i > 0)
             {
-                var allDB = await App.Database.GetScanDatabasesAsync();
+                allDB = await App.Database.GetScanDatabasesAsync();
                 _database = await App.Database.GetScanAsync(i);
                 if (i <= allDB.Count)
                 {
@@ -71,23 +77,31 @@ namespace AgroPathogenMeterApp.Views
             ObservableDictionary<string, string> displayStrings = new ObservableDictionary<string, string>();
             try
             {
-                if (_database.IsInfected)
+                if (_database == null)
                 {
-                    displayStrings.Add("IsInfected", "The sample is infected");
-                    displayStrings.Add("InfectedColor", "Red");
+                    displayStrings.Add("IsInfected", "Database is null");
+                    displayStrings.Add("Name", _database.ID.ToString());
                 }
                 else
                 {
-                    displayStrings.Add("IsInfected", "The sample is not infected");
-                    displayStrings.Add("InfectedColor", "Green");
-                }
+                    if (_database.IsInfected)
+                    {
+                        displayStrings.Add("IsInfected", "The sample is infected");
+                        displayStrings.Add("InfectedColor", "Red");
+                    }
+                    else
+                    {
+                        displayStrings.Add("IsInfected", "The sample is not infected");
+                        displayStrings.Add("InfectedColor", "Green");
+                    }
 
-                displayStrings.Add("Name", "Name: " + _database.Name);
-                displayStrings.Add("ID", "ID: " + _database.ID);
-                displayStrings.Add("Date", "Date: " + _database.Date);
-                displayStrings.Add("AmountBacteria", "There is " + _database.AmountBacteria + "cfu of Bacteria in the urine.");
-                displayStrings.Add("ConcentrationBacteria", "There is " + _database.ConcentrationBacteria + "cfu/ml of Bacteria in the urine.");
-                displayStrings.Add("VoltamType", "A " + _database.VoltamType + " scan was run.");
+                    displayStrings.Add("Name", "Name: " + _database.Name.ToString());
+                    displayStrings.Add("ID", "ID: " + i.ToString());
+                    displayStrings.Add("Date", "Date: " + _database.Date.ToString());
+                    displayStrings.Add("AmountBacteria", "There is " + _database.AmountBacteria.ToString() + "cfu of Bacteria in the urine.");
+                    displayStrings.Add("ConcentrationBacteria", "There is " + _database.ConcentrationBacteria.ToString() + "cfu/ml of Bacteria in the urine.");
+                    displayStrings.Add("VoltamType", "A " + _database.VoltamType + " scan was run.");
+                }
             }
             catch (Exception ex)
             {

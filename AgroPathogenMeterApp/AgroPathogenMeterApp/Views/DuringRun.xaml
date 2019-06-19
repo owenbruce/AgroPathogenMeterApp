@@ -17,20 +17,20 @@
                        TextColor="Black"
                        FontSize="Large"
                        HorizontalTextAlignment="Center"
-                       VerticalOptions="Start"/>
+                       VerticalOptions="Start" />
                 <ProgressBar IsVisible="True"
                              HeightRequest="23"
                              WidthRequest="400"
                              Progress="0.5"
                              ProgressColor="Green"
                              HorizontalOptions="Center"
-                             VerticalOptions="CenterAndExpand"/>
+                             VerticalOptions="CenterAndExpand" />
                 <Button Text="Continue"
                         IsEnabled="False"
                         IsVisible="False"
                         Clicked="OnContinueClicked"
                         FontSize="Medium"
-                        VerticalOptions="Center"/>
+                        VerticalOptions="Center" />
             </Grid>
         </RelativeLayout>
     </ContentPage.Content>
