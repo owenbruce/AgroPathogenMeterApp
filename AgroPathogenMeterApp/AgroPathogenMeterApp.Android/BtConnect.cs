@@ -20,12 +20,11 @@ namespace AgroPathogenMeterApp.Droid
         private Curve _activeCurve;
         private Context context = Android.App.Application.Context;
         private Measurement measurement;
-        //private static Scanner scanner;
-        /*
-        public Scanner getScan()
+        
+        public string FilePath()
         {
+            return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/Db";
         }
-        */
 
         public async void connect()
         {

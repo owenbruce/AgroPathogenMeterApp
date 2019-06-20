@@ -8,6 +8,6 @@ namespace AgroPathogenMeterApp
 
         void connect(ScanDatabase _database);
 
-        //Scanner getScan();
+        string FilePath();
     }
 }

@@ -37,7 +37,7 @@
                 </Picker.ItemsSource>
             </Picker>
             <Entry x:Name="Entry1"
-                   Text=""
+                   Text="{Binding StartingPotential}"
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -75,7 +75,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry2"
-                   Text=""
+                   Text="{Binding EndingPotential}"
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -113,7 +113,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry3"
-                   Text=""
+                   Text="{Binding PotentialStep}"
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -151,7 +151,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry4"
-                   Text=""
+                   Text="{Binding ScanRate}"
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">

@@ -1,11 +1,7 @@
 ﻿using AgroPathogenMeterApp.Models;
-using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-
-[assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp.Data
 {
@@ -19,9 +15,9 @@ namespace AgroPathogenMeterApp.Data
             _database.CreateTableAsync<ScanDatabase>().Wait();
         }
 
-        public Task<int> DeleteScanAsync(ScanDatabase scan)   //Deletes the current scan from the database
+        public Task<List<ScanDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"
         {
-            return _database.DeleteAsync(scan);
+            return _database.Table<ScanDatabase>().ToListAsync();
         }
 
         public Task<ScanDatabase> GetScanAsync(int id)   //Gets a ceartain scan from the database
@@ -30,12 +26,6 @@ namespace AgroPathogenMeterApp.Data
                             .Where(i => i.ID == id)
                             .FirstOrDefaultAsync();
         }
-
-        public Task<List<ScanDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"
-        {
-            return _database.Table<ScanDatabase>().ToListAsync();
-        }
-
         public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)
@@ -46,6 +36,11 @@ namespace AgroPathogenMeterApp.Data
             {
                 return _database.InsertAsync(scan);
             }
+        }
+
+        public Task<int> DeleteScanAsync(ScanDatabase scan)   //Deletes the current scan from the database
+        {
+            return _database.DeleteAsync(scan);
         }
     }
 }

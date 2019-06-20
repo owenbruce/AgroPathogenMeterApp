@@ -18,6 +18,8 @@
                     Clicked="OnManualTestClicked" />
             <Button Text="View Raw Data"
                     Clicked="OnRawDataClicked" />
+            <Button Text="Testing"
+                    Clicked="OnTestingClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

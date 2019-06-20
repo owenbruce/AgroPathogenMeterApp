@@ -22,5 +22,10 @@ namespace AgroPathogenMeterApp.Views
         {
             await Navigation.PushAsync(new rawData { });
         }
+
+        private async void OnTestingClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TestingDb { });
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -146,18 +147,16 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
-            ScanDatabase _database = new ScanDatabase
+            var Scan = new ScanDatabase
             {
                 VoltamType = VoltammetryScan.SelectedItem.ToString(),   //Sets the type of voltammetric scan to be run
-                IsInfected = false,   //Sets isinfected to false temporarily
-                ID = 1
+                IsInfected = false   //Sets isinfected to false temporarily
             };
-            await App.Database.SaveScanAsync(_database);
             try
             {
                 #region Parameter Setter
 
-                switch (_database.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
+                switch (Scan.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
                 {
                     case "Cyclic Voltammetry":
                         if (Entry1.Text.Length >= 1 &&
@@ -178,11 +177,11 @@ namespace AgroPathogenMeterApp.Views
                                     InStepRange(Convert.ToDouble(Entry4.Text)) &&
                                     InScanRateRange(Convert.ToDouble(Entry5.Text)))
                                 {
-                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                    _database.NegativeVertex = Convert.ToDouble(Entry2.Text);
-                                    _database.PositiveVertex = Convert.ToDouble(Entry3.Text);
-                                    _database.PotentialStep = Convert.ToDouble(Entry4.Text);
-                                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
+                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    Scan.NegativeVertex = Convert.ToDouble(Entry2.Text);
+                                    Scan.PositiveVertex = Convert.ToDouble(Entry3.Text);
+                                    Scan.PotentialStep = Convert.ToDouble(Entry4.Text);
+                                    Scan.ScanRate = Convert.ToDouble(Entry5.Text);
                                 }
                                 else
                                 {
@@ -223,11 +222,11 @@ namespace AgroPathogenMeterApp.Views
                                     InAmplitudeRange(Convert.ToDouble(Entry4.Text)) &&
                                     InFrequencyRange(Convert.ToDouble(Entry5.Text)))
                                 {
-                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    _database.Amplitude = Convert.ToDouble(Entry4.Text);
-                                    _database.Frequency = Convert.ToDouble(Entry5.Text);
+                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    Scan.Amplitude = Convert.ToDouble(Entry4.Text);
+                                    Scan.Frequency = Convert.ToDouble(Entry5.Text);
                                 }
                                 else
                                 {
@@ -264,10 +263,9 @@ namespace AgroPathogenMeterApp.Views
                                     InStepRange(Convert.ToDouble(Entry3.Text)) &&
                                     InScanRateRange(Convert.ToDouble(Entry4.Text)))
                                 {
-                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    _database.ScanRate = Convert.ToDouble(Entry4.Text);
+                                    var Db = (ScanDatabase)BindingContext;
+                                    Db.Date = DateTime.Now;
+                                    await App.Database.SaveScanAsync(Db);
                                 }
                                 else
                                 {
@@ -310,12 +308,12 @@ namespace AgroPathogenMeterApp.Views
                                     InScanRateRange(Convert.ToDouble(Entry5.Text)) &&
                                     InFrequencyRange(Convert.ToDouble(Entry6.Text)))
                                 {
-                                    _database.StartingPotential = Convert.ToDouble(Entry1.Text);
-                                    _database.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    _database.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    _database.ACPotential = Convert.ToDouble(Entry4.Text);
-                                    _database.ScanRate = Convert.ToDouble(Entry5.Text);
-                                    _database.Frequency = Convert.ToDouble(Entry6.Text);
+                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    Scan.ACPotential = Convert.ToDouble(Entry4.Text);
+                                    Scan.ScanRate = Convert.ToDouble(Entry5.Text);
+                                    Scan.Frequency = Convert.ToDouble(Entry6.Text);
                                 }
                                 else
                                 {
@@ -349,9 +347,9 @@ namespace AgroPathogenMeterApp.Views
                                     InPRange(Convert.ToDouble(Entry2.Text)) &&
                                     InStepRange(Convert.ToDouble(Entry3.Text)))
                                 {
-                                    _database.AppliedPotential = Convert.ToDouble(Entry1.Text);
-                                    _database.TimeInterval = Convert.ToDouble(Entry2.Text);
-                                    _database.RunTime = Convert.ToDouble(Entry3.Text);
+                                    Scan.AppliedPotential = Convert.ToDouble(Entry1.Text);
+                                    Scan.TimeInterval = Convert.ToDouble(Entry2.Text);
+                                    Scan.RunTime = Convert.ToDouble(Entry3.Text);
                                 }
                                 else
                                 {
@@ -375,7 +373,7 @@ namespace AgroPathogenMeterApp.Views
                     default:
                         break;
                 }
-
+                
                 #endregion Parameter Setter
             }
             catch (Exception ex)
@@ -389,14 +387,17 @@ namespace AgroPathogenMeterApp.Views
                     { "Entry 6:", Entry6.Text.ToString()  },
                 });
             }
-            _database.Date = DateTime.Now;
-            await App.Database.SaveScanAsync(_database);
 
-            //DependencyService.Get<BtControl>().connect(_database);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
+            Scan.Date = DateTime.Now;
+            await App.Database.SaveScanAsync(Scan);
+
+            File.Copy(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.db3"), DependencyService.Get<BtControl>().FilePath());
+
+            //DependencyService.Get<BtControl>().connect(Scan);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 
             await Navigation.PushAsync(new RunFinal
             {
-                BindingContext = _database
+
             });
         }
     }

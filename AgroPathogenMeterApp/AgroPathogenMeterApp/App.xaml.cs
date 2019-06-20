@@ -17,12 +17,12 @@ namespace AgroPathogenMeterApp
         public static string AzureBackendUrl = "http://localhost:5000";
 
         public static bool UseMockDataStore = true;
-        private static Scanner scanner;
+        static Scanner scanner;
         public static NavigationPage NavigationPage { get; private set; }
 
         public App()
         {
-            InitializeComponent();
+            InitializeComponent();  
             MainPage = new MasterPage();
         }
 
@@ -32,7 +32,7 @@ namespace AgroPathogenMeterApp
             {
                 if (scanner == null)
                 {
-                    scanner = new Scanner(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.db3"));
+                    scanner = new Scanner(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Notes.db3"));
                 }
                 return scanner;
             }
