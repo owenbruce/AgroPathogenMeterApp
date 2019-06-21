@@ -37,7 +37,7 @@
                 </Picker.ItemsSource>
             </Picker>
             <Entry x:Name="Entry1"
-                   Text="{Binding StartingPotential}"
+                   Text=""
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -63,11 +63,6 @@
                         <Setter Property="Placeholder" Value="Starting Potential" />
                     </DataTrigger>
                     <DataTrigger TargetType="Entry"
-                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
-                                 Value="Chronoamperometry">
-                        <Setter Property="Placeholder" Value="Applied Potential" />
-                    </DataTrigger>
-                    <DataTrigger TargetType="Entry"
                                  Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedIndex}"
                                  Value="-1">
                         <Setter Property="IsVisible" Value="False" />
@@ -75,7 +70,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry2"
-                   Text="{Binding EndingPotential}"
+                   Text=""
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -101,11 +96,6 @@
                         <Setter Property="Placeholder" Value="Ending Potential" />
                     </DataTrigger>
                     <DataTrigger TargetType="Entry"
-                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
-                                 Value="Chronoamperometry">
-                        <Setter Property="Placeholder" Value="Time Interval" />
-                    </DataTrigger>
-                    <DataTrigger TargetType="Entry"
                                  Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedIndex}"
                                  Value="-1">
                         <Setter Property="IsVisible" Value="False" />
@@ -113,7 +103,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry3"
-                   Text="{Binding PotentialStep}"
+                   Text=""
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">
@@ -139,11 +129,6 @@
                         <Setter Property="Placeholder" Value="Potential Step" />
                     </DataTrigger>
                     <DataTrigger TargetType="Entry"
-                                 Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedItem}"
-                                 Value="Chronoamperometry">
-                        <Setter Property="Placeholder" Value="Run Time" />
-                    </DataTrigger>
-                    <DataTrigger TargetType="Entry"
                                  Binding="{Binding Source={x:Reference VoltammetryScan}, Path=SelectedIndex}"
                                  Value="-1">
                         <Setter Property="IsVisible" Value="False" />
@@ -151,7 +136,7 @@
                 </Entry.Triggers>
             </Entry>
             <Entry x:Name="Entry4"
-                   Text="{Binding ScanRate}"
+                   Text=""
                    Keyboard="Numeric"
                    IsVisible="True"
                    Placeholder="">

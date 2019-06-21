@@ -1,4 +1,5 @@
-﻿using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Data;
+using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
@@ -61,23 +62,6 @@ namespace AgroPathogenMeterApp.Views
                 return true;
             }
             return false;
-        }
-
-        private bool OnlyDotDash(string value1, string value2, string value3)
-        {
-            if (value1.Equals(".") ||
-                value2.Equals(".") ||
-                value3.Equals("."))
-            {
-                return false;
-            }
-            else if (value1.Equals("-") ||
-                     value2.Equals("-") ||
-                     value3.Equals("-"))
-            {
-                return false;
-            }
-            return true;
         }
 
         private bool OnlyDotDash(string value1, string value2, string value3, string value4)
@@ -147,6 +131,7 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
+            Scanner scanner = App.Database;
             var Scan = new ScanDatabase
             {
                 VoltamType = VoltammetryScan.SelectedItem.ToString(),   //Sets the type of voltammetric scan to be run
@@ -334,42 +319,6 @@ namespace AgroPathogenMeterApp.Views
                         }
                         break;
 
-                    case "Chronoamperometry":
-                        if (Entry1.Text.Length >= 1 &&
-                            Entry2.Text.Length >= 1 &&
-                            Entry3.Text.Length >= 1)
-                        {
-                            if (OnlyDotDash(Entry1.Text.ToString(),
-                                            Entry2.Text.ToString(),
-                                            Entry3.Text.ToString()))
-                            {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
-                                    InStepRange(Convert.ToDouble(Entry3.Text)))
-                                {
-                                    Scan.AppliedPotential = Convert.ToDouble(Entry1.Text);
-                                    Scan.TimeInterval = Convert.ToDouble(Entry2.Text);
-                                    Scan.RunTime = Convert.ToDouble(Entry3.Text);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                await DisplayAlert("Warning", "You must enter a number", "OK");
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                            return;
-                        }
-                        break;
-
                     default:
                         break;
                 }
@@ -389,9 +338,9 @@ namespace AgroPathogenMeterApp.Views
             }
 
             Scan.Date = DateTime.Now;
-            await App.Database.SaveScanAsync(Scan);
+            await scanner.SaveScanAsync(Scan);
 
-            File.Copy(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.db3"), DependencyService.Get<BtControl>().FilePath());
+            //File.Copy(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.db3"), DependencyService.Get<BtControl>().FilePath());
 
             //DependencyService.Get<BtControl>().connect(Scan);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 

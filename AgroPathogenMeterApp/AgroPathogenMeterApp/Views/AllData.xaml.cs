@@ -1,4 +1,5 @@
-﻿using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Data;
+using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
@@ -80,30 +81,24 @@ namespace AgroPathogenMeterApp.Views
             ObservableDictionary<string, string> displayStrings = new ObservableDictionary<string, string>();
             try
             {
-                if (Scan == null)
+                if (Scan.IsInfected)
                 {
-                    displayStrings.Add("IsInfected", "Database is null");
+                    displayStrings.Add("IsInfected", "The sample is infected");
+                    displayStrings.Add("InfectedColor", "Red");
                 }
                 else
                 {
-                    if (Scan.IsInfected)
-                    {
-                        displayStrings.Add("IsInfected", "The sample is infected");
-                        displayStrings.Add("InfectedColor", "Red");
-                    }
-                    else
-                    {
-                        displayStrings.Add("IsInfected", "The sample is not infected");
-                        displayStrings.Add("InfectedColor", "Green");
-                    }
-
-                    displayStrings.Add("Name", "Name: " + Scan.Name.ToString());
-                    displayStrings.Add("ID", "ID: " + i.ToString());
-                    displayStrings.Add("Date", "Date: " + Scan.Date.ToString());
-                    displayStrings.Add("AmountBacteria", "There is " + Scan.AmountBacteria.ToString() + "cfu of Bacteria in the urine.");
-                    displayStrings.Add("ConcentrationBacteria", "There is " + Scan.ConcentrationBacteria.ToString() + "cfu/ml of Bacteria in the urine.");
-                    displayStrings.Add("VoltamType", "A " + Scan.VoltamType + " scan was run.");
+                    displayStrings.Add("IsInfected", "The sample is not infected");
+                    displayStrings.Add("InfectedColor", "Green");
                 }
+
+                displayStrings.Add("Name", "Name: " + Scan.Name);
+                displayStrings.Add("ID", "ID: " + i);
+                displayStrings.Add("Date", "Date: " + Scan.Date);
+                displayStrings.Add("AmountBacteria", "There is " + Scan.AmountBacteria + "cfu of Bacteria in the urine.");
+                displayStrings.Add("ConcentrationBacteria", "There is " + Scan.ConcentrationBacteria + "cfu/ml of Bacteria in the urine.");
+                displayStrings.Add("VoltamType", "A " + Scan.VoltamType + " scan was run.");
+
             }
             catch (Exception ex)
             {

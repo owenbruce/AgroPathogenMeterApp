@@ -22,7 +22,8 @@ namespace AgroPathogenMeterApp
 
         public App()
         {
-            InitializeComponent();  
+            InitializeComponent();
+            scanner = Database;
             MainPage = new MasterPage();
         }
 

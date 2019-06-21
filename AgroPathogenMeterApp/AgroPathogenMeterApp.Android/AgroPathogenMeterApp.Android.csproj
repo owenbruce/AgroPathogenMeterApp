@@ -111,6 +111,8 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\PSMethods\PSDummyCell_LSV.psmethod" />
+    <AndroidResource Include="Resources\PSMethods\standSWV.psmethod" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
