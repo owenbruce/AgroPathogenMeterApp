@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgroPathogenMeterApp.Models;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +15,13 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnRunTestClicked(Object sender, EventArgs e)
         {
+            //Setup the standard scan
+            ScanDatabase scan = new ScanDatabase
+            {
+                VoltamType = "Standard",
+                Date = DateTime.Now
+            };
+            await App.Database.SaveScanAsync(scan);
             await Navigation.PushAsync(new DuringRun
             {
             });
