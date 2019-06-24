@@ -1,7 +1,6 @@
 ﻿using SQLite;
 using System;
 
-
 namespace AgroPathogenMeterApp.Models
 {
     public class ScanDatabase   //Current SQLite database which contains all of the necessary information for the scan parameters, results, and identifying information
@@ -12,7 +11,7 @@ namespace AgroPathogenMeterApp.Models
         public bool IsInfected { get; set; }
         public DateTime Date { get; set; }
         public double ACPotential { get; set; }
-        public double AmountBacteria { get;set; }
+        public double AmountBacteria { get; set; }
         public double Amplitude { get; set; }
         public double ConcentrationBacteria { get; set; }
         public double EndingPotential { get; set; }

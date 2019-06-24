@@ -3,7 +3,6 @@ using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -322,7 +321,7 @@ namespace AgroPathogenMeterApp.Views
                     default:
                         break;
                 }
-                
+
                 #endregion Parameter Setter
             }
             catch (Exception ex)
@@ -346,7 +345,6 @@ namespace AgroPathogenMeterApp.Views
 
             await Navigation.PushAsync(new RunFinal
             {
-
             });
         }
     }

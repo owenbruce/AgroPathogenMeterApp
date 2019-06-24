@@ -1,5 +1,4 @@
-﻿using AgroPathogenMeterApp.Data;
-using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
@@ -26,10 +25,12 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
             GetDatabase();
         }
+
         private async void SetDatabaseList()
         {
             allDB = await App.Database.GetScanDatabasesAsync();
         }
+
         private async void GetDatabase()
         {
             if (i > 0)
@@ -98,7 +99,6 @@ namespace AgroPathogenMeterApp.Views
                 displayStrings.Add("AmountBacteria", "There is " + Scan.AmountBacteria + "cfu of Bacteria in the urine.");
                 displayStrings.Add("ConcentrationBacteria", "There is " + Scan.ConcentrationBacteria + "cfu/ml of Bacteria in the urine.");
                 displayStrings.Add("VoltamType", "A " + Scan.VoltamType + " scan was run.");
-
             }
             catch (Exception ex)
             {

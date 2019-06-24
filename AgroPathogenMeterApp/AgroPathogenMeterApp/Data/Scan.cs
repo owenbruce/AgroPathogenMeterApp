@@ -7,7 +7,7 @@ namespace AgroPathogenMeterApp.Data
 {
     public class Scanner
     {
-        readonly SQLiteAsyncConnection _database;
+        private readonly SQLiteAsyncConnection _database;
 
         public Scanner(string dbPath)   //The current running database is saved as a table in the sqlite database
         {
@@ -26,6 +26,7 @@ namespace AgroPathogenMeterApp.Data
                             .Where(i => i.ID == id)
                             .FirstOrDefaultAsync();
         }
+
         public Task<int> SaveScanAsync(ScanDatabase scan)   //Saves the current scan into the database
         {
             if (scan.ID != 0)

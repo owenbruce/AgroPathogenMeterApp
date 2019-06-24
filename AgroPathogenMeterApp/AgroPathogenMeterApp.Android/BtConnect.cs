@@ -5,10 +5,13 @@ using Android.OS;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
+using PalmSens.DataFiles;
 using PalmSens.Plottables;
 using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
 using System;
+using System.IO;
+using System.Text;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(BtConnect))]
@@ -20,7 +23,7 @@ namespace AgroPathogenMeterApp.Droid
         private Curve _activeCurve;
         private Context context = Android.App.Application.Context;
         private Measurement measurement;
-        
+
         public string FilePath()
         {
             return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/Db";
@@ -139,27 +142,44 @@ namespace AgroPathogenMeterApp.Droid
                         break;
 
                     case "Chronoamperometry":
-                        //run chronoamperometry, not supported currently?
+                        //run chronoamperometry, not supported currently? Also not sure if wanted.
 
                         break;
 
                     case "Standard":
                         SquareWave squareWave1 = new SquareWave
                         {
-                            MinPeakWidth = 0.1f,
-                            PeakWindow = 0.1f,
                             BeginPotential = 0.0f,
                             EndPotential = -0.6f,
-                            StepPotential = 0.001f,
                             Frequency = 60.0f,
-                            PulseAmplitude = 0.025f
+                            MinPeakWidth = 0.1f,
+                            PeakWindow = 0.1f,
+                            PulseAmplitude = 0.025f,
+                            StepPotential = 0.001f
                         };
-                        break; 
+
+                        comm.Measure(squareWave1);
+                        break;
+
                     default:
                         break;
                 }
 
                 #endregion Test Switches
+
+                while (!measurement.IsFinished)
+                {
+                    //Add in code to update the screen to tell the user how far along the test is while it is running
+                }
+                var allDb = await App.Database.GetScanDatabasesAsync();
+                int currentScan = allDb.Count;
+                string stream = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Curve" + currentScan + "csv");
+                byte[] byteArray = Encoding.UTF8.GetBytes(stream);
+
+                MemoryStream memoryStream = new MemoryStream(byteArray);
+                Curve[] curves = new Curve[0];
+                curves[0] = _activeCurve;
+                CSVDataFile.SaveCurves(memoryStream, curves);
 
                 comm.Disconnect();
             }

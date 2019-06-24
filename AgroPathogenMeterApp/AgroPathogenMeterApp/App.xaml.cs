@@ -17,7 +17,7 @@ namespace AgroPathogenMeterApp
         public static string AzureBackendUrl = "http://localhost:5000";
 
         public static bool UseMockDataStore = true;
-        static Scanner scanner;
+        private static Scanner scanner;
         public static NavigationPage NavigationPage { get; private set; }
 
         public App()

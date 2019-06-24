@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgroPathogenMeterApp.Models;
+﻿using AgroPathogenMeterApp.Models;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,17 +17,16 @@ namespace AgroPathogenMeterApp.Views
         {
             ScanDatabase scan = new ScanDatabase
             {
-                IsInfected = false,
-                Date = DateTime.Now,
                 AmountBacteria = 0,
                 ConcentrationBacteria = 0,
+                Date = DateTime.Now,
+                IsInfected = false,
                 VoltamType = Entry1.Text
             };
             await App.Database.SaveScanAsync(scan);
 
             await Navigation.PushAsync(new AllData
             {
-
             });
         }
     }

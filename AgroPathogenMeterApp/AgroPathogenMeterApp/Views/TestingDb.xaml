@@ -8,11 +8,11 @@
     <ContentPage.Content>
         <StackLayout>
             <Entry Text=""
-                   x:Name="Entry1"/>
+                   x:Name="Entry1" />
             <Label Text=""
                    x:Name="Label1" />
             <Button Text="View Result"
-                    Clicked="OnViewResultClicked"/>
+                    Clicked="OnViewResultClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
