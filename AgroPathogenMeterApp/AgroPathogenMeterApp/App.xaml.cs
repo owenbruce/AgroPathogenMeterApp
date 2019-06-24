@@ -1,4 +1,5 @@
 ﻿using AgroPathogenMeterApp.Data;
+using Plugin.Permissions;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -56,6 +57,7 @@ namespace AgroPathogenMeterApp
                   "ios={b2f34a3d-c5ba-4523-92f2-1321a1a55616}",
                   typeof(Analytics), typeof(Crashes));
             // Handle when your app starts
+            
         }
     }
 }

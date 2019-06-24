@@ -3,6 +3,7 @@ using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +21,7 @@ namespace AgroPathogenMeterApp.Views
 
         private bool InAmplitudeRange(double value)
         {
-            if (value >= 0.001 && value <= 250)
+            if (value >= 0.001 && value <= 0.25)
             {
                 return true;
             }
@@ -29,7 +30,7 @@ namespace AgroPathogenMeterApp.Views
 
         private bool InFrequencyRange(double value)
         {
-            if (value >= 1 && value <= 1000)
+            if (value >= 1 && value <= 2000)
             {
                 return true;
             }
@@ -38,7 +39,7 @@ namespace AgroPathogenMeterApp.Views
 
         private bool InPRange(double value)
         {
-            if (Math.Abs(value) <= 10)
+            if (Math.Abs(value) <= 5)
             {
                 return true;
             }
@@ -56,7 +57,7 @@ namespace AgroPathogenMeterApp.Views
 
         private bool InStepRange(double value)
         {
-            if (value >= 0.075 && value <= 250)
+            if (value >= 0.000076 && value <= 0.25)
             {
                 return true;
             }
@@ -76,6 +77,13 @@ namespace AgroPathogenMeterApp.Views
                      value2.Equals("-") ||
                      value3.Equals("-") ||
                      value4.Equals("-"))
+            {
+                return false;
+            }
+            else if (value1.Equals("-.") ||
+                     value2.Equals("-.") ||
+                     value3.Equals("-.") ||
+                     value4.Equals("-."))
             {
                 return false;
             }
@@ -100,6 +108,14 @@ namespace AgroPathogenMeterApp.Views
             {
                 return false;
             }
+            else if (value1.Equals("-.") ||
+                     value2.Equals("-.") ||
+                     value3.Equals("-.") ||
+                     value4.Equals("-.") ||
+                     value5.Equals("-."))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -120,6 +136,15 @@ namespace AgroPathogenMeterApp.Views
                      value4.Equals("-") ||
                      value5.Equals("-") ||
                      value6.Equals("-"))
+            {
+                return false;
+            }
+            else if (value1.Equals("-.") ||
+                     value2.Equals("-.") ||
+                     value3.Equals("-.") ||
+                     value4.Equals("-.") ||
+                     value5.Equals("-.") ||
+                     value6.Equals("-."))
             {
                 return false;
             }
@@ -149,11 +174,11 @@ namespace AgroPathogenMeterApp.Views
                             Entry4.Text.Length >= 1 &&
                             Entry5.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(),
-                                            Entry2.Text.ToString(),
-                                            Entry3.Text.ToString(),
-                                            Entry4.Text.ToString(),
-                                            Entry5.Text.ToString()))
+                            if (OnlyDotDash(Entry1.Text,
+                                            Entry2.Text,
+                                            Entry3.Text,
+                                            Entry4.Text,
+                                            Entry5.Text))
                             {
                                 if (InPRange(Convert.ToDouble(Entry1.Text)) &&
                                     InPRange(Convert.ToDouble(Entry2.Text)) &&
@@ -194,11 +219,11 @@ namespace AgroPathogenMeterApp.Views
                             Entry4.Text.Length >= 1 &&
                             Entry5.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(),
-                                            Entry2.Text.ToString(),
-                                            Entry3.Text.ToString(),
-                                            Entry4.Text.ToString(),
-                                            Entry5.Text.ToString()))
+                            if (OnlyDotDash(Entry1.Text,
+                                            Entry2.Text,
+                                            Entry3.Text,
+                                            Entry4.Text,
+                                            Entry5.Text))
                             {
                                 if (InPRange(Convert.ToDouble(Entry1.Text)) &&
                                     InPRange(Convert.ToDouble(Entry2.Text)) &&
@@ -237,19 +262,20 @@ namespace AgroPathogenMeterApp.Views
                             Entry3.Text.Length >= 1 &&
                             Entry4.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(),
-                                            Entry2.Text.ToString(),
-                                            Entry3.Text.ToString(),
-                                            Entry4.Text.ToString()))
+                            if (OnlyDotDash(Entry1.Text,
+                                            Entry2.Text,
+                                            Entry3.Text,
+                                            Entry4.Text))
                             {
                                 if (InPRange(Convert.ToDouble(Entry1.Text)) &&
                                     InPRange(Convert.ToDouble(Entry2.Text)) &&
                                     InStepRange(Convert.ToDouble(Entry3.Text)) &&
                                     InScanRateRange(Convert.ToDouble(Entry4.Text)))
                                 {
-                                    var Db = (ScanDatabase)BindingContext;
-                                    Db.Date = DateTime.Now;
-                                    await App.Database.SaveScanAsync(Db);
+                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);
+                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                                    Scan.ScanRate = Convert.ToDouble(Entry4.Text);
                                 }
                                 else
                                 {
@@ -278,12 +304,12 @@ namespace AgroPathogenMeterApp.Views
                             Entry5.Text.Length >= 1 &&
                             Entry6.Text.Length >= 1)
                         {
-                            if (OnlyDotDash(Entry1.Text.ToString(),
-                                            Entry2.Text.ToString(),
-                                            Entry3.Text.ToString(),
-                                            Entry4.Text.ToString(),
-                                            Entry5.Text.ToString(),
-                                            Entry6.Text.ToString()))
+                            if (OnlyDotDash(Entry1.Text,
+                                            Entry2.Text,
+                                            Entry3.Text,
+                                            Entry4.Text,
+                                            Entry5.Text,
+                                            Entry6.Text))
                             {
                                 if (InPRange(Convert.ToDouble(Entry1.Text)) &&
                                     InPRange(Convert.ToDouble(Entry2.Text)) &&
@@ -327,12 +353,12 @@ namespace AgroPathogenMeterApp.Views
             catch (Exception ex)
             {
                 Crashes.TrackError(ex, new Dictionary<string, string>{
-                    { "Entry 1:", Entry1.Text.ToString()  },
-                    { "Entry 2:", Entry2.Text.ToString()  },
-                    { "Entry 3:", Entry3.Text.ToString()  },
-                    { "Entry 4:", Entry4.Text.ToString()  },
-                    { "Entry 5:", Entry5.Text.ToString()  },
-                    { "Entry 6:", Entry6.Text.ToString()  },
+                    { "Entry 1:", Entry1.Text  },
+                    { "Entry 2:", Entry2.Text  },
+                    { "Entry 3:", Entry3.Text  },
+                    { "Entry 4:", Entry4.Text  },
+                    { "Entry 5:", Entry5.Text  },
+                    { "Entry 6:", Entry6.Text  },
                 });
             }
 
