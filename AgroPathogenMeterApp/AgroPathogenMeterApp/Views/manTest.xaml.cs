@@ -1,6 +1,7 @@
 ﻿using AgroPathogenMeterApp.Data;
 using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace AgroPathogenMeterApp.Views
     {
         public manTest()
         {
+            Analytics.TrackEvent("Manual Test Opened");
             InitializeComponent();
         }
 

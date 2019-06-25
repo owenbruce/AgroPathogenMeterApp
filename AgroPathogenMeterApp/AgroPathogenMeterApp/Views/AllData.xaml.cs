@@ -1,4 +1,5 @@
 ﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
@@ -20,6 +21,7 @@ namespace AgroPathogenMeterApp.Views
 
         public AllData()
         {
+            Analytics.TrackEvent("AllData opened");
             i = 1;
             SetDatabaseList();
             InitializeComponent();

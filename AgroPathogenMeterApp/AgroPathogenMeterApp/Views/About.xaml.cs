@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Analytics;
+using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,6 +11,7 @@ namespace AgroPathogenMeterApp.Views
     {
         public About()
         {
+            Analytics.TrackEvent("About opened");
             InitializeComponent();
         }
 

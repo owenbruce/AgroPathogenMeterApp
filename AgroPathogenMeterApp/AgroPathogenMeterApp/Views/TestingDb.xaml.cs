@@ -1,4 +1,5 @@
 ﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Analytics;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,6 +11,7 @@ namespace AgroPathogenMeterApp.Views
     {
         public TestingDb()
         {
+            Analytics.TrackEvent("Testing Database opened");
             InitializeComponent();
         }
 

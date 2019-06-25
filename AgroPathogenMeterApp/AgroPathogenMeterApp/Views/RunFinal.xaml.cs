@@ -1,5 +1,6 @@
 ﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -12,6 +13,7 @@ namespace AgroPathogenMeterApp.Views
     {
         public RunFinal()
         {
+            Analytics.TrackEvent("Scan completed");
             InitializeComponent();
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Microsoft.AppCenter.Analytics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +10,7 @@ namespace AgroPathogenMeterApp.Views
     {
         public dvlp()
         {
+            Analytics.TrackEvent("Developer opened");
             InitializeComponent();
         }
 

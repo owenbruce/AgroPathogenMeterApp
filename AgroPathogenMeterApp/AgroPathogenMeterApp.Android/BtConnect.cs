@@ -171,6 +171,8 @@ namespace AgroPathogenMeterApp.Droid
                 {
                     //Add in code to update the screen to tell the user how far along the test is while it is running
                 }
+
+                //Below saves the file as a csv, potentially useful if PalmSens' peak detection doesn't work, otherwise, just use their peak detection
                 var allDb = await App.Database.GetScanDatabasesAsync();
                 int currentScan = allDb.Count;
                 string stream = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Curve" + currentScan + "csv");
@@ -180,6 +182,11 @@ namespace AgroPathogenMeterApp.Droid
                 Curve[] curves = new Curve[0];
                 curves[0] = _activeCurve;
                 CSVDataFile.SaveCurves(memoryStream, curves);
+
+
+                //Saving the file as a .pssession file to use if PalmSens' peak detection DOES work, or if "manual" peak selection is possible
+
+
 
                 comm.Disconnect();
             }
