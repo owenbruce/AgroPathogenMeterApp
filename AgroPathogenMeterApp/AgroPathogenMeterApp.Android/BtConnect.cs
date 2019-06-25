@@ -5,8 +5,10 @@ using Android.OS;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
+using PalmSens.Data;
 using PalmSens.DataFiles;
 using PalmSens.Plottables;
+using PalmSens.PSAndroid;
 using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
 using System;
@@ -18,11 +20,12 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.Droid
 {
-    public class BtConnect : BtControl
+    public class BtConnect : IBtControl
     {
         private Curve _activeCurve;
         private Context context = Android.App.Application.Context;
         private Measurement measurement;
+        SessionManager session = new SessionManager();
 
         public string FilePath()
         {
@@ -185,7 +188,8 @@ namespace AgroPathogenMeterApp.Droid
 
 
                 //Saving the file as a .pssession file to use if PalmSens' peak detection DOES work, or if "manual" peak selection is possible
-
+                session.AddMeasurement(measurement);
+                LoadSaveHelperFunctions.SaveSessionFile(stream, session);
 
 
                 comm.Disconnect();

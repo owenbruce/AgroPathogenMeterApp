@@ -2,7 +2,7 @@
 
 namespace AgroPathogenMeterApp
 {
-    public interface BtControl
+    public interface IBtControl
     {
         void connect();
 
