@@ -164,16 +164,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\APMIconM.png" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FTDI">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\FTDI.dll</HintPath>
-    </Reference>
+    <Reference Include="FTDI" />
     <Reference Include="Mono.Android" />
-    <Reference Include="PalmSens.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PalmSens.PSAndroid.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.PSAndroid.Core.dll</HintPath>
-    </Reference>
+    <Reference Include="PalmSens.Core" />
+    <Reference Include="PalmSens.PSAndroid.Core" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
