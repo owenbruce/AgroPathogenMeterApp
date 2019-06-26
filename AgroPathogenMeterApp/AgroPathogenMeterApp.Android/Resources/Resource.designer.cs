@@ -26,52 +26,6 @@ namespace AgroPathogenMeterApp.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::PalmSens.PSAndroid.Resource.Attribute.autoScaleTextStyleView = global::AgroPathogenMeterApp.Droid.Resource.Attribute.autoScaleTextStyleView;
-			global::PalmSens.PSAndroid.Resource.Attribute.minTextSize = global::AgroPathogenMeterApp.Droid.Resource.Attribute.minTextSize;
-			global::PalmSens.PSAndroid.Resource.Color.background_grey = global::AgroPathogenMeterApp.Droid.Resource.Color.background_grey;
-			global::PalmSens.PSAndroid.Resource.Color.background_lightgrey = global::AgroPathogenMeterApp.Droid.Resource.Color.background_lightgrey;
-			global::PalmSens.PSAndroid.Resource.Color.background_lightgrey_down = global::AgroPathogenMeterApp.Droid.Resource.Color.background_lightgrey_down;
-			global::PalmSens.PSAndroid.Resource.Color.black = global::AgroPathogenMeterApp.Droid.Resource.Color.black;
-			global::PalmSens.PSAndroid.Resource.Color.palmsensblue = global::AgroPathogenMeterApp.Droid.Resource.Color.palmsensblue;
-			global::PalmSens.PSAndroid.Resource.Color.white = global::AgroPathogenMeterApp.Droid.Resource.Color.white;
-			global::PalmSens.PSAndroid.Resource.Drawable.ic_menu_connect = global::AgroPathogenMeterApp.Droid.Resource.Drawable.ic_menu_connect;
-			global::PalmSens.PSAndroid.Resource.Drawable.ic_menu_connected = global::AgroPathogenMeterApp.Droid.Resource.Drawable.ic_menu_connected;
-			global::PalmSens.PSAndroid.Resource.Drawable.pstouch_button = global::AgroPathogenMeterApp.Droid.Resource.Drawable.pstouch_button;
-			global::PalmSens.PSAndroid.Resource.Drawable.pstouch_button_container = global::AgroPathogenMeterApp.Droid.Resource.Drawable.pstouch_button_container;
-			global::PalmSens.PSAndroid.Resource.Id.button_scan = global::AgroPathogenMeterApp.Droid.Resource.Id.button_scan;
-			global::PalmSens.PSAndroid.Resource.Id.new_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.new_devices;
-			global::PalmSens.PSAndroid.Resource.Id.paired_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.paired_devices;
-			global::PalmSens.PSAndroid.Resource.Id.scan = global::AgroPathogenMeterApp.Droid.Resource.Id.scan;
-			global::PalmSens.PSAndroid.Resource.Id.title_new_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.title_new_devices;
-			global::PalmSens.PSAndroid.Resource.Id.title_paired_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.title_paired_devices;
-			global::PalmSens.PSAndroid.Resource.Layout.device_list = global::AgroPathogenMeterApp.Droid.Resource.Layout.device_list;
-			global::PalmSens.PSAndroid.Resource.Layout.device_name = global::AgroPathogenMeterApp.Droid.Resource.Layout.device_name;
-			global::PalmSens.PSAndroid.Resource.Menu.bluetooth_option_menu = global::AgroPathogenMeterApp.Droid.Resource.Menu.bluetooth_option_menu;
-			global::PalmSens.PSAndroid.Resource.String.bt_not_enabled_leaving = global::AgroPathogenMeterApp.Droid.Resource.String.bt_not_enabled_leaving;
-			global::PalmSens.PSAndroid.Resource.String.button_scan = global::AgroPathogenMeterApp.Droid.Resource.String.button_scan;
-			global::PalmSens.PSAndroid.Resource.String.connect = global::AgroPathogenMeterApp.Droid.Resource.String.connect;
-			global::PalmSens.PSAndroid.Resource.String.discoverable = global::AgroPathogenMeterApp.Droid.Resource.String.discoverable;
-			global::PalmSens.PSAndroid.Resource.String.none_found = global::AgroPathogenMeterApp.Droid.Resource.String.none_found;
-			global::PalmSens.PSAndroid.Resource.String.none_paired = global::AgroPathogenMeterApp.Droid.Resource.String.none_paired;
-			global::PalmSens.PSAndroid.Resource.String.not_connected = global::AgroPathogenMeterApp.Droid.Resource.String.not_connected;
-			global::PalmSens.PSAndroid.Resource.String.scanning = global::AgroPathogenMeterApp.Droid.Resource.String.scanning;
-			global::PalmSens.PSAndroid.Resource.String.select_device = global::AgroPathogenMeterApp.Droid.Resource.String.select_device;
-			global::PalmSens.PSAndroid.Resource.String.send = global::AgroPathogenMeterApp.Droid.Resource.String.send;
-			global::PalmSens.PSAndroid.Resource.String.title_connected_to = global::AgroPathogenMeterApp.Droid.Resource.String.title_connected_to;
-			global::PalmSens.PSAndroid.Resource.String.title_connecting = global::AgroPathogenMeterApp.Droid.Resource.String.title_connecting;
-			global::PalmSens.PSAndroid.Resource.String.title_not_connected = global::AgroPathogenMeterApp.Droid.Resource.String.title_not_connected;
-			global::PalmSens.PSAndroid.Resource.String.title_other_devices = global::AgroPathogenMeterApp.Droid.Resource.String.title_other_devices;
-			global::PalmSens.PSAndroid.Resource.String.title_paired_devices = global::AgroPathogenMeterApp.Droid.Resource.String.title_paired_devices;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_ButtonStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_ButtonStyle;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_ListViewStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_ListViewStyle;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_TextStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_TextStyle;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_TitleTextStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_TitleTextStyle;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_WindowTitleBackground = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_WindowTitleBackground;
-			global::PalmSens.PSAndroid.Resource.Style.BlueToothTheme_WindowTitleStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_WindowTitleStyle;
-			global::PalmSens.PSAndroid.Resource.Styleable.AutoScaleTextView = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView;
-			global::PalmSens.PSAndroid.Resource.Styleable.AutoScaleTextView_minTextSize = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView_minTextSize;
-			global::PalmSens.PSAndroid.Resource.Xml.device_filter = global::AgroPathogenMeterApp.Droid.Resource.Xml.device_filter;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::AgroPathogenMeterApp.Droid.Resource.Attribute.font;
 			global::Xamarin.Essentials.Resource.Attribute.fontProviderAuthority = global::AgroPathogenMeterApp.Droid.Resource.Attribute.fontProviderAuthority;
 			global::Xamarin.Essentials.Resource.Attribute.fontProviderCerts = global::AgroPathogenMeterApp.Droid.Resource.Attribute.fontProviderCerts;
@@ -2392,9 +2346,6 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0100ba
 			public const int autoCompleteTextViewStyle = 2130772154;
 			
-			// aapt resource value: 0x7f010173
-			public const int autoScaleTextStyleView = 2130772339;
-			
 			// aapt resource value: 0x7f010054
 			public const int autoSizeMaxTextSize = 2130772052;
 			
@@ -2959,9 +2910,6 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f010143
 			public const int menu = 2130772291;
 			
-			// aapt resource value: 0x7f010174
-			public const int minTextSize = 2130772340;
-			
 			// aapt resource value: 0x7f010045
 			public const int multiChoiceItemLayout = 2130772037;
 			
@@ -3420,44 +3368,44 @@ namespace AgroPathogenMeterApp.Droid
 		public partial class Color
 		{
 			
+			// aapt resource value: 0x7f0e0050
+			public const int abc_background_cache_hint_selector_material_dark = 2131624016;
+			
+			// aapt resource value: 0x7f0e0051
+			public const int abc_background_cache_hint_selector_material_light = 2131624017;
+			
+			// aapt resource value: 0x7f0e0052
+			public const int abc_btn_colored_borderless_text_material = 2131624018;
+			
+			// aapt resource value: 0x7f0e0053
+			public const int abc_btn_colored_text_material = 2131624019;
+			
+			// aapt resource value: 0x7f0e0054
+			public const int abc_color_highlight_material = 2131624020;
+			
+			// aapt resource value: 0x7f0e0055
+			public const int abc_hint_foreground_material_dark = 2131624021;
+			
 			// aapt resource value: 0x7f0e0056
-			public const int abc_background_cache_hint_selector_material_dark = 2131624022;
-			
-			// aapt resource value: 0x7f0e0057
-			public const int abc_background_cache_hint_selector_material_light = 2131624023;
-			
-			// aapt resource value: 0x7f0e0058
-			public const int abc_btn_colored_borderless_text_material = 2131624024;
-			
-			// aapt resource value: 0x7f0e0059
-			public const int abc_btn_colored_text_material = 2131624025;
-			
-			// aapt resource value: 0x7f0e005a
-			public const int abc_color_highlight_material = 2131624026;
-			
-			// aapt resource value: 0x7f0e005b
-			public const int abc_hint_foreground_material_dark = 2131624027;
-			
-			// aapt resource value: 0x7f0e005c
-			public const int abc_hint_foreground_material_light = 2131624028;
+			public const int abc_hint_foreground_material_light = 2131624022;
 			
 			// aapt resource value: 0x7f0e0004
 			public const int abc_input_method_navigation_guard = 2131623940;
 			
-			// aapt resource value: 0x7f0e005d
-			public const int abc_primary_text_disable_only_material_dark = 2131624029;
+			// aapt resource value: 0x7f0e0057
+			public const int abc_primary_text_disable_only_material_dark = 2131624023;
 			
-			// aapt resource value: 0x7f0e005e
-			public const int abc_primary_text_disable_only_material_light = 2131624030;
+			// aapt resource value: 0x7f0e0058
+			public const int abc_primary_text_disable_only_material_light = 2131624024;
 			
-			// aapt resource value: 0x7f0e005f
-			public const int abc_primary_text_material_dark = 2131624031;
+			// aapt resource value: 0x7f0e0059
+			public const int abc_primary_text_material_dark = 2131624025;
 			
-			// aapt resource value: 0x7f0e0060
-			public const int abc_primary_text_material_light = 2131624032;
+			// aapt resource value: 0x7f0e005a
+			public const int abc_primary_text_material_light = 2131624026;
 			
-			// aapt resource value: 0x7f0e0061
-			public const int abc_search_url_text = 2131624033;
+			// aapt resource value: 0x7f0e005b
+			public const int abc_search_url_text = 2131624027;
 			
 			// aapt resource value: 0x7f0e0005
 			public const int abc_search_url_text_normal = 2131623941;
@@ -3468,29 +3416,29 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e0007
 			public const int abc_search_url_text_selected = 2131623943;
 			
+			// aapt resource value: 0x7f0e005c
+			public const int abc_secondary_text_material_dark = 2131624028;
+			
+			// aapt resource value: 0x7f0e005d
+			public const int abc_secondary_text_material_light = 2131624029;
+			
+			// aapt resource value: 0x7f0e005e
+			public const int abc_tint_btn_checkable = 2131624030;
+			
+			// aapt resource value: 0x7f0e005f
+			public const int abc_tint_default = 2131624031;
+			
+			// aapt resource value: 0x7f0e0060
+			public const int abc_tint_edittext = 2131624032;
+			
+			// aapt resource value: 0x7f0e0061
+			public const int abc_tint_seek_thumb = 2131624033;
+			
 			// aapt resource value: 0x7f0e0062
-			public const int abc_secondary_text_material_dark = 2131624034;
+			public const int abc_tint_spinner = 2131624034;
 			
 			// aapt resource value: 0x7f0e0063
-			public const int abc_secondary_text_material_light = 2131624035;
-			
-			// aapt resource value: 0x7f0e0064
-			public const int abc_tint_btn_checkable = 2131624036;
-			
-			// aapt resource value: 0x7f0e0065
-			public const int abc_tint_default = 2131624037;
-			
-			// aapt resource value: 0x7f0e0066
-			public const int abc_tint_edittext = 2131624038;
-			
-			// aapt resource value: 0x7f0e0067
-			public const int abc_tint_seek_thumb = 2131624039;
-			
-			// aapt resource value: 0x7f0e0068
-			public const int abc_tint_spinner = 2131624040;
-			
-			// aapt resource value: 0x7f0e0069
-			public const int abc_tint_switch_track = 2131624041;
+			public const int abc_tint_switch_track = 2131624035;
 			
 			// aapt resource value: 0x7f0e0008
 			public const int accent_material_dark = 2131623944;
@@ -3504,23 +3452,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e000b
 			public const int background_floating_material_light = 2131623947;
 			
-			// aapt resource value: 0x7f0e004e
-			public const int background_grey = 2131624014;
-			
-			// aapt resource value: 0x7f0e004f
-			public const int background_lightgrey = 2131624015;
-			
-			// aapt resource value: 0x7f0e0050
-			public const int background_lightgrey_down = 2131624016;
-			
 			// aapt resource value: 0x7f0e000c
 			public const int background_material_dark = 2131623948;
 			
 			// aapt resource value: 0x7f0e000d
 			public const int background_material_light = 2131623949;
-			
-			// aapt resource value: 0x7f0e004c
-			public const int black = 2131624012;
 			
 			// aapt resource value: 0x7f0e000e
 			public const int bright_foreground_disabled_material_dark = 2131623950;
@@ -3558,20 +3494,20 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e0003
 			public const int cardview_shadow_start_color = 2131623939;
 			
-			// aapt resource value: 0x7f0e0054
-			public const int colorAccent = 2131624020;
+			// aapt resource value: 0x7f0e004e
+			public const int colorAccent = 2131624014;
 			
-			// aapt resource value: 0x7f0e0052
-			public const int colorPrimary = 2131624018;
+			// aapt resource value: 0x7f0e004c
+			public const int colorPrimary = 2131624012;
 			
-			// aapt resource value: 0x7f0e0053
-			public const int colorPrimaryDark = 2131624019;
+			// aapt resource value: 0x7f0e004d
+			public const int colorPrimaryDark = 2131624013;
 			
 			// aapt resource value: 0x7f0e0040
 			public const int design_bottom_navigation_shadow_color = 2131624000;
 			
-			// aapt resource value: 0x7f0e006a
-			public const int design_error = 2131624042;
+			// aapt resource value: 0x7f0e0064
+			public const int design_error = 2131624036;
 			
 			// aapt resource value: 0x7f0e0041
 			public const int design_fab_shadow_end_color = 2131624001;
@@ -3597,8 +3533,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e0048
 			public const int design_snackbar_background_color = 2131624008;
 			
-			// aapt resource value: 0x7f0e006b
-			public const int design_tint_password_toggle = 2131624043;
+			// aapt resource value: 0x7f0e0065
+			public const int design_tint_password_toggle = 2131624037;
 			
 			// aapt resource value: 0x7f0e0016
 			public const int dim_foreground_disabled_material_dark = 2131623958;
@@ -3627,11 +3563,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e001e
 			public const int highlighted_text_material_light = 2131623966;
 			
-			// aapt resource value: 0x7f0e0051
-			public const int launcher_background = 2131624017;
+			// aapt resource value: 0x7f0e004b
+			public const int launcher_background = 2131624011;
 			
-			// aapt resource value: 0x7f0e0055
-			public const int loginBackground = 2131624021;
+			// aapt resource value: 0x7f0e004f
+			public const int loginBackground = 2131624015;
 			
 			// aapt resource value: 0x7f0e001f
 			public const int material_blue_grey_800 = 2131623967;
@@ -3677,9 +3613,6 @@ namespace AgroPathogenMeterApp.Droid
 			
 			// aapt resource value: 0x7f0e003f
 			public const int notification_material_background_media_default_color = 2131623999;
-			
-			// aapt resource value: 0x7f0e004d
-			public const int palmsensblue = 2131624013;
 			
 			// aapt resource value: 0x7f0e002b
 			public const int primary_dark_material_dark = 2131623979;
@@ -3729,11 +3662,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0e003a
 			public const int switch_thumb_disabled_material_light = 2131623994;
 			
-			// aapt resource value: 0x7f0e006c
-			public const int switch_thumb_material_dark = 2131624044;
+			// aapt resource value: 0x7f0e0066
+			public const int switch_thumb_material_dark = 2131624038;
 			
-			// aapt resource value: 0x7f0e006d
-			public const int switch_thumb_material_light = 2131624045;
+			// aapt resource value: 0x7f0e0067
+			public const int switch_thumb_material_light = 2131624039;
 			
 			// aapt resource value: 0x7f0e003b
 			public const int switch_thumb_normal_material_dark = 2131623995;
@@ -3746,9 +3679,6 @@ namespace AgroPathogenMeterApp.Droid
 			
 			// aapt resource value: 0x7f0e003e
 			public const int tooltip_background_light = 2131623998;
-			
-			// aapt resource value: 0x7f0e004b
-			public const int white = 2131624011;
 			
 			static Color()
 			{
@@ -4523,26 +4453,26 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f020137
-			public const int avd_hide_password_1 = 2130837815;
+			// aapt resource value: 0x7f020133
+			public const int avd_hide_password_1 = 2130837811;
 			
-			// aapt resource value: 0x7f020138
-			public const int avd_hide_password_2 = 2130837816;
+			// aapt resource value: 0x7f020134
+			public const int avd_hide_password_2 = 2130837812;
 			
-			// aapt resource value: 0x7f020139
-			public const int avd_hide_password_3 = 2130837817;
+			// aapt resource value: 0x7f020135
+			public const int avd_hide_password_3 = 2130837813;
 			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
 			
-			// aapt resource value: 0x7f02013a
-			public const int avd_show_password_1 = 2130837818;
+			// aapt resource value: 0x7f020136
+			public const int avd_show_password_1 = 2130837814;
 			
-			// aapt resource value: 0x7f02013b
-			public const int avd_show_password_2 = 2130837819;
+			// aapt resource value: 0x7f020137
+			public const int avd_show_password_2 = 2130837815;
 			
-			// aapt resource value: 0x7f02013c
-			public const int avd_show_password_3 = 2130837820;
+			// aapt resource value: 0x7f020138
+			public const int avd_show_password_3 = 2130837816;
 			
 			// aapt resource value: 0x7f020056
 			public const int design_bottom_navigation_item_background = 2130837590;
@@ -4695,529 +4625,517 @@ namespace AgroPathogenMeterApp.Droid
 			public const int ic_media_stop_light = 2130837639;
 			
 			// aapt resource value: 0x7f020088
-			public const int ic_menu_connect = 2130837640;
+			public const int ic_mr_button_connected_00_dark = 2130837640;
 			
 			// aapt resource value: 0x7f020089
-			public const int ic_menu_connected = 2130837641;
+			public const int ic_mr_button_connected_00_light = 2130837641;
 			
 			// aapt resource value: 0x7f02008a
-			public const int ic_mr_button_connected_00_dark = 2130837642;
+			public const int ic_mr_button_connected_01_dark = 2130837642;
 			
 			// aapt resource value: 0x7f02008b
-			public const int ic_mr_button_connected_00_light = 2130837643;
+			public const int ic_mr_button_connected_01_light = 2130837643;
 			
 			// aapt resource value: 0x7f02008c
-			public const int ic_mr_button_connected_01_dark = 2130837644;
+			public const int ic_mr_button_connected_02_dark = 2130837644;
 			
 			// aapt resource value: 0x7f02008d
-			public const int ic_mr_button_connected_01_light = 2130837645;
+			public const int ic_mr_button_connected_02_light = 2130837645;
 			
 			// aapt resource value: 0x7f02008e
-			public const int ic_mr_button_connected_02_dark = 2130837646;
+			public const int ic_mr_button_connected_03_dark = 2130837646;
 			
 			// aapt resource value: 0x7f02008f
-			public const int ic_mr_button_connected_02_light = 2130837647;
+			public const int ic_mr_button_connected_03_light = 2130837647;
 			
 			// aapt resource value: 0x7f020090
-			public const int ic_mr_button_connected_03_dark = 2130837648;
+			public const int ic_mr_button_connected_04_dark = 2130837648;
 			
 			// aapt resource value: 0x7f020091
-			public const int ic_mr_button_connected_03_light = 2130837649;
+			public const int ic_mr_button_connected_04_light = 2130837649;
 			
 			// aapt resource value: 0x7f020092
-			public const int ic_mr_button_connected_04_dark = 2130837650;
+			public const int ic_mr_button_connected_05_dark = 2130837650;
 			
 			// aapt resource value: 0x7f020093
-			public const int ic_mr_button_connected_04_light = 2130837651;
+			public const int ic_mr_button_connected_05_light = 2130837651;
 			
 			// aapt resource value: 0x7f020094
-			public const int ic_mr_button_connected_05_dark = 2130837652;
+			public const int ic_mr_button_connected_06_dark = 2130837652;
 			
 			// aapt resource value: 0x7f020095
-			public const int ic_mr_button_connected_05_light = 2130837653;
+			public const int ic_mr_button_connected_06_light = 2130837653;
 			
 			// aapt resource value: 0x7f020096
-			public const int ic_mr_button_connected_06_dark = 2130837654;
+			public const int ic_mr_button_connected_07_dark = 2130837654;
 			
 			// aapt resource value: 0x7f020097
-			public const int ic_mr_button_connected_06_light = 2130837655;
+			public const int ic_mr_button_connected_07_light = 2130837655;
 			
 			// aapt resource value: 0x7f020098
-			public const int ic_mr_button_connected_07_dark = 2130837656;
+			public const int ic_mr_button_connected_08_dark = 2130837656;
 			
 			// aapt resource value: 0x7f020099
-			public const int ic_mr_button_connected_07_light = 2130837657;
+			public const int ic_mr_button_connected_08_light = 2130837657;
 			
 			// aapt resource value: 0x7f02009a
-			public const int ic_mr_button_connected_08_dark = 2130837658;
+			public const int ic_mr_button_connected_09_dark = 2130837658;
 			
 			// aapt resource value: 0x7f02009b
-			public const int ic_mr_button_connected_08_light = 2130837659;
+			public const int ic_mr_button_connected_09_light = 2130837659;
 			
 			// aapt resource value: 0x7f02009c
-			public const int ic_mr_button_connected_09_dark = 2130837660;
+			public const int ic_mr_button_connected_10_dark = 2130837660;
 			
 			// aapt resource value: 0x7f02009d
-			public const int ic_mr_button_connected_09_light = 2130837661;
+			public const int ic_mr_button_connected_10_light = 2130837661;
 			
 			// aapt resource value: 0x7f02009e
-			public const int ic_mr_button_connected_10_dark = 2130837662;
+			public const int ic_mr_button_connected_11_dark = 2130837662;
 			
 			// aapt resource value: 0x7f02009f
-			public const int ic_mr_button_connected_10_light = 2130837663;
+			public const int ic_mr_button_connected_11_light = 2130837663;
 			
 			// aapt resource value: 0x7f0200a0
-			public const int ic_mr_button_connected_11_dark = 2130837664;
+			public const int ic_mr_button_connected_12_dark = 2130837664;
 			
 			// aapt resource value: 0x7f0200a1
-			public const int ic_mr_button_connected_11_light = 2130837665;
+			public const int ic_mr_button_connected_12_light = 2130837665;
 			
 			// aapt resource value: 0x7f0200a2
-			public const int ic_mr_button_connected_12_dark = 2130837666;
+			public const int ic_mr_button_connected_13_dark = 2130837666;
 			
 			// aapt resource value: 0x7f0200a3
-			public const int ic_mr_button_connected_12_light = 2130837667;
+			public const int ic_mr_button_connected_13_light = 2130837667;
 			
 			// aapt resource value: 0x7f0200a4
-			public const int ic_mr_button_connected_13_dark = 2130837668;
+			public const int ic_mr_button_connected_14_dark = 2130837668;
 			
 			// aapt resource value: 0x7f0200a5
-			public const int ic_mr_button_connected_13_light = 2130837669;
+			public const int ic_mr_button_connected_14_light = 2130837669;
 			
 			// aapt resource value: 0x7f0200a6
-			public const int ic_mr_button_connected_14_dark = 2130837670;
+			public const int ic_mr_button_connected_15_dark = 2130837670;
 			
 			// aapt resource value: 0x7f0200a7
-			public const int ic_mr_button_connected_14_light = 2130837671;
+			public const int ic_mr_button_connected_15_light = 2130837671;
 			
 			// aapt resource value: 0x7f0200a8
-			public const int ic_mr_button_connected_15_dark = 2130837672;
+			public const int ic_mr_button_connected_16_dark = 2130837672;
 			
 			// aapt resource value: 0x7f0200a9
-			public const int ic_mr_button_connected_15_light = 2130837673;
+			public const int ic_mr_button_connected_16_light = 2130837673;
 			
 			// aapt resource value: 0x7f0200aa
-			public const int ic_mr_button_connected_16_dark = 2130837674;
+			public const int ic_mr_button_connected_17_dark = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int ic_mr_button_connected_16_light = 2130837675;
+			public const int ic_mr_button_connected_17_light = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int ic_mr_button_connected_17_dark = 2130837676;
+			public const int ic_mr_button_connected_18_dark = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int ic_mr_button_connected_17_light = 2130837677;
+			public const int ic_mr_button_connected_18_light = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int ic_mr_button_connected_18_dark = 2130837678;
+			public const int ic_mr_button_connected_19_dark = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int ic_mr_button_connected_18_light = 2130837679;
+			public const int ic_mr_button_connected_19_light = 2130837679;
 			
 			// aapt resource value: 0x7f0200b0
-			public const int ic_mr_button_connected_19_dark = 2130837680;
+			public const int ic_mr_button_connected_20_dark = 2130837680;
 			
 			// aapt resource value: 0x7f0200b1
-			public const int ic_mr_button_connected_19_light = 2130837681;
+			public const int ic_mr_button_connected_20_light = 2130837681;
 			
 			// aapt resource value: 0x7f0200b2
-			public const int ic_mr_button_connected_20_dark = 2130837682;
+			public const int ic_mr_button_connected_21_dark = 2130837682;
 			
 			// aapt resource value: 0x7f0200b3
-			public const int ic_mr_button_connected_20_light = 2130837683;
+			public const int ic_mr_button_connected_21_light = 2130837683;
 			
 			// aapt resource value: 0x7f0200b4
-			public const int ic_mr_button_connected_21_dark = 2130837684;
+			public const int ic_mr_button_connected_22_dark = 2130837684;
 			
 			// aapt resource value: 0x7f0200b5
-			public const int ic_mr_button_connected_21_light = 2130837685;
+			public const int ic_mr_button_connected_22_light = 2130837685;
 			
 			// aapt resource value: 0x7f0200b6
-			public const int ic_mr_button_connected_22_dark = 2130837686;
+			public const int ic_mr_button_connected_23_dark = 2130837686;
 			
 			// aapt resource value: 0x7f0200b7
-			public const int ic_mr_button_connected_22_light = 2130837687;
+			public const int ic_mr_button_connected_23_light = 2130837687;
 			
 			// aapt resource value: 0x7f0200b8
-			public const int ic_mr_button_connected_23_dark = 2130837688;
+			public const int ic_mr_button_connected_24_dark = 2130837688;
 			
 			// aapt resource value: 0x7f0200b9
-			public const int ic_mr_button_connected_23_light = 2130837689;
+			public const int ic_mr_button_connected_24_light = 2130837689;
 			
 			// aapt resource value: 0x7f0200ba
-			public const int ic_mr_button_connected_24_dark = 2130837690;
+			public const int ic_mr_button_connected_25_dark = 2130837690;
 			
 			// aapt resource value: 0x7f0200bb
-			public const int ic_mr_button_connected_24_light = 2130837691;
+			public const int ic_mr_button_connected_25_light = 2130837691;
 			
 			// aapt resource value: 0x7f0200bc
-			public const int ic_mr_button_connected_25_dark = 2130837692;
+			public const int ic_mr_button_connected_26_dark = 2130837692;
 			
 			// aapt resource value: 0x7f0200bd
-			public const int ic_mr_button_connected_25_light = 2130837693;
+			public const int ic_mr_button_connected_26_light = 2130837693;
 			
 			// aapt resource value: 0x7f0200be
-			public const int ic_mr_button_connected_26_dark = 2130837694;
+			public const int ic_mr_button_connected_27_dark = 2130837694;
 			
 			// aapt resource value: 0x7f0200bf
-			public const int ic_mr_button_connected_26_light = 2130837695;
+			public const int ic_mr_button_connected_27_light = 2130837695;
 			
 			// aapt resource value: 0x7f0200c0
-			public const int ic_mr_button_connected_27_dark = 2130837696;
+			public const int ic_mr_button_connected_28_dark = 2130837696;
 			
 			// aapt resource value: 0x7f0200c1
-			public const int ic_mr_button_connected_27_light = 2130837697;
+			public const int ic_mr_button_connected_28_light = 2130837697;
 			
 			// aapt resource value: 0x7f0200c2
-			public const int ic_mr_button_connected_28_dark = 2130837698;
+			public const int ic_mr_button_connected_29_dark = 2130837698;
 			
 			// aapt resource value: 0x7f0200c3
-			public const int ic_mr_button_connected_28_light = 2130837699;
+			public const int ic_mr_button_connected_29_light = 2130837699;
 			
 			// aapt resource value: 0x7f0200c4
-			public const int ic_mr_button_connected_29_dark = 2130837700;
+			public const int ic_mr_button_connected_30_dark = 2130837700;
 			
 			// aapt resource value: 0x7f0200c5
-			public const int ic_mr_button_connected_29_light = 2130837701;
+			public const int ic_mr_button_connected_30_light = 2130837701;
 			
 			// aapt resource value: 0x7f0200c6
-			public const int ic_mr_button_connected_30_dark = 2130837702;
+			public const int ic_mr_button_connecting_00_dark = 2130837702;
 			
 			// aapt resource value: 0x7f0200c7
-			public const int ic_mr_button_connected_30_light = 2130837703;
+			public const int ic_mr_button_connecting_00_light = 2130837703;
 			
 			// aapt resource value: 0x7f0200c8
-			public const int ic_mr_button_connecting_00_dark = 2130837704;
+			public const int ic_mr_button_connecting_01_dark = 2130837704;
 			
 			// aapt resource value: 0x7f0200c9
-			public const int ic_mr_button_connecting_00_light = 2130837705;
+			public const int ic_mr_button_connecting_01_light = 2130837705;
 			
 			// aapt resource value: 0x7f0200ca
-			public const int ic_mr_button_connecting_01_dark = 2130837706;
+			public const int ic_mr_button_connecting_02_dark = 2130837706;
 			
 			// aapt resource value: 0x7f0200cb
-			public const int ic_mr_button_connecting_01_light = 2130837707;
+			public const int ic_mr_button_connecting_02_light = 2130837707;
 			
 			// aapt resource value: 0x7f0200cc
-			public const int ic_mr_button_connecting_02_dark = 2130837708;
+			public const int ic_mr_button_connecting_03_dark = 2130837708;
 			
 			// aapt resource value: 0x7f0200cd
-			public const int ic_mr_button_connecting_02_light = 2130837709;
+			public const int ic_mr_button_connecting_03_light = 2130837709;
 			
 			// aapt resource value: 0x7f0200ce
-			public const int ic_mr_button_connecting_03_dark = 2130837710;
+			public const int ic_mr_button_connecting_04_dark = 2130837710;
 			
 			// aapt resource value: 0x7f0200cf
-			public const int ic_mr_button_connecting_03_light = 2130837711;
+			public const int ic_mr_button_connecting_04_light = 2130837711;
 			
 			// aapt resource value: 0x7f0200d0
-			public const int ic_mr_button_connecting_04_dark = 2130837712;
+			public const int ic_mr_button_connecting_05_dark = 2130837712;
 			
 			// aapt resource value: 0x7f0200d1
-			public const int ic_mr_button_connecting_04_light = 2130837713;
+			public const int ic_mr_button_connecting_05_light = 2130837713;
 			
 			// aapt resource value: 0x7f0200d2
-			public const int ic_mr_button_connecting_05_dark = 2130837714;
+			public const int ic_mr_button_connecting_06_dark = 2130837714;
 			
 			// aapt resource value: 0x7f0200d3
-			public const int ic_mr_button_connecting_05_light = 2130837715;
+			public const int ic_mr_button_connecting_06_light = 2130837715;
 			
 			// aapt resource value: 0x7f0200d4
-			public const int ic_mr_button_connecting_06_dark = 2130837716;
+			public const int ic_mr_button_connecting_07_dark = 2130837716;
 			
 			// aapt resource value: 0x7f0200d5
-			public const int ic_mr_button_connecting_06_light = 2130837717;
+			public const int ic_mr_button_connecting_07_light = 2130837717;
 			
 			// aapt resource value: 0x7f0200d6
-			public const int ic_mr_button_connecting_07_dark = 2130837718;
+			public const int ic_mr_button_connecting_08_dark = 2130837718;
 			
 			// aapt resource value: 0x7f0200d7
-			public const int ic_mr_button_connecting_07_light = 2130837719;
+			public const int ic_mr_button_connecting_08_light = 2130837719;
 			
 			// aapt resource value: 0x7f0200d8
-			public const int ic_mr_button_connecting_08_dark = 2130837720;
+			public const int ic_mr_button_connecting_09_dark = 2130837720;
 			
 			// aapt resource value: 0x7f0200d9
-			public const int ic_mr_button_connecting_08_light = 2130837721;
+			public const int ic_mr_button_connecting_09_light = 2130837721;
 			
 			// aapt resource value: 0x7f0200da
-			public const int ic_mr_button_connecting_09_dark = 2130837722;
+			public const int ic_mr_button_connecting_10_dark = 2130837722;
 			
 			// aapt resource value: 0x7f0200db
-			public const int ic_mr_button_connecting_09_light = 2130837723;
+			public const int ic_mr_button_connecting_10_light = 2130837723;
 			
 			// aapt resource value: 0x7f0200dc
-			public const int ic_mr_button_connecting_10_dark = 2130837724;
+			public const int ic_mr_button_connecting_11_dark = 2130837724;
 			
 			// aapt resource value: 0x7f0200dd
-			public const int ic_mr_button_connecting_10_light = 2130837725;
+			public const int ic_mr_button_connecting_11_light = 2130837725;
 			
 			// aapt resource value: 0x7f0200de
-			public const int ic_mr_button_connecting_11_dark = 2130837726;
+			public const int ic_mr_button_connecting_12_dark = 2130837726;
 			
 			// aapt resource value: 0x7f0200df
-			public const int ic_mr_button_connecting_11_light = 2130837727;
+			public const int ic_mr_button_connecting_12_light = 2130837727;
 			
 			// aapt resource value: 0x7f0200e0
-			public const int ic_mr_button_connecting_12_dark = 2130837728;
+			public const int ic_mr_button_connecting_13_dark = 2130837728;
 			
 			// aapt resource value: 0x7f0200e1
-			public const int ic_mr_button_connecting_12_light = 2130837729;
+			public const int ic_mr_button_connecting_13_light = 2130837729;
 			
 			// aapt resource value: 0x7f0200e2
-			public const int ic_mr_button_connecting_13_dark = 2130837730;
+			public const int ic_mr_button_connecting_14_dark = 2130837730;
 			
 			// aapt resource value: 0x7f0200e3
-			public const int ic_mr_button_connecting_13_light = 2130837731;
+			public const int ic_mr_button_connecting_14_light = 2130837731;
 			
 			// aapt resource value: 0x7f0200e4
-			public const int ic_mr_button_connecting_14_dark = 2130837732;
+			public const int ic_mr_button_connecting_15_dark = 2130837732;
 			
 			// aapt resource value: 0x7f0200e5
-			public const int ic_mr_button_connecting_14_light = 2130837733;
+			public const int ic_mr_button_connecting_15_light = 2130837733;
 			
 			// aapt resource value: 0x7f0200e6
-			public const int ic_mr_button_connecting_15_dark = 2130837734;
+			public const int ic_mr_button_connecting_16_dark = 2130837734;
 			
 			// aapt resource value: 0x7f0200e7
-			public const int ic_mr_button_connecting_15_light = 2130837735;
+			public const int ic_mr_button_connecting_16_light = 2130837735;
 			
 			// aapt resource value: 0x7f0200e8
-			public const int ic_mr_button_connecting_16_dark = 2130837736;
+			public const int ic_mr_button_connecting_17_dark = 2130837736;
 			
 			// aapt resource value: 0x7f0200e9
-			public const int ic_mr_button_connecting_16_light = 2130837737;
+			public const int ic_mr_button_connecting_17_light = 2130837737;
 			
 			// aapt resource value: 0x7f0200ea
-			public const int ic_mr_button_connecting_17_dark = 2130837738;
+			public const int ic_mr_button_connecting_18_dark = 2130837738;
 			
 			// aapt resource value: 0x7f0200eb
-			public const int ic_mr_button_connecting_17_light = 2130837739;
+			public const int ic_mr_button_connecting_18_light = 2130837739;
 			
 			// aapt resource value: 0x7f0200ec
-			public const int ic_mr_button_connecting_18_dark = 2130837740;
+			public const int ic_mr_button_connecting_19_dark = 2130837740;
 			
 			// aapt resource value: 0x7f0200ed
-			public const int ic_mr_button_connecting_18_light = 2130837741;
+			public const int ic_mr_button_connecting_19_light = 2130837741;
 			
 			// aapt resource value: 0x7f0200ee
-			public const int ic_mr_button_connecting_19_dark = 2130837742;
+			public const int ic_mr_button_connecting_20_dark = 2130837742;
 			
 			// aapt resource value: 0x7f0200ef
-			public const int ic_mr_button_connecting_19_light = 2130837743;
+			public const int ic_mr_button_connecting_20_light = 2130837743;
 			
 			// aapt resource value: 0x7f0200f0
-			public const int ic_mr_button_connecting_20_dark = 2130837744;
+			public const int ic_mr_button_connecting_21_dark = 2130837744;
 			
 			// aapt resource value: 0x7f0200f1
-			public const int ic_mr_button_connecting_20_light = 2130837745;
+			public const int ic_mr_button_connecting_21_light = 2130837745;
 			
 			// aapt resource value: 0x7f0200f2
-			public const int ic_mr_button_connecting_21_dark = 2130837746;
+			public const int ic_mr_button_connecting_22_dark = 2130837746;
 			
 			// aapt resource value: 0x7f0200f3
-			public const int ic_mr_button_connecting_21_light = 2130837747;
+			public const int ic_mr_button_connecting_22_light = 2130837747;
 			
 			// aapt resource value: 0x7f0200f4
-			public const int ic_mr_button_connecting_22_dark = 2130837748;
+			public const int ic_mr_button_connecting_23_dark = 2130837748;
 			
 			// aapt resource value: 0x7f0200f5
-			public const int ic_mr_button_connecting_22_light = 2130837749;
+			public const int ic_mr_button_connecting_23_light = 2130837749;
 			
 			// aapt resource value: 0x7f0200f6
-			public const int ic_mr_button_connecting_23_dark = 2130837750;
+			public const int ic_mr_button_connecting_24_dark = 2130837750;
 			
 			// aapt resource value: 0x7f0200f7
-			public const int ic_mr_button_connecting_23_light = 2130837751;
+			public const int ic_mr_button_connecting_24_light = 2130837751;
 			
 			// aapt resource value: 0x7f0200f8
-			public const int ic_mr_button_connecting_24_dark = 2130837752;
+			public const int ic_mr_button_connecting_25_dark = 2130837752;
 			
 			// aapt resource value: 0x7f0200f9
-			public const int ic_mr_button_connecting_24_light = 2130837753;
+			public const int ic_mr_button_connecting_25_light = 2130837753;
 			
 			// aapt resource value: 0x7f0200fa
-			public const int ic_mr_button_connecting_25_dark = 2130837754;
+			public const int ic_mr_button_connecting_26_dark = 2130837754;
 			
 			// aapt resource value: 0x7f0200fb
-			public const int ic_mr_button_connecting_25_light = 2130837755;
+			public const int ic_mr_button_connecting_26_light = 2130837755;
 			
 			// aapt resource value: 0x7f0200fc
-			public const int ic_mr_button_connecting_26_dark = 2130837756;
+			public const int ic_mr_button_connecting_27_dark = 2130837756;
 			
 			// aapt resource value: 0x7f0200fd
-			public const int ic_mr_button_connecting_26_light = 2130837757;
+			public const int ic_mr_button_connecting_27_light = 2130837757;
 			
 			// aapt resource value: 0x7f0200fe
-			public const int ic_mr_button_connecting_27_dark = 2130837758;
+			public const int ic_mr_button_connecting_28_dark = 2130837758;
 			
 			// aapt resource value: 0x7f0200ff
-			public const int ic_mr_button_connecting_27_light = 2130837759;
+			public const int ic_mr_button_connecting_28_light = 2130837759;
 			
 			// aapt resource value: 0x7f020100
-			public const int ic_mr_button_connecting_28_dark = 2130837760;
+			public const int ic_mr_button_connecting_29_dark = 2130837760;
 			
 			// aapt resource value: 0x7f020101
-			public const int ic_mr_button_connecting_28_light = 2130837761;
+			public const int ic_mr_button_connecting_29_light = 2130837761;
 			
 			// aapt resource value: 0x7f020102
-			public const int ic_mr_button_connecting_29_dark = 2130837762;
+			public const int ic_mr_button_connecting_30_dark = 2130837762;
 			
 			// aapt resource value: 0x7f020103
-			public const int ic_mr_button_connecting_29_light = 2130837763;
+			public const int ic_mr_button_connecting_30_light = 2130837763;
 			
 			// aapt resource value: 0x7f020104
-			public const int ic_mr_button_connecting_30_dark = 2130837764;
+			public const int ic_mr_button_disabled_dark = 2130837764;
 			
 			// aapt resource value: 0x7f020105
-			public const int ic_mr_button_connecting_30_light = 2130837765;
+			public const int ic_mr_button_disabled_light = 2130837765;
 			
 			// aapt resource value: 0x7f020106
-			public const int ic_mr_button_disabled_dark = 2130837766;
+			public const int ic_mr_button_disconnected_dark = 2130837766;
 			
 			// aapt resource value: 0x7f020107
-			public const int ic_mr_button_disabled_light = 2130837767;
+			public const int ic_mr_button_disconnected_light = 2130837767;
 			
 			// aapt resource value: 0x7f020108
-			public const int ic_mr_button_disconnected_dark = 2130837768;
+			public const int ic_mr_button_grey = 2130837768;
 			
 			// aapt resource value: 0x7f020109
-			public const int ic_mr_button_disconnected_light = 2130837769;
+			public const int ic_vol_type_speaker_dark = 2130837769;
 			
 			// aapt resource value: 0x7f02010a
-			public const int ic_mr_button_grey = 2130837770;
+			public const int ic_vol_type_speaker_group_dark = 2130837770;
 			
 			// aapt resource value: 0x7f02010b
-			public const int ic_vol_type_speaker_dark = 2130837771;
+			public const int ic_vol_type_speaker_group_light = 2130837771;
 			
 			// aapt resource value: 0x7f02010c
-			public const int ic_vol_type_speaker_group_dark = 2130837772;
+			public const int ic_vol_type_speaker_light = 2130837772;
 			
 			// aapt resource value: 0x7f02010d
-			public const int ic_vol_type_speaker_group_light = 2130837773;
+			public const int ic_vol_type_tv_dark = 2130837773;
 			
 			// aapt resource value: 0x7f02010e
-			public const int ic_vol_type_speaker_light = 2130837774;
+			public const int ic_vol_type_tv_light = 2130837774;
 			
 			// aapt resource value: 0x7f02010f
-			public const int ic_vol_type_tv_dark = 2130837775;
+			public const int mr_button_connected_dark = 2130837775;
 			
 			// aapt resource value: 0x7f020110
-			public const int ic_vol_type_tv_light = 2130837776;
+			public const int mr_button_connected_light = 2130837776;
 			
 			// aapt resource value: 0x7f020111
-			public const int mr_button_connected_dark = 2130837777;
+			public const int mr_button_connecting_dark = 2130837777;
 			
 			// aapt resource value: 0x7f020112
-			public const int mr_button_connected_light = 2130837778;
+			public const int mr_button_connecting_light = 2130837778;
 			
 			// aapt resource value: 0x7f020113
-			public const int mr_button_connecting_dark = 2130837779;
+			public const int mr_button_dark = 2130837779;
 			
 			// aapt resource value: 0x7f020114
-			public const int mr_button_connecting_light = 2130837780;
+			public const int mr_button_light = 2130837780;
 			
 			// aapt resource value: 0x7f020115
-			public const int mr_button_dark = 2130837781;
+			public const int mr_dialog_close_dark = 2130837781;
 			
 			// aapt resource value: 0x7f020116
-			public const int mr_button_light = 2130837782;
+			public const int mr_dialog_close_light = 2130837782;
 			
 			// aapt resource value: 0x7f020117
-			public const int mr_dialog_close_dark = 2130837783;
+			public const int mr_dialog_material_background_dark = 2130837783;
 			
 			// aapt resource value: 0x7f020118
-			public const int mr_dialog_close_light = 2130837784;
+			public const int mr_dialog_material_background_light = 2130837784;
 			
 			// aapt resource value: 0x7f020119
-			public const int mr_dialog_material_background_dark = 2130837785;
+			public const int mr_group_collapse = 2130837785;
 			
 			// aapt resource value: 0x7f02011a
-			public const int mr_dialog_material_background_light = 2130837786;
+			public const int mr_group_expand = 2130837786;
 			
 			// aapt resource value: 0x7f02011b
-			public const int mr_group_collapse = 2130837787;
+			public const int mr_media_pause_dark = 2130837787;
 			
 			// aapt resource value: 0x7f02011c
-			public const int mr_group_expand = 2130837788;
+			public const int mr_media_pause_light = 2130837788;
 			
 			// aapt resource value: 0x7f02011d
-			public const int mr_media_pause_dark = 2130837789;
+			public const int mr_media_play_dark = 2130837789;
 			
 			// aapt resource value: 0x7f02011e
-			public const int mr_media_pause_light = 2130837790;
+			public const int mr_media_play_light = 2130837790;
 			
 			// aapt resource value: 0x7f02011f
-			public const int mr_media_play_dark = 2130837791;
+			public const int mr_media_stop_dark = 2130837791;
 			
 			// aapt resource value: 0x7f020120
-			public const int mr_media_play_light = 2130837792;
+			public const int mr_media_stop_light = 2130837792;
 			
 			// aapt resource value: 0x7f020121
-			public const int mr_media_stop_dark = 2130837793;
+			public const int mr_vol_type_audiotrack_dark = 2130837793;
 			
 			// aapt resource value: 0x7f020122
-			public const int mr_media_stop_light = 2130837794;
+			public const int mr_vol_type_audiotrack_light = 2130837794;
 			
 			// aapt resource value: 0x7f020123
-			public const int mr_vol_type_audiotrack_dark = 2130837795;
+			public const int navigation_empty_icon = 2130837795;
 			
 			// aapt resource value: 0x7f020124
-			public const int mr_vol_type_audiotrack_light = 2130837796;
+			public const int notification_action_background = 2130837796;
 			
 			// aapt resource value: 0x7f020125
-			public const int navigation_empty_icon = 2130837797;
+			public const int notification_bg = 2130837797;
 			
 			// aapt resource value: 0x7f020126
-			public const int notification_action_background = 2130837798;
+			public const int notification_bg_low = 2130837798;
 			
 			// aapt resource value: 0x7f020127
-			public const int notification_bg = 2130837799;
+			public const int notification_bg_low_normal = 2130837799;
 			
 			// aapt resource value: 0x7f020128
-			public const int notification_bg_low = 2130837800;
+			public const int notification_bg_low_pressed = 2130837800;
 			
 			// aapt resource value: 0x7f020129
-			public const int notification_bg_low_normal = 2130837801;
+			public const int notification_bg_normal = 2130837801;
 			
 			// aapt resource value: 0x7f02012a
-			public const int notification_bg_low_pressed = 2130837802;
+			public const int notification_bg_normal_pressed = 2130837802;
 			
 			// aapt resource value: 0x7f02012b
-			public const int notification_bg_normal = 2130837803;
-			
-			// aapt resource value: 0x7f02012c
-			public const int notification_bg_normal_pressed = 2130837804;
-			
-			// aapt resource value: 0x7f02012d
-			public const int notification_icon_background = 2130837805;
-			
-			// aapt resource value: 0x7f020135
-			public const int notification_template_icon_bg = 2130837813;
-			
-			// aapt resource value: 0x7f020136
-			public const int notification_template_icon_low_bg = 2130837814;
-			
-			// aapt resource value: 0x7f02012e
-			public const int notification_tile_bg = 2130837806;
-			
-			// aapt resource value: 0x7f02012f
-			public const int notify_panel_notification_icon_bg = 2130837807;
-			
-			// aapt resource value: 0x7f020130
-			public const int pstouch_button = 2130837808;
+			public const int notification_icon_background = 2130837803;
 			
 			// aapt resource value: 0x7f020131
-			public const int pstouch_button_container = 2130837809;
+			public const int notification_template_icon_bg = 2130837809;
 			
 			// aapt resource value: 0x7f020132
-			public const int tooltip_frame_dark = 2130837810;
+			public const int notification_template_icon_low_bg = 2130837810;
 			
-			// aapt resource value: 0x7f020133
-			public const int tooltip_frame_light = 2130837811;
+			// aapt resource value: 0x7f02012c
+			public const int notification_tile_bg = 2130837804;
 			
-			// aapt resource value: 0x7f020134
-			public const int xamarin_logo = 2130837812;
+			// aapt resource value: 0x7f02012d
+			public const int notify_panel_notification_icon_bg = 2130837805;
+			
+			// aapt resource value: 0x7f02012e
+			public const int tooltip_frame_dark = 2130837806;
+			
+			// aapt resource value: 0x7f02012f
+			public const int tooltip_frame_light = 2130837807;
+			
+			// aapt resource value: 0x7f020130
+			public const int xamarin_logo = 2130837808;
 			
 			static Drawable()
 			{
@@ -5250,8 +5168,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0037
 			public const int SYM = 2131361847;
 			
-			// aapt resource value: 0x7f0a00bf
-			public const int action0 = 2131361983;
+			// aapt resource value: 0x7f0a00ba
+			public const int action0 = 2131361978;
 			
 			// aapt resource value: 0x7f0a007c
 			public const int action_bar = 2131361916;
@@ -5274,17 +5192,17 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a005a
 			public const int action_bar_title = 2131361882;
 			
-			// aapt resource value: 0x7f0a00bc
-			public const int action_container = 2131361980;
+			// aapt resource value: 0x7f0a00b7
+			public const int action_container = 2131361975;
 			
 			// aapt resource value: 0x7f0a007d
 			public const int action_context_bar = 2131361917;
 			
-			// aapt resource value: 0x7f0a00c3
-			public const int action_divider = 2131361987;
+			// aapt resource value: 0x7f0a00be
+			public const int action_divider = 2131361982;
 			
-			// aapt resource value: 0x7f0a00bd
-			public const int action_image = 2131361981;
+			// aapt resource value: 0x7f0a00b8
+			public const int action_image = 2131361976;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int action_menu_divider = 2131361795;
@@ -5301,11 +5219,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a005c
 			public const int action_mode_close_button = 2131361884;
 			
-			// aapt resource value: 0x7f0a00be
-			public const int action_text = 2131361982;
+			// aapt resource value: 0x7f0a00b9
+			public const int action_text = 2131361977;
 			
-			// aapt resource value: 0x7f0a00cc
-			public const int actions = 2131361996;
+			// aapt resource value: 0x7f0a00c7
+			public const int actions = 2131361991;
 			
 			// aapt resource value: 0x7f0a005d
 			public const int activity_chooser_view_content = 2131361885;
@@ -5346,11 +5264,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0063
 			public const int buttonPanel = 2131361891;
 			
-			// aapt resource value: 0x7f0a009f
-			public const int button_scan = 2131361951;
-			
-			// aapt resource value: 0x7f0a00c0
-			public const int cancel_action = 2131361984;
+			// aapt resource value: 0x7f0a00bb
+			public const int cancel_action = 2131361979;
 			
 			// aapt resource value: 0x7f0a0045
 			public const int center = 2131361861;
@@ -5364,8 +5279,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0073
 			public const int checkbox = 2131361907;
 			
-			// aapt resource value: 0x7f0a00c8
-			public const int chronometer = 2131361992;
+			// aapt resource value: 0x7f0a00c3
+			public const int chronometer = 2131361987;
 			
 			// aapt resource value: 0x7f0a004e
 			public const int clip_horizontal = 2131361870;
@@ -5421,8 +5336,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0030
 			public const int end = 2131361840;
 			
-			// aapt resource value: 0x7f0a00ce
-			public const int end_padder = 2131361998;
+			// aapt resource value: 0x7f0a00c9
+			public const int end_padder = 2131361993;
 			
 			// aapt resource value: 0x7f0a003f
 			public const int enterAlways = 2131361855;
@@ -5451,11 +5366,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0054
 			public const int @fixed = 2131361876;
 			
-			// aapt resource value: 0x7f0a00a0
-			public const int flyoutcontent_appbar = 2131361952;
+			// aapt resource value: 0x7f0a009b
+			public const int flyoutcontent_appbar = 2131361947;
 			
-			// aapt resource value: 0x7f0a00a1
-			public const int flyoutcontent_recycler = 2131361953;
+			// aapt resource value: 0x7f0a009c
+			public const int flyoutcontent_recycler = 2131361948;
 			
 			// aapt resource value: 0x7f0a0058
 			public const int forever = 2131361880;
@@ -5472,8 +5387,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0062
 			public const int icon = 2131361890;
 			
-			// aapt resource value: 0x7f0a00cd
-			public const int icon_group = 2131361997;
+			// aapt resource value: 0x7f0a00c8
+			public const int icon_group = 2131361992;
 			
 			// aapt resource value: 0x7f0a003a
 			public const int ifRoom = 2131361850;
@@ -5481,8 +5396,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a005f
 			public const int image = 2131361887;
 			
-			// aapt resource value: 0x7f0a00c9
-			public const int info = 2131361993;
+			// aapt resource value: 0x7f0a00c4
+			public const int info = 2131361988;
 			
 			// aapt resource value: 0x7f0a0059
 			public const int italic = 2131361881;
@@ -5508,26 +5423,26 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0061
 			public const int list_item = 2131361889;
 			
-			// aapt resource value: 0x7f0a00cf
-			public const int main_appbar = 2131361999;
+			// aapt resource value: 0x7f0a00ca
+			public const int main_appbar = 2131361994;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int main_scrollview = 2131362002;
+			// aapt resource value: 0x7f0a00cd
+			public const int main_scrollview = 2131361997;
 			
-			// aapt resource value: 0x7f0a00d1
-			public const int main_tablayout = 2131362001;
+			// aapt resource value: 0x7f0a00cc
+			public const int main_tablayout = 2131361996;
 			
-			// aapt resource value: 0x7f0a00d0
-			public const int main_toolbar = 2131362000;
+			// aapt resource value: 0x7f0a00cb
+			public const int main_toolbar = 2131361995;
 			
-			// aapt resource value: 0x7f0a00da
-			public const int masked = 2131362010;
+			// aapt resource value: 0x7f0a00d5
+			public const int masked = 2131362005;
 			
-			// aapt resource value: 0x7f0a00c2
-			public const int media_actions = 2131361986;
+			// aapt resource value: 0x7f0a00bd
+			public const int media_actions = 2131361981;
 			
-			// aapt resource value: 0x7f0a00d8
-			public const int message = 2131362008;
+			// aapt resource value: 0x7f0a00d3
+			public const int message = 2131362003;
 			
 			// aapt resource value: 0x7f0a0031
 			public const int middle = 2131361841;
@@ -5535,80 +5450,80 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0053
 			public const int mini = 2131361875;
 			
-			// aapt resource value: 0x7f0a00ae
-			public const int mr_art = 2131361966;
+			// aapt resource value: 0x7f0a00a9
+			public const int mr_art = 2131361961;
 			
-			// aapt resource value: 0x7f0a00a3
-			public const int mr_chooser_list = 2131361955;
+			// aapt resource value: 0x7f0a009e
+			public const int mr_chooser_list = 2131361950;
+			
+			// aapt resource value: 0x7f0a00a1
+			public const int mr_chooser_route_desc = 2131361953;
+			
+			// aapt resource value: 0x7f0a009f
+			public const int mr_chooser_route_icon = 2131361951;
+			
+			// aapt resource value: 0x7f0a00a0
+			public const int mr_chooser_route_name = 2131361952;
+			
+			// aapt resource value: 0x7f0a009d
+			public const int mr_chooser_title = 2131361949;
 			
 			// aapt resource value: 0x7f0a00a6
-			public const int mr_chooser_route_desc = 2131361958;
-			
-			// aapt resource value: 0x7f0a00a4
-			public const int mr_chooser_route_icon = 2131361956;
-			
-			// aapt resource value: 0x7f0a00a5
-			public const int mr_chooser_route_name = 2131361957;
-			
-			// aapt resource value: 0x7f0a00a2
-			public const int mr_chooser_title = 2131361954;
-			
-			// aapt resource value: 0x7f0a00ab
-			public const int mr_close = 2131361963;
-			
-			// aapt resource value: 0x7f0a00b1
-			public const int mr_control_divider = 2131361969;
-			
-			// aapt resource value: 0x7f0a00b7
-			public const int mr_control_playback_ctrl = 2131361975;
-			
-			// aapt resource value: 0x7f0a00ba
-			public const int mr_control_subtitle = 2131361978;
-			
-			// aapt resource value: 0x7f0a00b9
-			public const int mr_control_title = 2131361977;
-			
-			// aapt resource value: 0x7f0a00b8
-			public const int mr_control_title_container = 2131361976;
+			public const int mr_close = 2131361958;
 			
 			// aapt resource value: 0x7f0a00ac
-			public const int mr_custom_control = 2131361964;
-			
-			// aapt resource value: 0x7f0a00ad
-			public const int mr_default_control = 2131361965;
-			
-			// aapt resource value: 0x7f0a00a8
-			public const int mr_dialog_area = 2131361960;
-			
-			// aapt resource value: 0x7f0a00a7
-			public const int mr_expandable_area = 2131361959;
-			
-			// aapt resource value: 0x7f0a00bb
-			public const int mr_group_expand_collapse = 2131361979;
-			
-			// aapt resource value: 0x7f0a00af
-			public const int mr_media_main_control = 2131361967;
-			
-			// aapt resource value: 0x7f0a00aa
-			public const int mr_name = 2131361962;
-			
-			// aapt resource value: 0x7f0a00b0
-			public const int mr_playback_control = 2131361968;
-			
-			// aapt resource value: 0x7f0a00a9
-			public const int mr_title_bar = 2131361961;
+			public const int mr_control_divider = 2131361964;
 			
 			// aapt resource value: 0x7f0a00b2
-			public const int mr_volume_control = 2131361970;
-			
-			// aapt resource value: 0x7f0a00b3
-			public const int mr_volume_group_list = 2131361971;
+			public const int mr_control_playback_ctrl = 2131361970;
 			
 			// aapt resource value: 0x7f0a00b5
-			public const int mr_volume_item_icon = 2131361973;
+			public const int mr_control_subtitle = 2131361973;
+			
+			// aapt resource value: 0x7f0a00b4
+			public const int mr_control_title = 2131361972;
+			
+			// aapt resource value: 0x7f0a00b3
+			public const int mr_control_title_container = 2131361971;
+			
+			// aapt resource value: 0x7f0a00a7
+			public const int mr_custom_control = 2131361959;
+			
+			// aapt resource value: 0x7f0a00a8
+			public const int mr_default_control = 2131361960;
+			
+			// aapt resource value: 0x7f0a00a3
+			public const int mr_dialog_area = 2131361955;
+			
+			// aapt resource value: 0x7f0a00a2
+			public const int mr_expandable_area = 2131361954;
 			
 			// aapt resource value: 0x7f0a00b6
-			public const int mr_volume_slider = 2131361974;
+			public const int mr_group_expand_collapse = 2131361974;
+			
+			// aapt resource value: 0x7f0a00aa
+			public const int mr_media_main_control = 2131361962;
+			
+			// aapt resource value: 0x7f0a00a5
+			public const int mr_name = 2131361957;
+			
+			// aapt resource value: 0x7f0a00ab
+			public const int mr_playback_control = 2131361963;
+			
+			// aapt resource value: 0x7f0a00a4
+			public const int mr_title_bar = 2131361956;
+			
+			// aapt resource value: 0x7f0a00ad
+			public const int mr_volume_control = 2131361965;
+			
+			// aapt resource value: 0x7f0a00ae
+			public const int mr_volume_group_list = 2131361966;
+			
+			// aapt resource value: 0x7f0a00b0
+			public const int mr_volume_item_icon = 2131361968;
+			
+			// aapt resource value: 0x7f0a00b1
+			public const int mr_volume_slider = 2131361969;
 			
 			// aapt resource value: 0x7f0a0028
 			public const int multiply = 2131361832;
@@ -5619,26 +5534,20 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a003b
 			public const int never = 2131361851;
 			
-			// aapt resource value: 0x7f0a009e
-			public const int new_devices = 2131361950;
-			
 			// aapt resource value: 0x7f0a0022
 			public const int none = 2131361826;
 			
 			// aapt resource value: 0x7f0a001e
 			public const int normal = 2131361822;
 			
-			// aapt resource value: 0x7f0a00cb
-			public const int notification_background = 2131361995;
+			// aapt resource value: 0x7f0a00c6
+			public const int notification_background = 2131361990;
 			
-			// aapt resource value: 0x7f0a00c5
-			public const int notification_main_column = 2131361989;
+			// aapt resource value: 0x7f0a00c0
+			public const int notification_main_column = 2131361984;
 			
-			// aapt resource value: 0x7f0a00c4
-			public const int notification_main_column_container = 2131361988;
-			
-			// aapt resource value: 0x7f0a009c
-			public const int paired_devices = 2131361948;
+			// aapt resource value: 0x7f0a00bf
+			public const int notification_main_column_container = 2131361983;
 			
 			// aapt resource value: 0x7f0a004c
 			public const int parallax = 2131361868;
@@ -5664,11 +5573,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a004a
 			public const int right = 2131361866;
 			
-			// aapt resource value: 0x7f0a00ca
-			public const int right_icon = 2131361994;
+			// aapt resource value: 0x7f0a00c5
+			public const int right_icon = 2131361989;
 			
-			// aapt resource value: 0x7f0a00c6
-			public const int right_side = 2131361990;
+			// aapt resource value: 0x7f0a00c1
+			public const int right_side = 2131361985;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int save_image_matrix = 2131361804;
@@ -5678,9 +5587,6 @@ namespace AgroPathogenMeterApp.Droid
 			
 			// aapt resource value: 0x7f0a000e
 			public const int save_scale_type = 2131361806;
-			
-			// aapt resource value: 0x7f0a00db
-			public const int scan = 2131362011;
 			
 			// aapt resource value: 0x7f0a0029
 			public const int screen = 2131361833;
@@ -5733,14 +5639,14 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a008a
 			public const int select_dialog_listview = 2131361930;
 			
-			// aapt resource value: 0x7f0a00d3
-			public const int shellcontent_appbar = 2131362003;
+			// aapt resource value: 0x7f0a00ce
+			public const int shellcontent_appbar = 2131361998;
 			
-			// aapt resource value: 0x7f0a00d5
-			public const int shellcontent_scrollview = 2131362005;
+			// aapt resource value: 0x7f0a00d0
+			public const int shellcontent_scrollview = 2131362000;
 			
-			// aapt resource value: 0x7f0a00d4
-			public const int shellcontent_toolbar = 2131362004;
+			// aapt resource value: 0x7f0a00cf
+			public const int shellcontent_toolbar = 2131361999;
 			
 			// aapt resource value: 0x7f0a0074
 			public const int shortcut = 2131361908;
@@ -5754,8 +5660,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0025
 			public const int showTitle = 2131361829;
 			
-			// aapt resource value: 0x7f0a00d6
-			public const int sliding_tabs = 2131362006;
+			// aapt resource value: 0x7f0a00d1
+			public const int sliding_tabs = 2131362001;
 			
 			// aapt resource value: 0x7f0a008d
 			public const int smallLabel = 2131361933;
@@ -5787,8 +5693,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a004b
 			public const int start = 2131361867;
 			
-			// aapt resource value: 0x7f0a00c1
-			public const int status_bar_latest_event_content = 2131361985;
+			// aapt resource value: 0x7f0a00bc
+			public const int status_bar_latest_event_content = 2131361980;
 			
 			// aapt resource value: 0x7f0a0076
 			public const int submenuarrow = 2131361910;
@@ -5823,8 +5729,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0015
 			public const int textinput_error = 2131361813;
 			
-			// aapt resource value: 0x7f0a00c7
-			public const int time = 2131361991;
+			// aapt resource value: 0x7f0a00c2
+			public const int time = 2131361986;
 			
 			// aapt resource value: 0x7f0a001c
 			public const int title = 2131361820;
@@ -5832,17 +5738,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0071
 			public const int titleDividerNoCustom = 2131361905;
 			
-			// aapt resource value: 0x7f0a009d
-			public const int title_new_devices = 2131361949;
-			
-			// aapt resource value: 0x7f0a009b
-			public const int title_paired_devices = 2131361947;
-			
 			// aapt resource value: 0x7f0a006f
 			public const int title_template = 2131361903;
 			
-			// aapt resource value: 0x7f0a00d7
-			public const int toolbar = 2131362007;
+			// aapt resource value: 0x7f0a00d2
+			public const int toolbar = 2131362002;
 			
 			// aapt resource value: 0x7f0a003e
 			public const int top = 2131361854;
@@ -5880,11 +5780,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0a0016
 			public const int view_offset_helper = 2131361814;
 			
-			// aapt resource value: 0x7f0a00d9
-			public const int visible = 2131362009;
+			// aapt resource value: 0x7f0a00d4
+			public const int visible = 2131362004;
 			
-			// aapt resource value: 0x7f0a00b4
-			public const int volume_item_container = 2131361972;
+			// aapt resource value: 0x7f0a00af
+			public const int volume_item_container = 2131361967;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int withText = 2131361852;
@@ -6100,103 +6000,97 @@ namespace AgroPathogenMeterApp.Droid
 			public const int design_text_input_password_icon = 2130968616;
 			
 			// aapt resource value: 0x7f040029
-			public const int device_list = 2130968617;
+			public const int FlyoutContent = 2130968617;
 			
 			// aapt resource value: 0x7f04002a
-			public const int device_name = 2130968618;
+			public const int mr_chooser_dialog = 2130968618;
 			
 			// aapt resource value: 0x7f04002b
-			public const int FlyoutContent = 2130968619;
+			public const int mr_chooser_list_item = 2130968619;
 			
 			// aapt resource value: 0x7f04002c
-			public const int mr_chooser_dialog = 2130968620;
+			public const int mr_controller_material_dialog_b = 2130968620;
 			
 			// aapt resource value: 0x7f04002d
-			public const int mr_chooser_list_item = 2130968621;
+			public const int mr_controller_volume_item = 2130968621;
 			
 			// aapt resource value: 0x7f04002e
-			public const int mr_controller_material_dialog_b = 2130968622;
+			public const int mr_playback_control = 2130968622;
 			
 			// aapt resource value: 0x7f04002f
-			public const int mr_controller_volume_item = 2130968623;
+			public const int mr_volume_control = 2130968623;
 			
 			// aapt resource value: 0x7f040030
-			public const int mr_playback_control = 2130968624;
+			public const int notification_action = 2130968624;
 			
 			// aapt resource value: 0x7f040031
-			public const int mr_volume_control = 2130968625;
+			public const int notification_action_tombstone = 2130968625;
 			
 			// aapt resource value: 0x7f040032
-			public const int notification_action = 2130968626;
+			public const int notification_media_action = 2130968626;
 			
 			// aapt resource value: 0x7f040033
-			public const int notification_action_tombstone = 2130968627;
+			public const int notification_media_cancel_action = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int notification_media_action = 2130968628;
+			public const int notification_template_big_media = 2130968628;
 			
 			// aapt resource value: 0x7f040035
-			public const int notification_media_cancel_action = 2130968629;
+			public const int notification_template_big_media_custom = 2130968629;
 			
 			// aapt resource value: 0x7f040036
-			public const int notification_template_big_media = 2130968630;
+			public const int notification_template_big_media_narrow = 2130968630;
 			
 			// aapt resource value: 0x7f040037
-			public const int notification_template_big_media_custom = 2130968631;
+			public const int notification_template_big_media_narrow_custom = 2130968631;
 			
 			// aapt resource value: 0x7f040038
-			public const int notification_template_big_media_narrow = 2130968632;
+			public const int notification_template_custom_big = 2130968632;
 			
 			// aapt resource value: 0x7f040039
-			public const int notification_template_big_media_narrow_custom = 2130968633;
+			public const int notification_template_icon_group = 2130968633;
 			
 			// aapt resource value: 0x7f04003a
-			public const int notification_template_custom_big = 2130968634;
+			public const int notification_template_lines_media = 2130968634;
 			
 			// aapt resource value: 0x7f04003b
-			public const int notification_template_icon_group = 2130968635;
+			public const int notification_template_media = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int notification_template_lines_media = 2130968636;
+			public const int notification_template_media_custom = 2130968636;
 			
 			// aapt resource value: 0x7f04003d
-			public const int notification_template_media = 2130968637;
+			public const int notification_template_part_chronometer = 2130968637;
 			
 			// aapt resource value: 0x7f04003e
-			public const int notification_template_media_custom = 2130968638;
+			public const int notification_template_part_time = 2130968638;
 			
 			// aapt resource value: 0x7f04003f
-			public const int notification_template_part_chronometer = 2130968639;
+			public const int RootLayout = 2130968639;
 			
 			// aapt resource value: 0x7f040040
-			public const int notification_template_part_time = 2130968640;
+			public const int select_dialog_item_material = 2130968640;
 			
 			// aapt resource value: 0x7f040041
-			public const int RootLayout = 2130968641;
+			public const int select_dialog_multichoice_material = 2130968641;
 			
 			// aapt resource value: 0x7f040042
-			public const int select_dialog_item_material = 2130968642;
+			public const int select_dialog_singlechoice_material = 2130968642;
 			
 			// aapt resource value: 0x7f040043
-			public const int select_dialog_multichoice_material = 2130968643;
+			public const int ShellContent = 2130968643;
 			
 			// aapt resource value: 0x7f040044
-			public const int select_dialog_singlechoice_material = 2130968644;
+			public const int support_simple_spinner_dropdown_item = 2130968644;
 			
 			// aapt resource value: 0x7f040045
-			public const int ShellContent = 2130968645;
+			public const int Tabbar = 2130968645;
 			
 			// aapt resource value: 0x7f040046
-			public const int support_simple_spinner_dropdown_item = 2130968646;
+			public const int Toolbar = 2130968646;
 			
 			// aapt resource value: 0x7f040047
-			public const int Tabbar = 2130968647;
-			
-			// aapt resource value: 0x7f040048
-			public const int Toolbar = 2130968648;
-			
-			// aapt resource value: 0x7f040049
-			public const int tooltip = 2130968649;
+			public const int tooltip = 2130968647;
 			
 			static Layout()
 			{
@@ -6204,22 +6098,6 @@ namespace AgroPathogenMeterApp.Droid
 			}
 			
 			private Layout()
-			{
-			}
-		}
-		
-		public partial class Menu
-		{
-			
-			// aapt resource value: 0x7f100000
-			public const int bluetooth_option_menu = 2131755008;
-			
-			static Menu()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Menu()
 			{
 			}
 		}
@@ -6348,20 +6226,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b0034
 			public const int bottom_sheet_behavior = 2131427380;
 			
-			// aapt resource value: 0x7f0b003e
-			public const int bt_not_enabled_leaving = 2131427390;
-			
-			// aapt resource value: 0x7f0b0048
-			public const int button_scan = 2131427400;
-			
 			// aapt resource value: 0x7f0b0035
 			public const int character_counter_pattern = 2131427381;
-			
-			// aapt resource value: 0x7f0b0049
-			public const int connect = 2131427401;
-			
-			// aapt resource value: 0x7f0b004a
-			public const int discoverable = 2131427402;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int mr_button_content_description = 2131427328;
@@ -6426,15 +6292,6 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b0014
 			public const int mr_user_route_category_name = 2131427348;
 			
-			// aapt resource value: 0x7f0b0045
-			public const int none_found = 2131427397;
-			
-			// aapt resource value: 0x7f0b0044
-			public const int none_paired = 2131427396;
-			
-			// aapt resource value: 0x7f0b003d
-			public const int not_connected = 2131427389;
-			
 			// aapt resource value: 0x7f0b0036
 			public const int password_toggle_content_description = 2131427382;
 			
@@ -6450,35 +6307,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b003a
 			public const int path_password_strike_through = 2131427386;
 			
-			// aapt resource value: 0x7f0b0042
-			public const int scanning = 2131427394;
-			
 			// aapt resource value: 0x7f0b0026
 			public const int search_menu_title = 2131427366;
 			
-			// aapt resource value: 0x7f0b0043
-			public const int select_device = 2131427395;
-			
-			// aapt resource value: 0x7f0b003c
-			public const int send = 2131427388;
-			
 			// aapt resource value: 0x7f0b003b
 			public const int status_bar_notification_info_overflow = 2131427387;
-			
-			// aapt resource value: 0x7f0b0040
-			public const int title_connected_to = 2131427392;
-			
-			// aapt resource value: 0x7f0b003f
-			public const int title_connecting = 2131427391;
-			
-			// aapt resource value: 0x7f0b0041
-			public const int title_not_connected = 2131427393;
-			
-			// aapt resource value: 0x7f0b0047
-			public const int title_other_devices = 2131427399;
-			
-			// aapt resource value: 0x7f0b0046
-			public const int title_paired_devices = 2131427398;
 			
 			static String()
 			{
@@ -6511,8 +6344,8 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0d016e
 			public const int Animation_Design_BottomSheetDialog = 2131558766;
 			
-			// aapt resource value: 0x7f0d0198
-			public const int AppCompatDialogStyle = 2131558808;
+			// aapt resource value: 0x7f0d0191
+			public const int AppCompatDialogStyle = 2131558801;
 			
 			// aapt resource value: 0x7f0d00a9
 			public const int Base_AlertDialog_AppCompat = 2131558569;
@@ -7006,27 +6839,6 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0d0170
 			public const int Base_Widget_Design_TabLayout = 2131558768;
 			
-			// aapt resource value: 0x7f0d0195
-			public const int BlueToothTheme = 2131558805;
-			
-			// aapt resource value: 0x7f0d0193
-			public const int BlueToothTheme_ButtonStyle = 2131558803;
-			
-			// aapt resource value: 0x7f0d0194
-			public const int BlueToothTheme_ListViewStyle = 2131558804;
-			
-			// aapt resource value: 0x7f0d0192
-			public const int BlueToothTheme_TextStyle = 2131558802;
-			
-			// aapt resource value: 0x7f0d0191
-			public const int BlueToothTheme_TitleTextStyle = 2131558801;
-			
-			// aapt resource value: 0x7f0d018f
-			public const int BlueToothTheme_WindowTitleBackground = 2131558799;
-			
-			// aapt resource value: 0x7f0d0190
-			public const int BlueToothTheme_WindowTitleStyle = 2131558800;
-			
 			// aapt resource value: 0x7f0d000b
 			public const int CardView = 2131558411;
 			
@@ -7036,20 +6848,20 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0d000e
 			public const int CardView_Light = 2131558414;
 			
-			// aapt resource value: 0x7f0d019a
-			public const int DrawerArrowStyle = 2131558810;
+			// aapt resource value: 0x7f0d0193
+			public const int DrawerArrowStyle = 2131558803;
 			
-			// aapt resource value: 0x7f0d0196
-			public const int MainTheme = 2131558806;
+			// aapt resource value: 0x7f0d018f
+			public const int MainTheme = 2131558799;
 			
-			// aapt resource value: 0x7f0d0197
-			public const int MainTheme_Base = 2131558807;
+			// aapt resource value: 0x7f0d0190
+			public const int MainTheme_Base = 2131558800;
 			
-			// aapt resource value: 0x7f0d0199
-			public const int MyTheme = 2131558809;
+			// aapt resource value: 0x7f0d0192
+			public const int MyTheme = 2131558802;
 			
-			// aapt resource value: 0x7f0d019b
-			public const int MyTheme_Base = 2131558811;
+			// aapt resource value: 0x7f0d0194
+			public const int MyTheme_Base = 2131558804;
 			
 			// aapt resource value: 0x7f0d002d
 			public const int Platform_AppCompat = 2131558445;
@@ -7743,10 +7555,7 @@ namespace AgroPathogenMeterApp.Droid
 		{
 			
 			// aapt resource value: 0x7f080000
-			public const int device_filter = 2131230720;
-			
-			// aapt resource value: 0x7f080001
-			public const int xamarin_essentials_fileprovider_file_paths = 2131230721;
+			public const int xamarin_essentials_fileprovider_file_paths = 2131230720;
 			
 			static Xml()
 			{
@@ -8578,12 +8387,6 @@ namespace AgroPathogenMeterApp.Droid
 			
 			// aapt resource value: 3
 			public const int AppCompatTheme_windowNoTitle = 3;
-			
-			public static int[] AutoScaleTextView = new int[] {
-					2130772340};
-			
-			// aapt resource value: 0
-			public const int AutoScaleTextView_minTextSize = 0;
 			
 			public static int[] BottomNavigationView = new int[] {
 					2130772030,
