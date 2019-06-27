@@ -6,15 +6,17 @@
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.run1">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="E.Coli Test"
-                VerticalOptions="Start"
-                HorizontalOptions="CenterAndExpand"
-                   FontSize="Large" />
-            <Label Text="This will run you through how to do a standard E.Coli test in urine." HorizontalOptions="StartAndExpand" FontSize="Medium" />
-            <Label Text="First Step, obtain a urine sample from the animal you wish to test." HorizontalOptions="StartAndExpand" FontSize="Medium" />
-            <Label Text="Second Step, (Do everything required to prepare the sample, edit once steps are determined)." FontSize="Medium" />
-            <Label Text="One you have finished all the above steps, please press continue to go through the next steps." FontSize="Medium" />
+        <StackLayout Padding="10,10,10,10">
+            <Label  Text="E.Coli Test"
+                    TextColor="Black"
+                    VerticalOptions="Start"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    FontSize="Large" />
+            <Label Text="       The following screens will run you through how to do a standard E.Coli test in urine." HorizontalOptions="StartAndExpand" FontSize="Medium" />
+            <Label Text="       First Step, obtain a urine sample from the animal you wish to test." HorizontalOptions="StartAndExpand" FontSize="Medium" />
+            <Label Text="       Second Step, (Do everything required to prepare the sample, edit once steps are determined)." FontSize="Medium" />
+            <Label Text="       One you have finished all the above steps, please press next to go through the next steps." FontSize="Medium" />
             <Button Text="Next" HorizontalOptions="End" Clicked="OnNextClicked" />
         </StackLayout>
     </ContentPage.Content>

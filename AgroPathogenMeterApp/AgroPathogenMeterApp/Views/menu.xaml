@@ -12,12 +12,9 @@
               "{ConstraintExpression Type=RelativeToParent, Property=Width}"
             RelativeLayout.HeightConstraint=
               "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-                <Label  Text="AgroPathogenMeter"
-                        VerticalOptions="Start"
-                        Margin="30"
-                        TextColor="Black"
-                        HorizontalOptions="CenterAndExpand"
-                        FontSize="Large" />
+                <Image Source="@drawable/APMLogo" 
+                       VerticalOptions="Start"
+                       />
                 <Button Text="Run Test"
                         Clicked="OnRunTestClicked"
                         Padding="20"

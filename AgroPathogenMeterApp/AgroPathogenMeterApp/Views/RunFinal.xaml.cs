@@ -5,18 +5,35 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Linq;
 
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RunFinal : ContentPage
     {
+        private String isInfect;
         public RunFinal()
         {
             Analytics.TrackEvent("Scan completed");
+            IsInfected();
             InitializeComponent();
         }
 
+        private async void IsInfected()
+        {
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+            if (_database.IsInfected)
+            {
+                isInfect = "The sample is infected";
+            }
+            else
+            {
+                isInfect = "The sample is not infected";
+            }
+            boolPath.Text = isInfect;
+        }
         private async void OnMoreInfoClicked(object sender, EventArgs e)
         {
             //Do other stuff
@@ -27,47 +44,10 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnSaveResultClicked(object sender, EventArgs e)
         {
-            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
-            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
-            try
-            {
-                double startingPotential = _database.StartingPotential;
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex, new Dictionary<string, string>
-                {
-                    {"AllDb Count:", _database.ToString()}
-                });
-            }
-            //Do stuff
-            /*
-            ScanDatabase _database;
-            try
-            {
-                string boolPath;
-                _database = await App.Database.GetScanAsync(allDb.Count());
-
-                if (_database.IsInfected)
-                {
-                    boolPath = "The sample is infected";
-                }
-                else
-                {
-                    boolPath = "The sample isn't infected";
-                }
-
-                BindingContext = boolPath;
-            }
-            catch(Exception ex)
-            {
-                Crashes.TrackError(ex);
-            }
-
             await Navigation.PushAsync(new dataview
             {
             });
-            */
+            
         }
     }
 }

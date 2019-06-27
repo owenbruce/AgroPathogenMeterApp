@@ -6,14 +6,15 @@
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.Run3">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10,10,10,10">
             <Label  Text="This page will walk you through how to run the test."
-                    VerticalOptions="CenterAndExpand"
+                    TextColor="Black"
+                    VerticalOptions="Start"
                     FontSize="Large"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand" />
-            <Label  Text="First Step, (steps for putting the sample on the electrode and then inserting the sample into the APM)." FontSize="Medium" HorizontalOptions="Start" />
-            <Label  Text="Finally, once you press run test below, the test wil begin to run, the test will take approx. ? minutes to run, please do not close the app until the test is completed." FontSize="Medium" HorizontalOptions="Start" />
+            <Label  Text="      First Step, (steps for putting the sample on the electrode and then inserting the sample into the APM)." FontSize="Medium" HorizontalOptions="Start" />
+            <Label  Text="      Finally, once you press run test below, the test wil begin to run, the test will take approx. ? minutes to run, please do not close the app until the test is completed." FontSize="Medium" HorizontalOptions="Start" />
             <Button Text="Run Test" Clicked="OnRunTestClicked" HorizontalOptions="End" VerticalOptions="End" />
         </StackLayout>
     </ContentPage.Content>

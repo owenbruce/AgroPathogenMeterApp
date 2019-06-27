@@ -26,11 +26,11 @@
                              HorizontalOptions="Center"
                              VerticalOptions="CenterAndExpand" />
                 <Button Text="Continue"
-                        IsEnabled="False"
-                        IsVisible="False"
+                        IsVisible="{Binding isVisible}"
                         Clicked="OnContinueClicked"
                         FontSize="Medium"
-                        VerticalOptions="Center" />
+                        VerticalOptions="End" 
+                        HorizontalOptions="Center"/>
             </Grid>
         </RelativeLayout>
     </ContentPage.Content>
