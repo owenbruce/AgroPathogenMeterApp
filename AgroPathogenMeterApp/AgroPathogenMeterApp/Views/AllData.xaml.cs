@@ -22,8 +22,8 @@ namespace AgroPathogenMeterApp.Views
         public AllData()
         {
             Analytics.TrackEvent("AllData opened");
-            i = 1;
             SetDatabaseList();
+            i = 1;
             InitializeComponent();
             GetDatabase();
         }
