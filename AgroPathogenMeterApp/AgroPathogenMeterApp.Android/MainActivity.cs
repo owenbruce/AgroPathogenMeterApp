@@ -7,6 +7,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using System.Security;
+using PalmSens;
 
 namespace AgroPathogenMeterApp.Droid
 {
