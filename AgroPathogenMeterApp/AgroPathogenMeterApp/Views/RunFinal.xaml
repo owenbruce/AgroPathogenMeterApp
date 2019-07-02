@@ -11,7 +11,8 @@
                    FontSize="Large"
                    VerticalOptions="Start"
                    HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding boolPath}"
+            <Label Text=""
+                   x:Name="boolPath"
                    FontSize="Medium"
                    HorizontalOptions="CenterAndExpand" />
             <Label Text="To save results, please press the save result button below, to see more information about the test, please press the more information button below"

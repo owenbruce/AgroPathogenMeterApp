@@ -7,8 +7,6 @@
              x:Class="AgroPathogenMeterApp.Views.TestingDb">
     <ContentPage.Content>
         <StackLayout>
-            <Entry Text=""
-                   x:Name="Entry1" />
             <Label Text=""
                    x:Name="Label1" />
             <Button Text="View Result"

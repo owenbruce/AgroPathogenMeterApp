@@ -22,8 +22,8 @@ namespace AgroPathogenMeterApp.Views
                 AmountBacteria = 0,
                 ConcentrationBacteria = 0,
                 Date = DateTime.Now,
-                IsInfected = false,
-                VoltamType = Entry1.Text
+                IsInfected = true,
+                VoltamType = "Positive Test"
             };
             await App.Database.SaveScanAsync(scan);
 

@@ -1,13 +1,13 @@
-﻿using AgroPathogenMeterApp.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace AgroPathogenMeterApp
 {
     public interface IBtControl
     {
-        void connect();
+        void Connect();
 
-        void connect(ScanDatabase _database);
-
-        string FilePath();
+        String FilePath();
     }
 }
