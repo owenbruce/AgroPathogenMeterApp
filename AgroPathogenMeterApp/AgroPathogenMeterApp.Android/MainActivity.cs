@@ -5,6 +5,7 @@ using Android.Runtime;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using PalmSens;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -18,7 +19,6 @@ namespace AgroPathogenMeterApp.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,6 +29,11 @@ namespace AgroPathogenMeterApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            Android.Content.Context context;
+            context = (Android.Content.Context)BluetoothService;
+            context.GetSystemService(BluetoothService);
+            PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
