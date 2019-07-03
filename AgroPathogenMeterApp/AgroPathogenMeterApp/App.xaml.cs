@@ -19,6 +19,7 @@ namespace AgroPathogenMeterApp
 
         public static bool UseMockDataStore = true;
         private static Scanner scanner;
+        private static Scanner2 scanner2;
         public static NavigationPage NavigationPage { get; private set; }
 
         public App()
@@ -27,7 +28,19 @@ namespace AgroPathogenMeterApp
             scanner = Database;
             MainPage = new MasterPage();
         }
-
+        
+        public static Scanner2 Database2
+        {
+            get
+            {
+                if(scanner2 == null)
+                {
+                    scanner2 = new Scanner2(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BtDevices.db3"));
+                }
+                return scanner2;
+            }
+        }
+        
         public static Scanner Database   //Creates the main database that will be used
         {
             get

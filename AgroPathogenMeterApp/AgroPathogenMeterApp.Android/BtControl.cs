@@ -6,7 +6,7 @@ using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Data;
 using PalmSens.Devices;
-using PalmSens.PSAndroid.Comm;
+//using PalmSens.PSAndroid.Comm;
 using PalmSens.Plottables;
 using Android.App;
 using Android.Content;
@@ -15,6 +15,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Bluetooth;
+using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -23,6 +24,23 @@ namespace AgroPathogenMeterApp.Droid
         Measurement measurement;
         Curve _activeCurve;
         
+        public async void TestConn()
+        {
+            if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
+            {
+                foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
+                {
+                    BtDatabase btDatabase = new BtDatabase
+                    {
+                        Name = pairedDevice.Name,
+                        Address = pairedDevice.Address
+                    };
+
+                    await App.Database2.SaveScanAsync(btDatabase);
+                }
+            }
+        }
+        /*
         public async void Connect()
         {
             Android.Content.Context context;
@@ -57,6 +75,7 @@ namespace AgroPathogenMeterApp.Droid
             }
 
         }
+        */
         private void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
             Status status = e.GetStatus();

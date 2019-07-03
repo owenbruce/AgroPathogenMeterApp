@@ -6,7 +6,8 @@ namespace AgroPathogenMeterApp
 {
     public interface IBtControl
     {
-        void Connect();
+        void TestConn();
+        //void Connect();
 
         String FilePath();
     }

@@ -14,9 +14,16 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
-        private void OnBtClicked(Object sender, EventArgs e)
+        private async void OnBtClicked(Object sender, EventArgs e)
         {
-            DependencyService.Get<IBtControl>().Connect();
+            try
+            {
+                //DependencyService.Get<IBtControl>().TestConn();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
+            }
         }
     }
 }

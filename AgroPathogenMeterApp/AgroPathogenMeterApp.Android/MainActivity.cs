@@ -1,19 +1,24 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
+using Android.Bluetooth;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using System.Security;
-using PalmSens;
 
 namespace AgroPathogenMeterApp.Droid
 {
     [Activity(Label = "AgroPathogenMeterApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private BluetoothDeviceReceiver _receiver;
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -30,15 +35,41 @@ namespace AgroPathogenMeterApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-
+            /*
             Android.Content.Context context;
-            context = (Android.Content.Context)BluetoothService;
+            context = (Android.Content.Context)BluetoothService;   This cast is faulty, need to find correct way to get context
             context.GetSystemService(BluetoothService);
-            PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
-
+            PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);   Before getting context, fix ps.psandroid not working
+            */
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
+            
+            const int locationPermissionsRequestCode = 1000;
+
+            var locationPermissions = new[]
+            {
+                Manifest.Permission.AccessCoarseLocation,
+                Manifest.Permission.AccessFineLocation
+            };
+
+            var coarseLocationPermissionGranted =
+                ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation);
+
+            var fineLocationPermissionGranted =
+                ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation);
+
+            if (coarseLocationPermissionGranted == Permission.Denied ||
+                fineLocationPermissionGranted == Permission.Denied)
+            {
+                ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
+            }
+
+            _receiver = new BluetoothDeviceReceiver();
+
+            RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
+            
+
             LoadApplication(new App());
         }
     }
