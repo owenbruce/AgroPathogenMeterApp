@@ -19,7 +19,7 @@ namespace AgroPathogenMeterApp.Views
         private List<ScanDatabase> allDB;
         private int i;
 
-        public AllData()
+        public AllData()   //Allow the user to view more specific information about scan such as extimated amount of bacteria, date, and more
         {
             Analytics.TrackEvent("AllData opened");
             SetDatabaseList();
@@ -28,12 +28,12 @@ namespace AgroPathogenMeterApp.Views
             GetDatabase();
         }
 
-        private async void SetDatabaseList()
+        private async void SetDatabaseList()   //Set a list to contain all databases stored currently in the file
         {
             allDB = await App.Database.GetScanDatabasesAsync();
         }
 
-        private async void GetDatabase()
+        private async void GetDatabase()   //Get a specific database depending on where you are in the list of databases
         {
             if (i > 0)
             {
@@ -42,18 +42,18 @@ namespace AgroPathogenMeterApp.Views
                 {
                     RefreshGui();
                 }
-                else
+                else    //If you try and go to the next database and it doesn't exist, don't change and reset i to it's previous value
                 {
                     i--;
                 }
             }
-            else
+            else   //If you try and go to the previous database and it doesn't exist, don't change and reset i to it's previous value
             {
                 i++;
             }
         }
 
-        private void OnNextClicked(object sender, EventArgs e)
+        private void OnNextClicked(object sender, EventArgs e)   //Allow the user to view the next database in the list
         {
             try
             {
@@ -66,7 +66,7 @@ namespace AgroPathogenMeterApp.Views
             }
         }
 
-        private void OnPreviousClicked(object sender, EventArgs e)
+        private void OnPreviousClicked(object sender, EventArgs e)   //Allow the user to view the previous database in the list
         {
             try
             {
@@ -81,7 +81,7 @@ namespace AgroPathogenMeterApp.Views
 
         private void RefreshGui()
         {
-            ObservableDictionary<string, string> displayStrings = new ObservableDictionary<string, string>();
+            ObservableDictionary<string, string> displayStrings = new ObservableDictionary<string, string>();   //Initialize a observable dictionary to allow the xaml file to grab information from the current database and display it
             try
             {
                 if (Scan.IsInfected)
@@ -107,7 +107,7 @@ namespace AgroPathogenMeterApp.Views
                 Crashes.TrackError(ex);
             }
 
-            BindingContext = displayStrings;
+            BindingContext = displayStrings;   //Set the binding context to the observable dictionary
         }
     }
 }

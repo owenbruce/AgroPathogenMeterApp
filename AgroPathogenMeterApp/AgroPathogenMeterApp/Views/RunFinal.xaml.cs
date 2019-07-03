@@ -13,14 +13,14 @@ namespace AgroPathogenMeterApp.Views
     public partial class RunFinal : ContentPage
     {
         private String isInfect;
-        public RunFinal()
+        public RunFinal()   //Show the final information about the scan and allow to view more information if wanted
         {
             Analytics.TrackEvent("Scan completed");
             IsInfected();
             InitializeComponent();
         }
 
-        private async void IsInfected()
+        private async void IsInfected()   //Displays whether or not the sample is infected
         {
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
@@ -34,7 +34,7 @@ namespace AgroPathogenMeterApp.Views
             }
             boolPath.Text = isInfect;
         }
-        private async void OnMoreInfoClicked(object sender, EventArgs e)
+        private async void OnMoreInfoClicked(object sender, EventArgs e)   //Opens the screen with more information
         {
             //Do other stuff
             await Navigation.PushAsync(new AllData
@@ -42,7 +42,7 @@ namespace AgroPathogenMeterApp.Views
             });
         }
 
-        private async void OnSaveResultClicked(object sender, EventArgs e)
+        private async void OnSaveResultClicked(object sender, EventArgs e)   //"Saves" the result into the database, potentially have this store to a server
         {
             await Navigation.PushAsync(new dataview
             {

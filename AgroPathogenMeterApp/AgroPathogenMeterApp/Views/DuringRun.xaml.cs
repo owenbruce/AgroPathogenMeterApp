@@ -11,14 +11,14 @@ namespace AgroPathogenMeterApp.Views
     public partial class DuringRun : ContentPage
     {
         bool isVisible = false;
-        public DuringRun()
+        public DuringRun()   //Display progress of the scan while the scan is taking place
         {
             Analytics.TrackEvent("DuringRun Opened");
             InitializeComponent();
             //ContinueRun();
         }
 
-        private async void ContinueRun()
+        private async void ContinueRun()   //Make the next button invisible so the user cannot proceed until the scan has been completed
         {
             isVisible = await Visible();
         }
@@ -29,7 +29,7 @@ namespace AgroPathogenMeterApp.Views
             return await Task.FromResult<bool>(true);
         }
 
-        private async void OnContinueClicked(object sender, EventArgs e)
+        private async void OnContinueClicked(object sender, EventArgs e)   //Continue onto dataview to see the results of the scan
         {
             await Navigation.PushAsync(new RunFinal
             {

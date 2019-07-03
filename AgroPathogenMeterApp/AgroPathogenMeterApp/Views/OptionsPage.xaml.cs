@@ -10,11 +10,11 @@ namespace AgroPathogenMeterApp.Views
     {
         private readonly List<HomeMenuItem> menuItems;
 
-        public OptionsPage()
+        public OptionsPage()   //Hamburger menu contains menus
         {
             InitializeComponent();
 
-            menuItems = new List<HomeMenuItem>
+            menuItems = new List<HomeMenuItem>   //Initialize the choices in the hamburger menu
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse"},
                 new HomeMenuItem {Id = MenuItemType.Instructions, Title="Instructions"},
@@ -23,10 +23,10 @@ namespace AgroPathogenMeterApp.Views
                 new HomeMenuItem {Id = MenuItemType.About, Title="About"}
             };
 
-            ListViewMenu.ItemsSource = menuItems;
+            ListViewMenu.ItemsSource = menuItems;   //Set the items in the menu to be the initialized ones above
 
             ListViewMenu.SelectedItem = menuItems[0];
-            ListViewMenu.ItemSelected += async (sender, e) =>
+            ListViewMenu.ItemSelected += async (sender, e) =>   //Opend the required screen based upon the selected item
             {
                 if (e.SelectedItem == null)
                 {

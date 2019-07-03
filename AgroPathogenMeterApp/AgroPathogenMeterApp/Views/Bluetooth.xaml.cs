@@ -10,7 +10,7 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Bluetooth : ContentPage
     {
-        public Bluetooth()
+        public Bluetooth()   //Allow the user to connect to the APM via bluetooth without having to run a test
         {
             Analytics.TrackEvent("Bluetooth Opened");
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace AgroPathogenMeterApp.Views
         {
             try
             {
-                BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();
+                BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();   //Connect to bluetooth differently depending on the operating system being used
             }
             catch (Exception ex)
             {

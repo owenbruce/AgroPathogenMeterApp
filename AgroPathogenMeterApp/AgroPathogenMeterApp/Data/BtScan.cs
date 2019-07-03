@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Data
 {
-    public class Scanner2
+    public class Scanner2   //Database to store information of bt devices
     {
         private readonly SQLiteAsyncConnection _database;
 

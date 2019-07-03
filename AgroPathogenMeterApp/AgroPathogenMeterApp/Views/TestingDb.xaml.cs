@@ -9,13 +9,13 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestingDb : ContentPage
     {
-        public TestingDb()
+        public TestingDb()   //Test a positive scan
         {
             Analytics.TrackEvent("Testing Database opened");
             InitializeComponent();
         }
 
-        private async void OnViewResultClicked(object sender, EventArgs e)
+        private async void OnViewResultClicked(object sender, EventArgs e)   //Set the paramters for a positive result and open up the screen to view all the data
         {
             ScanDatabase scan = new ScanDatabase
             {

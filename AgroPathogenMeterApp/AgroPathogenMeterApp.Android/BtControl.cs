@@ -26,7 +26,7 @@ namespace AgroPathogenMeterApp.Droid
         Measurement measurement;
         Curve _activeCurve;
         
-        public async Task<BtDatabase> TestConn()
+        public async Task<BtDatabase> TestConn()   //Test the connection to the APM
         {
             BtDatabase junk = new BtDatabase();
             try
@@ -94,6 +94,7 @@ namespace AgroPathogenMeterApp.Droid
 
         }
         */
+        //Below allows for starting the necessary measurements on the APM
         private void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
             Status status = e.GetStatus();

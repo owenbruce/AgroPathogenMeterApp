@@ -15,7 +15,7 @@ namespace AgroPathogenMeterApp.Views
             GetContext();
         }
 
-        private async void GetContext()
+        private async void GetContext()   //Get the database which was just scanned and display whether or not the sample is infected
         {
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
@@ -27,7 +27,7 @@ namespace AgroPathogenMeterApp.Views
             await Navigation.PopToRootAsync();
         }
 
-        private async void OnViewDataClicked(object sender, EventArgs e)
+        private async void OnViewDataClicked(object sender, EventArgs e)   //Allows the user to view more information about the scan/sample
         {
             await Navigation.PushAsync(new AllData
             {

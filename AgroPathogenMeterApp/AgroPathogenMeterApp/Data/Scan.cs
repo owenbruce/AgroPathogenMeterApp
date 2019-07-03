@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Data
 {
-    public class Scanner
+    public class Scanner   //Database to store information of scan including both results and parameters
     {
         private readonly SQLiteAsyncConnection _database;
 

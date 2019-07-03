@@ -12,7 +12,7 @@ namespace AgroPathogenMeterApp
     {
         private readonly Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
 
-        public MasterPage()
+        public MasterPage()   //Create a Hamburger menu
         {
             InitializeComponent();
 
@@ -21,7 +21,7 @@ namespace AgroPathogenMeterApp
             MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
         }
 
-        public async Task NavigateFromMenu(int id)
+        public async Task NavigateFromMenu(int id)   //Set all of the bages to be accessed by each button in the hamburger menu
         {
             if (!MenuPages.ContainsKey(id))
             {
@@ -51,7 +51,7 @@ namespace AgroPathogenMeterApp
 
             var newPage = MenuPages[id];
 
-            if (newPage != null && Detail != newPage)
+            if (newPage != null && Detail != newPage)   //Set the detail to be the new page opened
             {
                 Detail = newPage;
 

@@ -18,6 +18,7 @@ namespace AgroPathogenMeterApp
         public static string AzureBackendUrl = "http://localhost:5000";
 
         public static bool UseMockDataStore = true;
+
         private static Scanner scanner;
         private static Scanner2 scanner2;
         public static NavigationPage NavigationPage { get; private set; }
@@ -30,7 +31,7 @@ namespace AgroPathogenMeterApp
             MainPage = new MasterPage();
         }
         
-        public static Scanner2 Database2
+        public static Scanner2 Database2   //Creates the database which will be used to store information about the connected APM
         {
             get
             {

@@ -8,7 +8,7 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class testRunning : ContentPage   //Opens the menu which will be open and show progress while the scan is running and being processed
     {
-        public testRunning()
+        public testRunning()   //Current unused, potentially replace w/ RunFinal unless otherwise desired
         {
             InitializeComponent();
         }

@@ -10,14 +10,14 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class rawData : ContentPage   //Allows for developers to view the raw data
     {
-        public rawData()
+        public rawData()   //Allow a developer to view the raw data
         {
             Analytics.TrackEvent("Raw Data Opened");
             GraphCreate();
             InitializeComponent();
         }
 
-        private void GraphCreate()
+        private void GraphCreate()   //Work on getting a graph working on the phone
         {
             var Model = new PlotModel { Title = "Square Wave Voltammetric Scan" };
             var lineSeries = new LineSeries();

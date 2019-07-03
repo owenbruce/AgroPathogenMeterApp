@@ -25,7 +25,8 @@ namespace AgroPathogenMeterApp.Droid
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
         }
-        public LinearSweep LinSweep()
+
+        public LinearSweep LinSweep()   //Set the parameters for a linear sweep scan
         {
             if (_database == null)
             {
@@ -43,7 +44,7 @@ namespace AgroPathogenMeterApp.Droid
 
             return linearSweep;
         }
-        public SquareWave SWV()
+        public SquareWave SWV()   //Set the parameters for a square wave scan
         {
             if (_database == null)
             {
@@ -62,7 +63,7 @@ namespace AgroPathogenMeterApp.Droid
             return squareWave;
         }
 
-        public CyclicVoltammetry CV()
+        public CyclicVoltammetry CV()   //Set the parameters for a cyclic scan
         {
             if (_database == null)
             {
@@ -79,7 +80,7 @@ namespace AgroPathogenMeterApp.Droid
 
             return cyclicVoltammetry;
         }
-        public ACVoltammetry ACV()
+        public ACVoltammetry ACV()   //Set the parameters for an alternating current scan
         {
             if(_database == null)
             {

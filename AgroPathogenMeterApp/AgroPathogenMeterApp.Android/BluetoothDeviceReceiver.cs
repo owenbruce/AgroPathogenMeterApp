@@ -15,7 +15,7 @@ using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Droid
 {
-    public class BluetoothDeviceReceiver : BroadcastReceiver
+    public class BluetoothDeviceReceiver : BroadcastReceiver   //Allow for the phone to connect to the APM
     {
         public override async void OnReceive(Context context, Intent intent)
         {
@@ -37,7 +37,7 @@ namespace AgroPathogenMeterApp.Droid
                     Address = device.Address
                 };
 
-                //await App.Database2.SaveScanAsync(btDatabase);
+                await App.Database2.SaveScanAsync(btDatabase);
             }
         }
     }

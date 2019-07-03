@@ -24,7 +24,7 @@ namespace AgroPathogenMeterApp.Views
             await Navigation.PushAsync(new rawData { });
         }
 
-        private async void OnTestingClicked(object sender, EventArgs e)
+        private async void OnTestingClicked(object sender, EventArgs e)   //Opens up a small test screen to test a positive result
         {
             await Navigation.PushAsync(new TestingDb { });
         }

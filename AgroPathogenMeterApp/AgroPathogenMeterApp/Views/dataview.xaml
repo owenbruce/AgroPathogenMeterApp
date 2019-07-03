@@ -8,8 +8,7 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Editor Placeholder="Testing Data Saving Capabilites"
-                    Text="{Binding IsInfected}"
+            <Entry  Text="{Binding IsInfected}"
                     HeightRequest="75" />
             <Button Text="Save data"
                     Margin="10"
