@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Bluetooth;
 using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Crashes;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -24,21 +26,37 @@ namespace AgroPathogenMeterApp.Droid
         Measurement measurement;
         Curve _activeCurve;
         
-        public async void TestConn()
+        public async Task<BtDatabase> TestConn()
         {
-            if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
+            BtDatabase junk = new BtDatabase();
+            try
             {
-                foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
+                if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
                 {
-                    BtDatabase btDatabase = new BtDatabase
-                    {
-                        Name = pairedDevice.Name,
-                        Address = pairedDevice.Address
-                    };
 
-                    await App.Database2.SaveScanAsync(btDatabase);
+                    foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
+                    {
+
+                        BtDatabase btDatabase = new BtDatabase
+                        {
+
+                            Name = pairedDevice.Name,
+                            Address = pairedDevice.Address
+                        };
+                        await App.Database2.SaveScanAsync(btDatabase);
+
+                        return btDatabase;
+                    }
+
+
                 }
             }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+            return junk;
+            
         }
         /*
         public async void Connect()

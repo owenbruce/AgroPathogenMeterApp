@@ -2,6 +2,8 @@
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinUniversity.Infrastructure;
+using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -14,16 +16,20 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
-        private async void OnBtClicked(Object sender, EventArgs e)
+        private async void OnBtClicked(object sender, EventArgs e)
         {
             try
             {
-                //DependencyService.Get<IBtControl>().TestConn();
+                BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
             }
+
+
+            ObservableDictionary<string, string> displayString = new ObservableDictionary<string, string>();
+
         }
     }
 }
