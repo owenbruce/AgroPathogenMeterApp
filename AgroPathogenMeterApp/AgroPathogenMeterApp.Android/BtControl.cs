@@ -7,8 +7,9 @@ using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Data;
 using PalmSens.Devices;
-//using PalmSens.PSAndroid.Comm;
+using PalmSens.PSAndroid.Comm;
 using PalmSens.Plottables;
+using PalmSens.Techniques;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -18,6 +19,9 @@ using Android.Widget;
 using Android.Bluetooth;
 using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
+using AgroPathogenMeterApp.Droid;
+
+[assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -26,6 +30,8 @@ namespace AgroPathogenMeterApp.Droid
         Measurement measurement;
         Curve _activeCurve;
         
+        public BtControl() { }
+        public static void Init() { }
         public async Task<BtDatabase> TestConn()   //Test the connection to the APM
         {
             BtDatabase junk = new BtDatabase();
@@ -58,7 +64,7 @@ namespace AgroPathogenMeterApp.Droid
             return junk;
             
         }
-        /*
+        
         public async void Connect()
         {
             Android.Content.Context context;
@@ -81,7 +87,15 @@ namespace AgroPathogenMeterApp.Droid
 
                 comm.BeginReceiveCurve += Comm_BeginReceiveCurve;
 
-                comm.Measure(null);
+                Method m = await RunScan();
+                try
+                {
+                    comm.Measure(m);
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
 
                 //After measurement
 
@@ -89,11 +103,12 @@ namespace AgroPathogenMeterApp.Droid
             }
             catch(Exception ex)
             {
+                Crashes.TrackError(ex);
                 device.Close();
             }
 
         }
-        */
+        
         //Below allows for starting the necessary measurements on the APM
         private void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
@@ -125,6 +140,60 @@ namespace AgroPathogenMeterApp.Droid
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
             _activeCurve.Finished -= _activeCurve_Finished;
         }
+
+        //Below runs the necessary scan on the APM
+        private async Task<Method> RunScan()
+        {
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+            var instance = new ScanParams();
+
+            switch (_database.VoltamType)
+            {
+                case "Linear Voltammetry":
+                    LinearSweep linSweep = instance.LinSweep(_database);
+
+                    linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
+                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return linSweep;
+
+                case "Cyclic Voltammetry":
+                    CyclicVoltammetry cVoltammetry = instance.CV(_database);
+
+                    cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                    cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return cVoltammetry;
+
+                case "Square Wave Voltammetry":
+                    SquareWave squareWave = instance.SWV(_database);
+
+                    squareWave.Ranging.StartCurrentRange = new CurrentRange(5);
+                    squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return squareWave;
+
+                case "Alternating Current Voltammetry":
+                    ACVoltammetry acVoltammetry = instance.ACV(_database);
+
+                    acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return acVoltammetry;
+
+                default:
+                    //Add code to notify user that something has gone wrong and needs to be fixed
+
+                    return null;
+            }
+        }
+
+
         public string FilePath()
         {
             return "";

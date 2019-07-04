@@ -1,5 +1,6 @@
 ﻿using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,6 +27,15 @@ namespace AgroPathogenMeterApp.Views
                 VoltamType = "Positive Test"
             };
             await App.Database.SaveScanAsync(scan);
+            try
+            {
+                DependencyService.Get<IBtControl>().Connect();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Failed with error message: " + ex, "OK");
+                Crashes.TrackError(ex);
+            }
 
             await Navigation.PushAsync(new AllData
             {

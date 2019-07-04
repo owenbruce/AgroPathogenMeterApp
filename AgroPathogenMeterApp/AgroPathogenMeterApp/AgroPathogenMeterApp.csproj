@@ -30,8 +30,6 @@
     <PackageReference Include="OxyPlot.Core" Version="1.0.0" />
     <PackageReference Include="OxyPlot.Xamarin.Forms" Version="1.0.0" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
-    <PackageReference Include="Sentry" Version="1.2.0" />
-    <PackageReference Include="Sentry.Extensions.Logging" Version="1.2.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />  

@@ -18,21 +18,9 @@ namespace AgroPathogenMeterApp.Droid
 {
     class ScanParams
     {
-        private ScanDatabase _database = null;
 
-        private async void SetDatabase()
+        public LinearSweep LinSweep(ScanDatabase _database)   //Set the parameters for a linear sweep scan
         {
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-        }
-
-        public LinearSweep LinSweep()   //Set the parameters for a linear sweep scan
-        {
-            if (_database == null)
-            {
-                SetDatabase();
-            }
-
             LinearSweep linearSweep = new LinearSweep
             {
                 BeginPotential = (float)_database.StartingPotential,
@@ -44,13 +32,8 @@ namespace AgroPathogenMeterApp.Droid
 
             return linearSweep;
         }
-        public SquareWave SWV()   //Set the parameters for a square wave scan
+        public SquareWave SWV(ScanDatabase _database)   //Set the parameters for a square wave scan
         {
-            if (_database == null)
-            {
-                SetDatabase();
-            }
-
             SquareWave squareWave = new SquareWave
             {
                 BeginPotential = (float)_database.StartingPotential,
@@ -63,12 +46,8 @@ namespace AgroPathogenMeterApp.Droid
             return squareWave;
         }
 
-        public CyclicVoltammetry CV()   //Set the parameters for a cyclic scan
+        public CyclicVoltammetry CV(ScanDatabase _database)   //Set the parameters for a cyclic scan
         {
-            if (_database == null)
-            {
-                SetDatabase();
-            }
             CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry
             {
                 BeginPotential = (float)_database.StartingPotential,
@@ -80,12 +59,8 @@ namespace AgroPathogenMeterApp.Droid
 
             return cyclicVoltammetry;
         }
-        public ACVoltammetry ACV()   //Set the parameters for an alternating current scan
+        public ACVoltammetry ACV(ScanDatabase _database)   //Set the parameters for an alternating current scan
         {
-            if(_database == null)
-            {
-                SetDatabase();
-            }
             ACVoltammetry acVoltammetry = new ACVoltammetry
             {
                 BeginPotential = (float)_database.StartingPotential,
