@@ -13,7 +13,7 @@
                     FontSize="Large"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand" />
-            <Label  Text="      First Step, (steps for putting the sample on the electrode and then inserting the sample into the APM)." FontSize="Medium" HorizontalOptions="Start" />
+            <Label  Text="      First, (steps for putting the sample on the electrode and then inserting the sample into the APM)." FontSize="Medium" HorizontalOptions="Start" />
             <Label  Text="      Finally, once you press run test below, the test wil begin to run, the test will take approx. ? minutes to run, please do not close the app until the test is completed." FontSize="Medium" HorizontalOptions="Start" />
             <Button Text="Run Test" Clicked="OnRunTestClicked" HorizontalOptions="End" VerticalOptions="End" />
         </StackLayout>

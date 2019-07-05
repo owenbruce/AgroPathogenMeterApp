@@ -13,9 +13,9 @@
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     FontSize="Large" />
-            <Label  Text="      First Step, grab your AgroPathogenMeter (APM) and power it on by holding down the power button on the front until the display lights up." HorizontalOptions="Start" FontSize="Medium" />
-            <Label  Text="      Second Step, in settings, make sure that bluetooth is turned on." HorizontalOptions="Start" FontSize="Medium" />
-            <Label  Text="      Third Step, select the APM in the blueooth settings and press connect. Wait until the device has connected until continuing." HorizontalOptions="Start" FontSize="Medium" />
+            <Label  Text="      First, grab your AgroPathogenMeter (APM) and power it on by holding down the power button on the front until the display lights up." HorizontalOptions="Start" FontSize="Medium" />
+            <Label  Text="      Secondly, go into your phone's setting and make sure that bluetooth is turned on." HorizontalOptions="Start" FontSize="Medium" />
+            <Label  Text="      Now press next to continue onto the next steps." HorizontalOptions="Start" FontSize="Medium" />
             <Button Text="Next" HorizontalOptions="End" VerticalOptions="End" Clicked="OnNextClicked" />
         </StackLayout>
     </ContentPage.Content>

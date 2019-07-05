@@ -14,8 +14,8 @@
                     HorizontalTextAlignment="Center"
                     FontSize="Large" />
             <Label Text="       The following screens will run you through how to do a standard E.Coli test in urine." HorizontalOptions="StartAndExpand" FontSize="Medium" />
-            <Label Text="       First Step, obtain a urine sample from the animal you wish to test." HorizontalOptions="StartAndExpand" FontSize="Medium" />
-            <Label Text="       Second Step, (Do everything required to prepare the sample, edit once steps are determined)." FontSize="Medium" />
+            <Label Text="       First, obtain a urine sample from the animal you wish to test using ... ." HorizontalOptions="StartAndExpand" FontSize="Medium" />
+            <Label Text="       Secondly, (Do everything required to prepare the sample, edit once steps are determined)." FontSize="Medium" />
             <Label Text="       One you have finished all the above steps, please press next to go through the next steps." FontSize="Medium" />
             <Button Text="Next" HorizontalOptions="End" Clicked="OnNextClicked" />
         </StackLayout>
