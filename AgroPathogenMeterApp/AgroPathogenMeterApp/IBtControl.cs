@@ -9,8 +9,26 @@ namespace AgroPathogenMeterApp
     public interface IBtControl
     {
         Task<BtDatabase> TestConn();   //Test (and connect to) an APM
-        void Connect();
+        void Connect(bool simple);
 
-        String FilePath();   //Get an external file location to store on android
+        string FilePath();   //Get an external file location to store on android
     }
+    /*
+    public class BtControl: IBtControl
+    {
+        public Task<BtDatabase> TestConn()
+        {
+            return null;
+        }
+        public void Connect()
+        {
+
+        }
+        public string FilePath()
+        {
+            return "";
+        }
+        
+    }
+    */
 }

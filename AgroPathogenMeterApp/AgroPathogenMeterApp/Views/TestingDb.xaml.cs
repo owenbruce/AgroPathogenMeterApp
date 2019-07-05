@@ -29,7 +29,8 @@ namespace AgroPathogenMeterApp.Views
             await App.Database.SaveScanAsync(scan);
             try
             {
-                DependencyService.Get<IBtControl>().Connect();
+                bool simple = true;
+                DependencyService.Get<IBtControl>().Connect(simple);
             }
             catch (Exception ex)
             {

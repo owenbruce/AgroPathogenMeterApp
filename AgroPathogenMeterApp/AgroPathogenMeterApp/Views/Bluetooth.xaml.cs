@@ -1,4 +1,5 @@
 ﻿using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,11 +21,14 @@ namespace AgroPathogenMeterApp.Views
         {
             try
             {
-                BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();   //Connect to bluetooth differently depending on the operating system being used
+                bool simple = true;
+                var platform = DependencyService.Get<IBtControl>();
+                BtDatabase btDatabase = await platform.TestConn();   //Connect to bluetooth differently depending on the operating system being used
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
+                Crashes.TrackError(ex);
+                //await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
             }
 
 

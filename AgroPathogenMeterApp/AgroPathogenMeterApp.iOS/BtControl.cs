@@ -11,7 +11,7 @@ using UIKit;
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
 namespace AgroPathogenMeterApp.iOS
 {
-    class BtControl : IBtControl
+    public class BtControl : IBtControl
     {
         public BtControl() { }
         public static void Init() { }
@@ -20,7 +20,7 @@ namespace AgroPathogenMeterApp.iOS
             BtDatabase _database = null;
             return _database;
         }
-        public async void Connect()
+        public async void Connect(bool simple)
         {
 
         }

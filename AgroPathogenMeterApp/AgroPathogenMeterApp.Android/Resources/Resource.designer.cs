@@ -72,6 +72,54 @@ namespace AgroPathogenMeterApp.Droid
 			global::PalmSens.PSAndroid.Resource.Styleable.AutoScaleTextView = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView;
 			global::PalmSens.PSAndroid.Resource.Styleable.AutoScaleTextView_minTextSize = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView_minTextSize;
 			global::PalmSens.PSAndroid.Resource.Xml.device_filter = global::AgroPathogenMeterApp.Droid.Resource.Xml.device_filter;
+			global::PalmSens.Core.Simplified.Android.Resource.Attribute.autoScaleTextStyleView = global::AgroPathogenMeterApp.Droid.Resource.Attribute.autoScaleTextStyleView;
+			global::PalmSens.Core.Simplified.Android.Resource.Attribute.minTextSize = global::AgroPathogenMeterApp.Droid.Resource.Attribute.minTextSize;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.background_grey = global::AgroPathogenMeterApp.Droid.Resource.Color.background_grey;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.background_lightgrey = global::AgroPathogenMeterApp.Droid.Resource.Color.background_lightgrey;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.background_lightgrey_down = global::AgroPathogenMeterApp.Droid.Resource.Color.background_lightgrey_down;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.black = global::AgroPathogenMeterApp.Droid.Resource.Color.black;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.palmsensblue = global::AgroPathogenMeterApp.Droid.Resource.Color.palmsensblue;
+			global::PalmSens.Core.Simplified.Android.Resource.Color.white = global::AgroPathogenMeterApp.Droid.Resource.Color.white;
+			global::PalmSens.Core.Simplified.Android.Resource.Drawable.ic_menu_connect = global::AgroPathogenMeterApp.Droid.Resource.Drawable.ic_menu_connect;
+			global::PalmSens.Core.Simplified.Android.Resource.Drawable.ic_menu_connected = global::AgroPathogenMeterApp.Droid.Resource.Drawable.ic_menu_connected;
+			global::PalmSens.Core.Simplified.Android.Resource.Drawable.pstouch_button = global::AgroPathogenMeterApp.Droid.Resource.Drawable.pstouch_button;
+			global::PalmSens.Core.Simplified.Android.Resource.Drawable.pstouch_button_container = global::AgroPathogenMeterApp.Droid.Resource.Drawable.pstouch_button_container;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.button_scan = global::AgroPathogenMeterApp.Droid.Resource.Id.button_scan;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.new_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.new_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.paired_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.paired_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.scan = global::AgroPathogenMeterApp.Droid.Resource.Id.scan;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.title_new_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.title_new_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.Id.title_paired_devices = global::AgroPathogenMeterApp.Droid.Resource.Id.title_paired_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.Layout.device_list = global::AgroPathogenMeterApp.Droid.Resource.Layout.device_list;
+			global::PalmSens.Core.Simplified.Android.Resource.Layout.device_name = global::AgroPathogenMeterApp.Droid.Resource.Layout.device_name;
+			global::PalmSens.Core.Simplified.Android.Resource.Menu.bluetooth_option_menu = global::AgroPathogenMeterApp.Droid.Resource.Menu.bluetooth_option_menu;
+			global::PalmSens.Core.Simplified.Android.Resource.String.ApplicationName = global::AgroPathogenMeterApp.Droid.Resource.String.ApplicationName;
+			global::PalmSens.Core.Simplified.Android.Resource.String.Hello = global::AgroPathogenMeterApp.Droid.Resource.String.Hello;
+			global::PalmSens.Core.Simplified.Android.Resource.String.bt_not_enabled_leaving = global::AgroPathogenMeterApp.Droid.Resource.String.bt_not_enabled_leaving;
+			global::PalmSens.Core.Simplified.Android.Resource.String.button_scan = global::AgroPathogenMeterApp.Droid.Resource.String.button_scan;
+			global::PalmSens.Core.Simplified.Android.Resource.String.connect = global::AgroPathogenMeterApp.Droid.Resource.String.connect;
+			global::PalmSens.Core.Simplified.Android.Resource.String.discoverable = global::AgroPathogenMeterApp.Droid.Resource.String.discoverable;
+			global::PalmSens.Core.Simplified.Android.Resource.String.none_found = global::AgroPathogenMeterApp.Droid.Resource.String.none_found;
+			global::PalmSens.Core.Simplified.Android.Resource.String.none_paired = global::AgroPathogenMeterApp.Droid.Resource.String.none_paired;
+			global::PalmSens.Core.Simplified.Android.Resource.String.not_connected = global::AgroPathogenMeterApp.Droid.Resource.String.not_connected;
+			global::PalmSens.Core.Simplified.Android.Resource.String.scanning = global::AgroPathogenMeterApp.Droid.Resource.String.scanning;
+			global::PalmSens.Core.Simplified.Android.Resource.String.select_device = global::AgroPathogenMeterApp.Droid.Resource.String.select_device;
+			global::PalmSens.Core.Simplified.Android.Resource.String.send = global::AgroPathogenMeterApp.Droid.Resource.String.send;
+			global::PalmSens.Core.Simplified.Android.Resource.String.title_connected_to = global::AgroPathogenMeterApp.Droid.Resource.String.title_connected_to;
+			global::PalmSens.Core.Simplified.Android.Resource.String.title_connecting = global::AgroPathogenMeterApp.Droid.Resource.String.title_connecting;
+			global::PalmSens.Core.Simplified.Android.Resource.String.title_not_connected = global::AgroPathogenMeterApp.Droid.Resource.String.title_not_connected;
+			global::PalmSens.Core.Simplified.Android.Resource.String.title_other_devices = global::AgroPathogenMeterApp.Droid.Resource.String.title_other_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.String.title_paired_devices = global::AgroPathogenMeterApp.Droid.Resource.String.title_paired_devices;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_ButtonStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_ButtonStyle;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_ListViewStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_ListViewStyle;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_TextStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_TextStyle;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_TitleTextStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_TitleTextStyle;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_WindowTitleBackground = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_WindowTitleBackground;
+			global::PalmSens.Core.Simplified.Android.Resource.Style.BlueToothTheme_WindowTitleStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.BlueToothTheme_WindowTitleStyle;
+			global::PalmSens.Core.Simplified.Android.Resource.Xml.device_filter = global::AgroPathogenMeterApp.Droid.Resource.Xml.device_filter;
+			global::PalmSens.Core.Simplified.Android.Resource.Styleable.AutoScaleTextView = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView;
+			global::PalmSens.Core.Simplified.Android.Resource.Styleable.AutoScaleTextView_minTextSize = global::AgroPathogenMeterApp.Droid.Resource.Styleable.AutoScaleTextView_minTextSize;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::AgroPathogenMeterApp.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::AgroPathogenMeterApp.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::AgroPathogenMeterApp.Droid.Resource.Attribute.font;
@@ -7796,6 +7844,12 @@ namespace AgroPathogenMeterApp.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f0b004f
+			public const int ApplicationName = 2131427407;
+			
+			// aapt resource value: 0x7f0b004e
+			public const int Hello = 2131427406;
+			
 			// aapt resource value: 0x7f0b0018
 			public const int abc_action_bar_home_description = 2131427352;
 			
@@ -7919,11 +7973,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b0041
 			public const int bottom_sheet_behavior = 2131427393;
 			
-			// aapt resource value: 0x7f0b0050
-			public const int bt_not_enabled_leaving = 2131427408;
+			// aapt resource value: 0x7f0b0052
+			public const int bt_not_enabled_leaving = 2131427410;
 			
-			// aapt resource value: 0x7f0b005a
-			public const int button_scan = 2131427418;
+			// aapt resource value: 0x7f0b005c
+			public const int button_scan = 2131427420;
 			
 			// aapt resource value: 0x7f0b0042
 			public const int character_counter_content_description = 2131427394;
@@ -7931,11 +7985,11 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b0043
 			public const int character_counter_pattern = 2131427395;
 			
-			// aapt resource value: 0x7f0b005b
-			public const int connect = 2131427419;
+			// aapt resource value: 0x7f0b005d
+			public const int connect = 2131427421;
 			
-			// aapt resource value: 0x7f0b005c
-			public const int discoverable = 2131427420;
+			// aapt resource value: 0x7f0b005e
+			public const int discoverable = 2131427422;
 			
 			// aapt resource value: 0x7f0b0044
 			public const int fab_transformation_scrim_behavior = 2131427396;
@@ -8021,14 +8075,14 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b0047
 			public const int mtrl_chip_close_icon_content_description = 2131427399;
 			
-			// aapt resource value: 0x7f0b0057
-			public const int none_found = 2131427415;
+			// aapt resource value: 0x7f0b0059
+			public const int none_found = 2131427417;
 			
-			// aapt resource value: 0x7f0b0056
-			public const int none_paired = 2131427414;
+			// aapt resource value: 0x7f0b0058
+			public const int none_paired = 2131427416;
 			
-			// aapt resource value: 0x7f0b004f
-			public const int not_connected = 2131427407;
+			// aapt resource value: 0x7f0b0051
+			public const int not_connected = 2131427409;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int password_toggle_content_description = 2131427400;
@@ -8045,35 +8099,35 @@ namespace AgroPathogenMeterApp.Droid
 			// aapt resource value: 0x7f0b004c
 			public const int path_password_strike_through = 2131427404;
 			
-			// aapt resource value: 0x7f0b0054
-			public const int scanning = 2131427412;
+			// aapt resource value: 0x7f0b0056
+			public const int scanning = 2131427414;
 			
 			// aapt resource value: 0x7f0b0033
 			public const int search_menu_title = 2131427379;
 			
-			// aapt resource value: 0x7f0b0055
-			public const int select_device = 2131427413;
+			// aapt resource value: 0x7f0b0057
+			public const int select_device = 2131427415;
 			
-			// aapt resource value: 0x7f0b004e
-			public const int send = 2131427406;
+			// aapt resource value: 0x7f0b0050
+			public const int send = 2131427408;
 			
 			// aapt resource value: 0x7f0b004d
 			public const int status_bar_notification_info_overflow = 2131427405;
 			
-			// aapt resource value: 0x7f0b0052
-			public const int title_connected_to = 2131427410;
-			
-			// aapt resource value: 0x7f0b0051
-			public const int title_connecting = 2131427409;
+			// aapt resource value: 0x7f0b0054
+			public const int title_connected_to = 2131427412;
 			
 			// aapt resource value: 0x7f0b0053
-			public const int title_not_connected = 2131427411;
+			public const int title_connecting = 2131427411;
 			
-			// aapt resource value: 0x7f0b0059
-			public const int title_other_devices = 2131427417;
+			// aapt resource value: 0x7f0b0055
+			public const int title_not_connected = 2131427413;
 			
-			// aapt resource value: 0x7f0b0058
-			public const int title_paired_devices = 2131427416;
+			// aapt resource value: 0x7f0b005b
+			public const int title_other_devices = 2131427419;
+			
+			// aapt resource value: 0x7f0b005a
+			public const int title_paired_devices = 2131427418;
 			
 			static String()
 			{

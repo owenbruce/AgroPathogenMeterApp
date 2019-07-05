@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using PalmSens;
 using PalmSens.Comm;
+using PalmSens.Core.Simplified;
 using PalmSens.Data;
 using PalmSens.Devices;
 using PalmSens.PSAndroid.Comm;
+using PalmSens.Core.Simplified.Android;
 using PalmSens.Plottables;
 using PalmSens.Techniques;
 using Android.App;
@@ -20,18 +22,35 @@ using Android.Bluetooth;
 using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using AgroPathogenMeterApp.Droid;
+using Org.XmlPull.V1;
+using Android.Util;
+using PalmSens.Core.Simplified.Data;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
 
 namespace AgroPathogenMeterApp.Droid
 {
-    class BtControl : IBtControl
+    public class BtControl : IBtControl
     {
         Measurement measurement;
         Curve _activeCurve;
+        SimpleCurve _activeSimpleCurve;
         
         public BtControl() { }
         public static void Init() { }
+
+        public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
+        {
+            BtDatabase btDatabase = new BtDatabase
+            {
+
+                Name = pairedDevice.Name,
+                Address = pairedDevice.Address
+            };
+            await App.Database2.SaveScanAsync(btDatabase);
+
+            return btDatabase;
+        }
         public async Task<BtDatabase> TestConn()   //Test the connection to the APM
         {
             BtDatabase junk = new BtDatabase();
@@ -43,15 +62,7 @@ namespace AgroPathogenMeterApp.Droid
                     foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
                     {
 
-                        BtDatabase btDatabase = new BtDatabase
-                        {
-
-                            Name = pairedDevice.Name,
-                            Address = pairedDevice.Address
-                        };
-                        await App.Database2.SaveScanAsync(btDatabase);
-
-                        return btDatabase;
+                        return await AsyncTask(pairedDevice);
                     }
 
 
@@ -65,8 +76,12 @@ namespace AgroPathogenMeterApp.Droid
             
         }
         
-        public async void Connect()
+        public async void Connect(bool simple)
         {
+            if (simple)
+            {
+                SimpleConnect();
+            }
             Android.Content.Context context;
             context = (Android.Content.Context)Android.Content.Context.BluetoothService;
             Device[] devices = new Device[0];
@@ -109,6 +124,58 @@ namespace AgroPathogenMeterApp.Droid
 
         }
         
+        private async void SimpleConnect()
+        {
+            Android.Content.Context context = Application.Context;
+            IAttributeSet attributeSet = null;
+            PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+            Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
+            psCommSimpleAndroid.Connect(devices[0]);
+
+            psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+            psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+            psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+            SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(await RunScan());
+            /*
+            Method method;
+            using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
+                method = SimpleLoadSaveFunctions.LoadMethod(file);
+                */
+
+
+        }
+
+        private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, PalmSens.Core.Simplified.Data.SimpleCurve activeSimpleCurve)
+        {
+            _activeSimpleCurve = activeSimpleCurve;
+            _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
+            _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
+        }
+
+        private void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
+        {
+            _activeSimpleCurve.NewDataAdded -= _activeCurve_NewDataAdded;
+            _activeSimpleCurve.CurveFinished -= _activeSimpleCurve_CurveFinished;
+        }
+
+        private void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        {
+            int startIndex = e.StartIndex;
+            int count = e.Count;
+            double[] newData = new double[count];
+            (sender as SimpleCurve).YAxisValues.CopyTo(newData, startIndex);
+        }
+
+        private void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         //Below allows for starting the necessary measurements on the APM
         private void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {

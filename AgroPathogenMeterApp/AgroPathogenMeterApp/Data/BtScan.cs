@@ -12,7 +12,7 @@ namespace AgroPathogenMeterApp.Data
         public Scanner2(string dbPath)   //The current running database is saved as a table in the sqlite database
         {
             _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<ScanDatabase>().Wait();
+            _database.CreateTableAsync<BtDatabase>().Wait();
         }
 
         public Task<List<BtDatabase>> GetScanDatabasesAsync()   //Retrieves all of the "databases"

@@ -34,6 +34,8 @@ namespace AgroPathogenMeterApp.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            Xamarin.Forms.DependencyService.Register<IBtControl>();
+
             base.OnCreate(savedInstanceState);
             /*
             Android.Content.Context context;
