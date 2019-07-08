@@ -10,7 +10,6 @@ using Android.Support.V4.Content;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using PalmSens;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -19,12 +18,14 @@ namespace AgroPathogenMeterApp.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private BluetoothDeviceReceiver _receiver;
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
         [SecuritySafeCritical]
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,7 +47,7 @@ namespace AgroPathogenMeterApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
-            
+
             const int locationPermissionsRequestCode = 1000;
 
             var locationPermissions = new[]
@@ -70,7 +71,6 @@ namespace AgroPathogenMeterApp.Droid
             _receiver = new BluetoothDeviceReceiver();
 
             RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
-            
 
             LoadApplication(new App());
         }

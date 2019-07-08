@@ -136,11 +136,23 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FTDI">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\FTDI.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\OxyPlot.dll</HintPath>
     </Reference>
     <Reference Include="PalmSens.Core">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.Core.Simplified">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.Simplified.Android\bin\Debug\PalmSens.Core.Simplified.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.Core.Simplified.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.Simplified.Android\bin\Debug\PalmSens.Core.Simplified.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.PSAndroid.Core">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\PalmSens.PSAndroid.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />

@@ -29,8 +29,8 @@
                         IsVisible="{Binding isVisible}"
                         Clicked="OnContinueClicked"
                         FontSize="Medium"
-                        VerticalOptions="End" 
-                        HorizontalOptions="Center"/>
+                        VerticalOptions="End"
+                        HorizontalOptions="Center" />
             </Grid>
         </RelativeLayout>
     </ContentPage.Content>

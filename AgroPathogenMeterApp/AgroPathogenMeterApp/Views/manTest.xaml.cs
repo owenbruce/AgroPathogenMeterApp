@@ -1,10 +1,9 @@
 ﻿using AgroPathogenMeterApp.Data;
 using AgroPathogenMeterApp.Models;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -66,9 +65,9 @@ namespace AgroPathogenMeterApp.Views
             return false;
         }
 
-        private bool OnlyDotDash(string value1, 
-                                 string value2, 
-                                 string value3, 
+        private bool OnlyDotDash(string value1,
+                                 string value2,
+                                 string value3,
                                  string value4)   //Checks to make sure there is a number entered
         {
             if (value1.Equals(".") ||
@@ -95,10 +94,10 @@ namespace AgroPathogenMeterApp.Views
             return true;
         }
 
-        private bool OnlyDotDash(string value1, 
-                                 string value2, 
-                                 string value3, 
-                                 string value4, 
+        private bool OnlyDotDash(string value1,
+                                 string value2,
+                                 string value3,
+                                 string value4,
                                  string value5)   //Checks to make sure there is a number entered
         {
             if (value1.Equals(".") ||
@@ -129,10 +128,10 @@ namespace AgroPathogenMeterApp.Views
         }
 
         private bool OnlyDotDash(string value1,
-                                 string value2, 
-                                 string value3, 
-                                 string value4, 
-                                 string value5, 
+                                 string value2,
+                                 string value3,
+                                 string value4,
+                                 string value5,
                                  string value6)  //Checks to make sure there's a value entered
         {
             if (value1.Equals(".") ||

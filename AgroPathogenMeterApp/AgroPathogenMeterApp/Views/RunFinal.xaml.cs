@@ -1,11 +1,7 @@
-﻿using AgroPathogenMeterApp.Models;
-using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Analytics;
+﻿using Microsoft.AppCenter.Analytics;
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Linq;
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -13,6 +9,7 @@ namespace AgroPathogenMeterApp.Views
     public partial class RunFinal : ContentPage
     {
         private String isInfect;
+
         public RunFinal()   //Show the final information about the scan and allow to view more information if wanted
         {
             Analytics.TrackEvent("Scan completed");
@@ -34,6 +31,7 @@ namespace AgroPathogenMeterApp.Views
             }
             boolPath.Text = isInfect;
         }
+
         private async void OnMoreInfoClicked(object sender, EventArgs e)   //Opens the screen with more information
         {
             //Do other stuff
@@ -47,7 +45,6 @@ namespace AgroPathogenMeterApp.Views
             await Navigation.PushAsync(new dataview
             {
             });
-            
         }
     }
 }

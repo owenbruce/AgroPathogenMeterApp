@@ -1,5 +1,5 @@
-﻿using OxyPlot;
-using Microsoft.AppCenter.Analytics;
+﻿using Microsoft.AppCenter.Analytics;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Xamarin.Forms;

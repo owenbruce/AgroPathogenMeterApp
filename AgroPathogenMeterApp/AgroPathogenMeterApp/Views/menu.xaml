@@ -12,9 +12,8 @@
               "{ConstraintExpression Type=RelativeToParent, Property=Width}"
             RelativeLayout.HeightConstraint=
               "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-                <Image Source="@drawable/APMLogo" 
-                       VerticalOptions="Start"
-                       />
+                <Image Source="@drawable/APMLogo"
+                       VerticalOptions="Start" />
                 <Button Text="Run Test"
                         Clicked="OnRunTestClicked"
                         Padding="20"

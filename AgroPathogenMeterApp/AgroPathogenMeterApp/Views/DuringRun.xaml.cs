@@ -1,16 +1,17 @@
-﻿using System;
-using Microsoft.AppCenter.Analytics;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Microsoft.AppCenter.Analytics;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DuringRun : ContentPage
     {
-        bool isVisible = false;
+        private bool isVisible = false;
+
         public DuringRun()   //Display progress of the scan while the scan is taking place
         {
             Analytics.TrackEvent("DuringRun Opened");

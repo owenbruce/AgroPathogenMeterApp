@@ -1,10 +1,10 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinUniversity.Infrastructure;
-using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -31,9 +31,7 @@ namespace AgroPathogenMeterApp.Views
                 //await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
             }
 
-
             ObservableDictionary<string, string> displayString = new ObservableDictionary<string, string>();
-
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AgroPathogenMeterApp.Data;
-using Plugin.Permissions;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -30,19 +29,19 @@ namespace AgroPathogenMeterApp
             scanner2 = Database2;
             MainPage = new MasterPage();
         }
-        
+
         public static Scanner2 Database2   //Creates the database which will be used to store information about the connected APM
         {
             get
             {
-                if(scanner2 == null)
+                if (scanner2 == null)
                 {
                     scanner2 = new Scanner2(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BtDevices.db3"));
                 }
                 return scanner2;
             }
         }
-        
+
         public static Scanner Database   //Creates the main database that will be used
         {
             get

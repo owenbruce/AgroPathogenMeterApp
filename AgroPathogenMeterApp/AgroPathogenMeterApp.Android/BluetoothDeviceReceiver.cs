@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Android.App;
+﻿using AgroPathogenMeterApp.Models;
 using Android.Bluetooth;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -21,7 +10,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             var action = intent.Action;
 
-            if (action!= BluetoothDevice.ActionFound)
+            if (action != BluetoothDevice.ActionFound)
             {
                 return;
             }

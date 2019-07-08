@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.AppCenter.Analytics;
+﻿using Microsoft.AppCenter.Analytics;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

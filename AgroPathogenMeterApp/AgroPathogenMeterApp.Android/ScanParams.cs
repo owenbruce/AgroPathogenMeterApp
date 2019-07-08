@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AgroPathogenMeterApp.Data;
-using PalmSens;
+﻿using AgroPathogenMeterApp.Models;
 using PalmSens.Techniques;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System.Threading.Tasks;
-using AgroPathogenMeterApp.Models;
 
 namespace AgroPathogenMeterApp.Droid
 {
-    class ScanParams
+    internal class ScanParams
     {
-
         public LinearSweep LinSweep(ScanDatabase _database)   //Set the parameters for a linear sweep scan
         {
             LinearSweep linearSweep = new LinearSweep
@@ -28,10 +14,10 @@ namespace AgroPathogenMeterApp.Droid
                 Scanrate = (float)_database.ScanRate,
                 StepPotential = (float)_database.PotentialStep    //Add in additional required values once determined
             };
-            
 
             return linearSweep;
         }
+
         public SquareWave SWV(ScanDatabase _database)   //Set the parameters for a square wave scan
         {
             SquareWave squareWave = new SquareWave
@@ -59,6 +45,7 @@ namespace AgroPathogenMeterApp.Droid
 
             return cyclicVoltammetry;
         }
+
         public ACVoltammetry ACV(ScanDatabase _database)   //Set the parameters for an alternating current scan
         {
             ACVoltammetry acVoltammetry = new ACVoltammetry

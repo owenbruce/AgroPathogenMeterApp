@@ -1,30 +1,21 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using AgroPathogenMeterApp.Droid;
+using AgroPathogenMeterApp.Models;
+using Android.App;
+using Android.Bluetooth;
+using Android.Content;
+using Android.Util;
+using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
-using PalmSens.Core.Simplified;
+using PalmSens.Core.Simplified.Android;
+using PalmSens.Core.Simplified.Data;
 using PalmSens.Data;
 using PalmSens.Devices;
-using PalmSens.PSAndroid.Comm;
-using PalmSens.Core.Simplified.Android;
 using PalmSens.Plottables;
+using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Bluetooth;
-using AgroPathogenMeterApp.Models;
-using Microsoft.AppCenter.Crashes;
-using AgroPathogenMeterApp.Droid;
-using Org.XmlPull.V1;
-using Android.Util;
-using PalmSens.Core.Simplified.Data;
+using System;
+using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
 
@@ -32,18 +23,22 @@ namespace AgroPathogenMeterApp.Droid
 {
     public class BtControl : IBtControl
     {
-        Measurement measurement;
-        Curve _activeCurve;
-        SimpleCurve _activeSimpleCurve;
-        
-        public BtControl() { }
-        public static void Init() { }
+        private Measurement measurement;
+        private Curve _activeCurve;
+        private SimpleCurve _activeSimpleCurve;
+
+        public BtControl()
+        {
+        }
+
+        public static void Init()
+        {
+        }
 
         public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
             BtDatabase btDatabase = new BtDatabase
             {
-
                 Name = pairedDevice.Name,
                 Address = pairedDevice.Address
             };
@@ -51,6 +46,7 @@ namespace AgroPathogenMeterApp.Droid
 
             return btDatabase;
         }
+
         public async Task<BtDatabase> TestConn()   //Test the connection to the APM
         {
             BtDatabase junk = new BtDatabase();
@@ -58,14 +54,10 @@ namespace AgroPathogenMeterApp.Droid
             {
                 if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
                 {
-
                     foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
                     {
-
                         return await AsyncTask(pairedDevice);
                     }
-
-
                 }
             }
             catch (Exception ex)
@@ -73,17 +65,16 @@ namespace AgroPathogenMeterApp.Droid
                 Crashes.TrackError(ex);
             }
             return junk;
-            
         }
-        
+
         public async void Connect(bool simple)
         {
             if (simple)
             {
                 SimpleConnect();
+                return;
             }
-            Android.Content.Context context;
-            context = (Android.Content.Context)Android.Content.Context.BluetoothService;
+            Context context = Application.Context;
             Device[] devices = new Device[0];
             DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
             devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
@@ -116,17 +107,16 @@ namespace AgroPathogenMeterApp.Droid
 
                 comm.Disconnect();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Crashes.TrackError(ex);
                 device.Close();
             }
-
         }
-        
+
         private async void SimpleConnect()
         {
-            Android.Content.Context context = Application.Context;
+            Context context = Application.Context;
             IAttributeSet attributeSet = null;
             PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
             Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
@@ -141,8 +131,6 @@ namespace AgroPathogenMeterApp.Droid
             using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
                 method = SimpleLoadSaveFunctions.LoadMethod(file);
                 */
-
-
         }
 
         private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, PalmSens.Core.Simplified.Data.SimpleCurve activeSimpleCurve)
@@ -259,7 +247,6 @@ namespace AgroPathogenMeterApp.Droid
                     return null;
             }
         }
-
 
         public string FilePath()
         {

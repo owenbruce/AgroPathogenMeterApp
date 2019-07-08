@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Microsoft.AppCenter.Analytics;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Microsoft.AppCenter.Analytics;
 
 namespace AgroPathogenMeterApp.Views
 {
