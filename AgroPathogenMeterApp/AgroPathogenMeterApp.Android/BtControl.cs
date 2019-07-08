@@ -7,14 +7,13 @@ using Android.Util;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
-using PalmSens.Core.Simplified.Android;
 using PalmSens.Core.Simplified.Data;
 using PalmSens.Data;
 using PalmSens.Devices;
 using PalmSens.Plottables;
-using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
@@ -74,6 +73,9 @@ namespace AgroPathogenMeterApp.Droid
                 SimpleConnect();
                 return;
             }
+            /*
+            var deviceHandler = new DeviceHandler();
+            var deviceDiscoverer = new deviceDiscoverer();
             Context context = Application.Context;
             Device[] devices = new Device[0];
             DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
@@ -112,6 +114,7 @@ namespace AgroPathogenMeterApp.Droid
                 Crashes.TrackError(ex);
                 device.Close();
             }
+            */
         }
 
         private async void SimpleConnect()
@@ -126,11 +129,20 @@ namespace AgroPathogenMeterApp.Droid
             psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
             psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
             SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(await RunScan());
+
             /*
             Method method;
             using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
                 method = SimpleLoadSaveFunctions.LoadMethod(file);
-                */
+            */
+
+            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null /*filepath*/);
+
+            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+            //Load base null curve
+
+            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);
         }
 
         private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, PalmSens.Core.Simplified.Data.SimpleCurve activeSimpleCurve)

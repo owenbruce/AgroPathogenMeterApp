@@ -51,9 +51,6 @@
     <Reference Include="PalmSens.Core.Simplified.Android">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.Core.Simplified.Android\bin\Debug\PalmSens.Core.Simplified.Android.dll</HintPath>
     </Reference>
-    <Reference Include="PalmSens.PSAndroid.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\SDK\PalmSens SDK for Android 5.4\PSLibraries\PalmSens.PSAndroid.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
