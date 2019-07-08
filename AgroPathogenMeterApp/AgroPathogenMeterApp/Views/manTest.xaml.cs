@@ -4,6 +4,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -166,6 +167,189 @@ namespace AgroPathogenMeterApp.Views
 
         #endregion Parameter Range Checkers
 
+        #region Parameter Setter
+        private async Task<ScanDatabase> ACV(ScanDatabase Scan)
+        {
+            if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
+                            Entry5.Text.Length >= 1 &&
+                            Entry6.Text.Length >= 1)   //If there is an entry in all of the requried fields
+            {
+                if (OnlyDotDash(Entry1.Text,
+                                Entry2.Text,
+                                Entry3.Text,
+                                Entry4.Text,
+                                Entry5.Text,
+                                Entry6.Text))   //If all of them have numbers
+                {
+                    if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                        InPRange(Convert.ToDouble(Entry2.Text)) &&
+                        InStepRange(Convert.ToDouble(Entry3.Text)) &&
+                        InPRange(Convert.ToDouble(Entry4.Text)) &&
+                        InScanRateRange(Convert.ToDouble(Entry5.Text)) &&
+                        InFrequencyRange(Convert.ToDouble(Entry6.Text)))   //If they are all in range
+                    {
+                        Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the database based on entered values
+                        Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                        Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                        Scan.ACPotential = Convert.ToDouble(Entry4.Text);
+                        Scan.ScanRate = Convert.ToDouble(Entry5.Text);
+                        Scan.Frequency = Convert.ToDouble(Entry6.Text);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                        return null;
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Warning", "You must enter a number", "OK");
+                    return null;
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                return null;
+            }
+            return Scan;
+        }
+        private async Task<ScanDatabase> LinearVoltammetry(ScanDatabase Scan)
+        {
+            if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1)  //If there is an entry in all of the required fields
+            {
+                if (OnlyDotDash(Entry1.Text,
+                                Entry2.Text,
+                                Entry3.Text,
+                                Entry4.Text))   //If all of them have numbers
+                {
+                    if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                        InPRange(Convert.ToDouble(Entry2.Text)) &&
+                        InStepRange(Convert.ToDouble(Entry3.Text)) &&
+                        InScanRateRange(Convert.ToDouble(Entry4.Text)))   //If all of them are in range
+                    {
+                        Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set paramters in the database based on entered values
+                        Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                        Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                        Scan.ScanRate = Convert.ToDouble(Entry4.Text);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                        return null;
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Warning", "You must enter a number", "OK");
+                    return null;
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                return null;
+            }
+            return Scan;
+        }
+        private async Task<ScanDatabase> SWV(ScanDatabase Scan)
+        {
+            if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
+                            Entry5.Text.Length >= 1)   //If there is an entry in all of the required fields
+            {
+                if (OnlyDotDash(Entry1.Text,
+                                Entry2.Text,
+                                Entry3.Text,
+                                Entry4.Text,
+                                Entry5.Text))   //If all of them have numbers
+                {
+                    if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                        InPRange(Convert.ToDouble(Entry2.Text)) &&
+                        InStepRange(Convert.ToDouble(Entry3.Text)) &&
+                        InAmplitudeRange(Convert.ToDouble(Entry4.Text)) &&
+                        InFrequencyRange(Convert.ToDouble(Entry5.Text)))   //If all of them are in range
+                    {
+                        Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the databse based on entered values
+                        Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
+                        Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
+                        Scan.Amplitude = Convert.ToDouble(Entry4.Text);
+                        Scan.Frequency = Convert.ToDouble(Entry5.Text);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                        return null;
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Warning", "You must enter a number", "OK");
+                    return null;
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                return null;
+            }
+            return Scan;
+        }
+        private async Task<ScanDatabase> CyclicVotammetry(ScanDatabase Scan)
+        {
+            if (Entry1.Text.Length >= 1 &&
+                            Entry2.Text.Length >= 1 &&
+                            Entry3.Text.Length >= 1 &&
+                            Entry4.Text.Length >= 1 &&
+                            Entry5.Text.Length >= 1)   //If there is an entry in all of the required fields
+            {
+                if (OnlyDotDash(Entry1.Text,
+                                Entry2.Text,
+                                Entry3.Text,
+                                Entry4.Text,
+                                Entry5.Text))   //If all of them have numbers
+                {
+                    if (InPRange(Convert.ToDouble(Entry1.Text)) &&
+                        InPRange(Convert.ToDouble(Entry2.Text)) &&
+                        InPRange(Convert.ToDouble(Entry3.Text)) &&
+                        InStepRange(Convert.ToDouble(Entry4.Text)) &&
+                        InScanRateRange(Convert.ToDouble(Entry5.Text)))   //If all of them are in the correct range
+                    {
+                        Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the database based on entered values
+                        Scan.NegativeVertex = Convert.ToDouble(Entry2.Text);
+                        Scan.PositiveVertex = Convert.ToDouble(Entry3.Text);
+                        Scan.PotentialStep = Convert.ToDouble(Entry4.Text);
+                        Scan.ScanRate = Convert.ToDouble(Entry5.Text);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                        return null;
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Warning", "You must enter a number", "OK");
+                    return null;
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
+                return null;
+                //Setup error loop to get proper values
+            }
+            return Scan;
+        }
+        #endregion
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
             Scanner scanner = App.Database;
@@ -176,192 +360,31 @@ namespace AgroPathogenMeterApp.Views
             };
             try
             {
-                #region Parameter Setter
-
                 switch (Scan.VoltamType)   //Depending on the type of scan being performed, it sets different values from the same fields
                 {
                     case "Cyclic Voltammetry":   //If a cyclic voltammetry scan is wanted
-                        if (Entry1.Text.Length >= 1 &&
-                            Entry2.Text.Length >= 1 &&
-                            Entry3.Text.Length >= 1 &&
-                            Entry4.Text.Length >= 1 &&
-                            Entry5.Text.Length >= 1)   //If there is an entry in all of the required fields
-                        {
-                            if (OnlyDotDash(Entry1.Text,
-                                            Entry2.Text,
-                                            Entry3.Text,
-                                            Entry4.Text,
-                                            Entry5.Text))   //If all of them have numbers
-                            {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry3.Text)) &&
-                                    InStepRange(Convert.ToDouble(Entry4.Text)) &&
-                                    InScanRateRange(Convert.ToDouble(Entry5.Text)))   //If all of them are in the correct range
-                                {
-                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the database based on entered values
-                                    Scan.NegativeVertex = Convert.ToDouble(Entry2.Text);
-                                    Scan.PositiveVertex = Convert.ToDouble(Entry3.Text);
-                                    Scan.PotentialStep = Convert.ToDouble(Entry4.Text);
-                                    Scan.ScanRate = Convert.ToDouble(Entry5.Text);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                await DisplayAlert("Warning", "You must enter a number", "OK");
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                            return;
-                            //Setup error loop to get proper values
-                        }
+                        Scan = await CyclicVotammetry(Scan);
+                        if (Scan == null) return;
                         break;
 
                     case "Square Wave Voltammetry":   //If a squre wave voltammetric scan is wanted
-                        if (Entry1.Text.Length >= 1 &&
-                            Entry2.Text.Length >= 1 &&
-                            Entry3.Text.Length >= 1 &&
-                            Entry4.Text.Length >= 1 &&
-                            Entry5.Text.Length >= 1)   //If there is an entry in all of the required fields
-                        {
-                            if (OnlyDotDash(Entry1.Text,
-                                            Entry2.Text,
-                                            Entry3.Text,
-                                            Entry4.Text,
-                                            Entry5.Text))   //If all of them have numbers
-                            {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
-                                    InAmplitudeRange(Convert.ToDouble(Entry4.Text)) &&
-                                    InFrequencyRange(Convert.ToDouble(Entry5.Text)))   //If all of them are in range
-                                {
-                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the databse based on entered values
-                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    Scan.Amplitude = Convert.ToDouble(Entry4.Text);
-                                    Scan.Frequency = Convert.ToDouble(Entry5.Text);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                await DisplayAlert("Warning", "You must enter a number", "OK");
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                            return;
-                        }
+                        Scan = await SWV(Scan);
+                        if (Scan == null) return;
                         break;
 
                     case "Linear Voltammetry":   //If a Linear Voltammetric scan is wanted
-                        if (Entry1.Text.Length >= 1 &&
-                            Entry2.Text.Length >= 1 &&
-                            Entry3.Text.Length >= 1 &&
-                            Entry4.Text.Length >= 1)  //If there is an entry in all of the required fields
-                        {
-                            if (OnlyDotDash(Entry1.Text,
-                                            Entry2.Text,
-                                            Entry3.Text,
-                                            Entry4.Text))   //If all of them have numbers
-                            {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
-                                    InScanRateRange(Convert.ToDouble(Entry4.Text)))   //If all of them are in range
-                                {
-                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set paramters in the database based on entered values
-                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    Scan.ScanRate = Convert.ToDouble(Entry4.Text);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                await DisplayAlert("Warning", "You must enter a number", "OK");
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                            return;
-                        }
+                        Scan = await LinearVoltammetry(Scan);
+                        if (Scan == null) return;
                         break;
 
                     case "Alternating Current Voltammetry":   //If an alternating current voltammetric scan is wanted
-                        if (Entry1.Text.Length >= 1 &&
-                            Entry2.Text.Length >= 1 &&
-                            Entry3.Text.Length >= 1 &&
-                            Entry4.Text.Length >= 1 &&
-                            Entry5.Text.Length >= 1 &&
-                            Entry6.Text.Length >= 1)   //If there is an entry in all of the requried fields
-                        {
-                            if (OnlyDotDash(Entry1.Text,
-                                            Entry2.Text,
-                                            Entry3.Text,
-                                            Entry4.Text,
-                                            Entry5.Text,
-                                            Entry6.Text))   //If all of them have numbers
-                            {
-                                if (InPRange(Convert.ToDouble(Entry1.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry2.Text)) &&
-                                    InStepRange(Convert.ToDouble(Entry3.Text)) &&
-                                    InPRange(Convert.ToDouble(Entry4.Text)) &&
-                                    InScanRateRange(Convert.ToDouble(Entry5.Text)) &&
-                                    InFrequencyRange(Convert.ToDouble(Entry6.Text)))   //If they are all in range
-                                {
-                                    Scan.StartingPotential = Convert.ToDouble(Entry1.Text);   //Set parameters in the database based on entered values
-                                    Scan.EndingPotential = Convert.ToDouble(Entry2.Text);
-                                    Scan.PotentialStep = Convert.ToDouble(Entry3.Text);
-                                    Scan.ACPotential = Convert.ToDouble(Entry4.Text);
-                                    Scan.ScanRate = Convert.ToDouble(Entry5.Text);
-                                    Scan.Frequency = Convert.ToDouble(Entry6.Text);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                await DisplayAlert("Warning", "You must enter a number", "OK");
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert("Warning", "You must fill in all fields with a number within range", "OK");
-                            return;
-                        }
+                        Scan = await LinearVoltammetry(Scan);
+                        if (Scan == null) return;
                         break;
 
                     default:
                         break;
                 }
-
-                #endregion Parameter Setter
             }
             catch (Exception ex)
             {
