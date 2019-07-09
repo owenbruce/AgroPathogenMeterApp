@@ -378,7 +378,7 @@ namespace AgroPathogenMeterApp.Views
                         break;
 
                     case "Alternating Current Voltammetry":   //If an alternating current voltammetric scan is wanted
-                        Scan = await LinearVoltammetry(Scan);
+                        Scan = await ACV(Scan);
                         if (Scan == null) return;
                         break;
 
