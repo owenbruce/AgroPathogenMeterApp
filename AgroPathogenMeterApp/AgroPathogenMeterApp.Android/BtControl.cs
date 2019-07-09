@@ -142,7 +142,24 @@ namespace AgroPathogenMeterApp.Droid
 
             //Load base null curve
 
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);
+            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+            subtractedCurve.DetectPeaks();
+            double maxValue = subtractedCurve.Maximum();
+
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+
+            if(maxValue >= 0.001)
+            {
+                _database.IsInfected = true;
+            }
+            else
+            {
+                _database.IsInfected = false;
+            }
+
+            //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
         }
 
         private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, PalmSens.Core.Simplified.Data.SimpleCurve activeSimpleCurve)
