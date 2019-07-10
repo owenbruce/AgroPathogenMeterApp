@@ -11,6 +11,7 @@ using PalmSens.Core.Simplified.Data;
 using PalmSens.Data;
 using PalmSens.Devices;
 using PalmSens.Plottables;
+using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
 using System;
 using System.Collections.Generic;
@@ -73,9 +74,7 @@ namespace AgroPathogenMeterApp.Droid
                 SimpleConnect();
                 return;
             }
-            /*
-            var deviceHandler = new DeviceHandler();
-            var deviceDiscoverer = new deviceDiscoverer();
+
             Context context = Application.Context;
             Device[] devices = new Device[0];
             DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
@@ -114,7 +113,7 @@ namespace AgroPathogenMeterApp.Droid
                 Crashes.TrackError(ex);
                 device.Close();
             }
-            */
+
         }
 
         private async void SimpleConnect()
@@ -150,7 +149,7 @@ namespace AgroPathogenMeterApp.Droid
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
 
-            if(maxValue >= 0.001)
+            if (maxValue >= 0.001)
             {
                 _database.IsInfected = true;
             }

@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System;
 using System.IO;
 using Xamarin.Forms;
-
 [assembly: Dependency(typeof(FileHelper))]
 
 namespace AgroPathogenMeterApp

@@ -19,7 +19,7 @@ namespace AgroPathogenMeterApp.Droid
     {
         private BluetoothDeviceReceiver _receiver;
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -38,12 +38,10 @@ namespace AgroPathogenMeterApp.Droid
             Xamarin.Forms.DependencyService.Register<IBtControl>();
 
             base.OnCreate(savedInstanceState);
-            /*
-            Android.Content.Context context;
-            context = (Android.Content.Context)BluetoothService;   This cast is faulty, need to find correct way to get context
-            context.GetSystemService(BluetoothService);
-            PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);   Before getting context, fix ps.psandroid not working
-            */
+
+            Android.Content.Context context = Android.App.Application.Context;
+            PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             //OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();

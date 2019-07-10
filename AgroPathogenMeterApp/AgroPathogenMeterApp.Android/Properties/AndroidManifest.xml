@@ -16,4 +16,10 @@
 			<Function Type="name:serialPort" />
 		</Device>
 	</DeviceCapability>
+  <DeviceCapability Name="usb">
+    <Device Id="vidpid:0403 D182">
+      <Function Type="classId:02 * *" />
+      <Function Type="name:cdcControl" />
+    </Device>
+  </DeviceCapability>
 </manifest>

@@ -168,6 +168,7 @@ namespace AgroPathogenMeterApp.Views
         #endregion Parameter Range Checkers
 
         #region Parameter Setter
+
         private async Task<ScanDatabase> ACV(ScanDatabase Scan)
         {
             if (Entry1.Text.Length >= 1 &&
@@ -217,6 +218,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return Scan;
         }
+
         private async Task<ScanDatabase> LinearVoltammetry(ScanDatabase Scan)
         {
             if (Entry1.Text.Length >= 1 &&
@@ -258,6 +260,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return Scan;
         }
+
         private async Task<ScanDatabase> SWV(ScanDatabase Scan)
         {
             if (Entry1.Text.Length >= 1 &&
@@ -303,6 +306,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return Scan;
         }
+
         private async Task<ScanDatabase> CyclicVotammetry(ScanDatabase Scan)
         {
             if (Entry1.Text.Length >= 1 &&
@@ -349,7 +353,9 @@ namespace AgroPathogenMeterApp.Views
             }
             return Scan;
         }
-        #endregion
+
+        #endregion Parameter Setter
+
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
             Scanner scanner = App.Database;
