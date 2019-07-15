@@ -112,7 +112,6 @@ namespace AgroPathogenMeterApp.Droid
                 Crashes.TrackError(ex);
                 device.Close();
             }
-
         }
 
         private async void SimpleConnect()

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Runtime;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.Plottables;
 using PalmSens.Techniques;
-using PalmSens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -34,6 +31,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         #region Properties
+
         /// <summary>
         /// The platform specific interface for WinForms, WPF and Xamarin support
         /// </summary>
@@ -256,9 +254,11 @@ namespace AgroPathogenMeterApp.Droid
         /// Collection of active curves and their respective simplecurves
         /// </summary>
         private Dictionary<Curve, SimpleCurve> _activeCurves = new Dictionary<Curve, SimpleCurve>();
-        #endregion
+
+        #endregion Properties
 
         #region Functions
+
         /// <summary>
         /// Disconnects from the connected device.
         /// </summary>
@@ -755,9 +755,11 @@ namespace AgroPathogenMeterApp.Droid
                 _activeCurves.Remove(activeCurve);
             }
         }
-        #endregion
+
+        #endregion Functions
 
         #region events
+
         /// <summary>
         /// Occurs when a device status package is received, these packages are not sent during a measurement.
         /// </summary>
@@ -951,7 +953,8 @@ namespace AgroPathogenMeterApp.Droid
         {
             RemoveActiveCurve(sender as Curve);
         }
-        #endregion
+
+        #endregion events
 
         public void Dispose()
         {

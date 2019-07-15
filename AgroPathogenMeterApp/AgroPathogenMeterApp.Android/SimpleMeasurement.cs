@@ -2,11 +2,8 @@
 using PalmSens.Data;
 using PalmSens.Plottables;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -32,6 +29,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the title of the measurement.
         /// </summary>
@@ -69,9 +67,11 @@ namespace AgroPathogenMeterApp.Droid
         /// List of the available data types in the measurement
         /// </summary>
         public readonly List<DataArrayType> AvailableDataTypes = new List<DataArrayType>();
-        #endregion
+
+        #endregion Properties
 
         #region Functions
+
         /// <summary>
         /// Gets the type of measurement from the method.
         /// </summary>
@@ -129,6 +129,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         #region Curve functions
+
         /// <summary>
         /// Initializes the simple curve collection.
         /// </summary>
@@ -371,10 +372,13 @@ namespace AgroPathogenMeterApp.Droid
                 RemoveSimpleCurve(simpleCurve, silent);
             }
         }
-        #endregion
-        #endregion
+
+        #endregion Curve functions
+
+        #endregion Functions
 
         #region Events
+
         /// <summary>
         /// The SimpleCurveEventHandler delegate
         /// </summary>
@@ -408,7 +412,8 @@ namespace AgroPathogenMeterApp.Droid
         {
             SimpleCurveRemoved?.Invoke(this, simpleCurve);
         }
-        #endregion
+
+        #endregion Events
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

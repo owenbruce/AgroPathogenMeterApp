@@ -26,6 +26,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         #region Properties
+
         /// <summary>
         /// The original curve
         /// </summary>
@@ -194,9 +195,11 @@ namespace AgroPathogenMeterApp.Droid
         {
             get { return Curve.IsFinished; }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Functions
+
         /// <summary>
         /// Clones this instance.
         /// </summary>
@@ -873,9 +876,11 @@ namespace AgroPathogenMeterApp.Droid
 
             return area;
         }
-        #endregion
+
+        #endregion Functions
 
         #region Events
+
         /// <summary>
         /// Occurs when the SimpleCurve is [finished] measuring.
         /// </summary>
@@ -932,7 +937,8 @@ namespace AgroPathogenMeterApp.Droid
         {
             DetectedPeaks?.Invoke(this, EventArgs.Empty);
         }
-        #endregion
+
+        #endregion Events
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

@@ -1,12 +1,9 @@
-﻿using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Bluetooth;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Support.V4.Content;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -20,7 +17,7 @@ namespace AgroPathogenMeterApp.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private BluetoothDeviceReceiver _receiver;
-        PSCommSimpleAndroid psCommSimpleAndroid;
+        private PSCommSimpleAndroid psCommSimpleAndroid;
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
@@ -58,6 +55,7 @@ namespace AgroPathogenMeterApp.Droid
 
             LoadApplication(new App());
         }
+
         private void _psCommSimpleAndroid_ReceiveStatus(object sender, PalmSens.Comm.StatusEventArgs e)
         {
             Status status = e.GetStatus(); //Get the PalmSens.Comm.Status instance from the event data

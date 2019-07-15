@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PalmSens.Comm;
-using PalmSens.Devices;
+﻿using PalmSens.Comm;
+using System;
 
 namespace AgroPathogenMeterApp.Droid
 {
