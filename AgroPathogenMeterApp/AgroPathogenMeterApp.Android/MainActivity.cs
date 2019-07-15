@@ -10,6 +10,8 @@ using Android.Support.V4.Content;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using PalmSens;
+using PalmSens.Comm;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -17,7 +19,8 @@ namespace AgroPathogenMeterApp.Droid
     [Activity(Label = "AgroPathogenMeterApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        private BluetoothDeviceReceiver _receiver;
+        //private BluetoothDeviceReceiver _receiver;
+        //PSCommSimpleAndroid psCommSimpleAndroid;
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
@@ -39,6 +42,9 @@ namespace AgroPathogenMeterApp.Droid
 
             base.OnCreate(savedInstanceState);
 
+            //psCommSimpleAndroid = FindViewById<PSCommSimpleAndroid>(2131296261);
+            //psCommSimpleAndroid.ReceiveStatus += _psCommSimpleAndroid_ReceiveStatus;
+
             Android.Content.Context context = Android.App.Application.Context;
             PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
 
@@ -46,31 +52,22 @@ namespace AgroPathogenMeterApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             //OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
 
-            const int locationPermissionsRequestCode = 1000;
+            //_receiver = new BluetoothDeviceReceiver();
 
-            var locationPermissions = new[]
-            {
-                Manifest.Permission.AccessCoarseLocation,
-                Manifest.Permission.AccessFineLocation
-            };
-
-            var coarseLocationPermissionGranted =
-                ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation);
-
-            var fineLocationPermissionGranted =
-                ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation);
-
-            if (coarseLocationPermissionGranted == Permission.Denied ||
-                fineLocationPermissionGranted == Permission.Denied)
-            {
-                ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
-            }
-
-            _receiver = new BluetoothDeviceReceiver();
-
-            RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
+            //RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
 
             LoadApplication(new App());
+        }
+        private void _psCommSimpleAndroid_ReceiveStatus(object sender, PalmSens.Comm.StatusEventArgs e)
+        {
+            Status status = e.GetStatus(); //Get the PalmSens.Comm.Status instance from the event data
+            double potential = status.PotentialReading.Value; //Get the potential
+            double currentInRange = status.CurrentReading.ValueInRange; //Get the current expressed inthe active current range
+            PalmSens.Comm.ReadingStatus currentStatus = status.CurrentReading.ReadingStatus; //Get the status of the current reading
+            CurrentRange cr = status.CurrentReading.CurrentRange; //Get the active current range
+
+            //_txtPotential.Text = $"Potential: {potential.ToString("F3")} V";
+            //_txtCurrent.Text = $"Current: {currentInRange.ToString("F3")} * {cr.ToString()}";
         }
     }
 }

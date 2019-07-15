@@ -13,6 +13,8 @@
     <NeutralLanguage>en-CA</NeutralLanguage>
     <ApplicationIcon>apmicon_e2D_icon.ico</ApplicationIcon>
     <Win32Resource />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,22 +32,10 @@
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="XamarinUniversity.Infrastructure" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PalmSens.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\PalmSens.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PalmSens.PSAndroid.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\PalmSens.PSAndroid.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\LiveShare\Agent\System.Configuration.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
