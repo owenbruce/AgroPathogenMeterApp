@@ -19,8 +19,8 @@ namespace AgroPathogenMeterApp.Droid
     [Activity(Label = "AgroPathogenMeterApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        //private BluetoothDeviceReceiver _receiver;
-        //PSCommSimpleAndroid psCommSimpleAndroid;
+        private BluetoothDeviceReceiver _receiver;
+        PSCommSimpleAndroid psCommSimpleAndroid;
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
@@ -42,8 +42,8 @@ namespace AgroPathogenMeterApp.Droid
 
             base.OnCreate(savedInstanceState);
 
-            //psCommSimpleAndroid = FindViewById<PSCommSimpleAndroid>(2131296261);
-            //psCommSimpleAndroid.ReceiveStatus += _psCommSimpleAndroid_ReceiveStatus;
+            psCommSimpleAndroid = FindViewById<PSCommSimpleAndroid>(2131296261);
+            psCommSimpleAndroid.ReceiveStatus += _psCommSimpleAndroid_ReceiveStatus;
 
             Android.Content.Context context = Android.App.Application.Context;
             PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
@@ -52,9 +52,9 @@ namespace AgroPathogenMeterApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             //OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
 
-            //_receiver = new BluetoothDeviceReceiver();
+            _receiver = new BluetoothDeviceReceiver();
 
-            //RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
+            RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
 
             LoadApplication(new App());
         }
