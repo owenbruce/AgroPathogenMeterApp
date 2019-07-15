@@ -30,7 +30,7 @@ namespace AgroPathogenMeterApp.Views
             try
             {
                 bool simple = true;
-                DependencyService.Get<IBtControl>().Connect(simple);
+                //DependencyService.Get<IBtControl>().Connect(simple);
             }
             catch (Exception ex)
             {

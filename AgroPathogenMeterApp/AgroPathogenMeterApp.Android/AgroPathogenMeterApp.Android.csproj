@@ -91,15 +91,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BluetoothDeviceReceiver.cs" />
-    <Compile Include="BtControl.cs" />
-    <Compile Include="DeviceHandler.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="PSCommSimpleAndroid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScanParams.cs" />
-    <Compile Include="SimpleLoadSaveFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
