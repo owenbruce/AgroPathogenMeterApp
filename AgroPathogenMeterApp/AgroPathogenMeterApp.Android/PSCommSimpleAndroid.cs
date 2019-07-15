@@ -4,8 +4,6 @@ using Android.Util;
 using Android.Views;
 using PalmSens;
 using PalmSens.Comm;
-using PalmSens.Core.Simplified;
-using PalmSens.Core.Simplified.Data;
 using PalmSens.Devices;
 using System;
 using System.Collections.Generic;

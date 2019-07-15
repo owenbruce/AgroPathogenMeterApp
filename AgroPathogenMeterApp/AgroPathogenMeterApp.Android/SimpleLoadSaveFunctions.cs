@@ -1,6 +1,5 @@
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
-using PalmSens.Core.Simplified.Data;
 using PalmSens.Data;
 using PalmSens.DataFiles;
 using PalmSens.PSAndroid;

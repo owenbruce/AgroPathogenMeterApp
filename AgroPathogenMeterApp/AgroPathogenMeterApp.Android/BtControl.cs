@@ -7,7 +7,6 @@ using Android.Util;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Comm;
-using PalmSens.Core.Simplified.Data;
 using PalmSens.Data;
 using PalmSens.Devices;
 using PalmSens.Plottables;
@@ -161,7 +160,7 @@ namespace AgroPathogenMeterApp.Droid
             //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
         }
 
-        private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, PalmSens.Core.Simplified.Data.SimpleCurve activeSimpleCurve)
+        private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
         {
             _activeSimpleCurve = activeSimpleCurve;
             _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
