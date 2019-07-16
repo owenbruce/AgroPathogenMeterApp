@@ -21,7 +21,6 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <RestoreProjectStyle>PackageReferences</RestoreProjectStyle>
     <AndroidErrorOnCustomJavaObject>false</AndroidErrorOnCustomJavaObject>
     <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\owenb\source\repos\AgroPathogenMeterApp\AgroPathogenMeterApp\AgroPathogenMeterApp.Android\filename.keystore</AndroidSigningKeyStore>

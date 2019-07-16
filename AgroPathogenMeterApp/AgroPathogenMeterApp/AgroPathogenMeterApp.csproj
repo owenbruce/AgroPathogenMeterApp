@@ -13,7 +13,6 @@
     <NeutralLanguage>en-CA</NeutralLanguage>
     <ApplicationIcon>apmicon_e2D_icon.ico</ApplicationIcon>
     <Win32Resource />
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
