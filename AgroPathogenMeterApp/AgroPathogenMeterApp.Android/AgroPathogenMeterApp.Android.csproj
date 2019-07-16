@@ -184,8 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
-    <Reference Include="PalmSens.Core" />
-    <Reference Include="PalmSens.PSAndroid.Core" />
+    <Reference Include="PalmSens.Core">
+      <HintPath>Assets\PalmSens.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.PSAndroid.Core">
+      <HintPath>Assets\PalmSens.PSAndroid.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\System.dll</HintPath>
       <Private>True</Private>
