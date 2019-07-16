@@ -47,7 +47,7 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <AndroidDexTool>d8</AndroidDexTool>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AndroidLinkMode>Full</AndroidLinkMode>
+    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
