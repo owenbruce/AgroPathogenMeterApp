@@ -207,6 +207,9 @@
     <Reference Include="System.Drawing">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\LiveShare\Agent\System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Reflection.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\System.Xml.dll</HintPath>
       <Private>True</Private>
