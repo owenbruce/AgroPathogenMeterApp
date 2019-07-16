@@ -39,6 +39,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="FTDI">
+      <HintPath>..\AgroPathogenMeterApp.Android\Assets\FTDI.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.Core">
+      <HintPath>..\AgroPathogenMeterApp.Android\Assets\PalmSens.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PalmSens.PSAndroid.Core">
+      <HintPath>..\AgroPathogenMeterApp.Android\Assets\PalmSens.PSAndroid.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="MasterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
