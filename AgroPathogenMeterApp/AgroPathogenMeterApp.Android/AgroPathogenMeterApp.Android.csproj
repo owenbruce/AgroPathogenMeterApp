@@ -243,12 +243,6 @@
     <AndroidAsset Include="Assets\PalmSens.PSAndroid.Core.dll" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\PalmSens.Core.Simplified.Android.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\PalmSens.Core.Simplified.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\FTDI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
