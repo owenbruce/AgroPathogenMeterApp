@@ -47,8 +47,9 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <AndroidDexTool>d8</AndroidDexTool>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core</AndroidLinkSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
