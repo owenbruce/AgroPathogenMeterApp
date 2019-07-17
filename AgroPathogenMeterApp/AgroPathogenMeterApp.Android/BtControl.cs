@@ -133,7 +133,7 @@ namespace AgroPathogenMeterApp.Droid
                 method = SimpleLoadSaveFunctions.LoadMethod(file);
             */
 
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null /*filepath*/);
+            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
 
             List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
