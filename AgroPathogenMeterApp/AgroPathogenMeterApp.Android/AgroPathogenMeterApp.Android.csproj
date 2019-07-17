@@ -47,7 +47,7 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <AndroidDexTool>d8</AndroidDexTool>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidLinkMode>None</AndroidLinkMode>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core;Microsoft.TestPlatform</AndroidLinkSkip>
   </PropertyGroup>
