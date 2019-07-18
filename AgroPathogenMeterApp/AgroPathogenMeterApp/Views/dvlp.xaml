@@ -20,6 +20,8 @@
                     Clicked="OnRawDataClicked" />
             <Button Text="Testing"
                     Clicked="OnTestingClicked" />
+            <Button Text="Clear DB"
+                    Clicked="OnClearDbClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

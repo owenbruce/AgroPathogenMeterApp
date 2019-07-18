@@ -11,21 +11,4 @@ namespace AgroPathogenMeterApp
 
         string FilePath();   //Get an external file location to store on android
     }
-
-    /*
-    public class BtControl: IBtControl
-    {
-        public Task<BtDatabase> TestConn()
-        {
-            return null;
-        }
-        public void Connect()
-        {
-        }
-        public string FilePath()
-        {
-            return "";
-        }
-    }
-    */
 }

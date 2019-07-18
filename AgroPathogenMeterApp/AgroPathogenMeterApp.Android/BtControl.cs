@@ -6,6 +6,7 @@ using Android.Content;
 using Android.Util;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
+using PalmSens.Analysis;
 using PalmSens.Comm;
 using PalmSens.Data;
 using PalmSens.Devices;
@@ -20,19 +21,17 @@ using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Droid
 {
+    [Android.Runtime.Preserve(AllMembers = true)]
     public class BtControl : IBtControl
     {
-        private Measurement measurement;
-        private Curve _activeCurve;
-        private SimpleCurve _activeSimpleCurve;
+        public Measurement measurement;
+        public Curve _activeCurve;
+        public SimpleCurve _activeSimpleCurve;
 
         public BtControl()
         {
         }
 
-        public static void Init()
-        {
-        }
 
         public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
@@ -114,7 +113,7 @@ namespace AgroPathogenMeterApp.Droid
             }
         }
 
-        private async void SimpleConnect()
+        public async void SimpleConnect()
         {
             Context context = Application.Context;
             IAttributeSet attributeSet = null;
@@ -142,12 +141,14 @@ namespace AgroPathogenMeterApp.Droid
             SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
             subtractedCurve.DetectPeaks();
-            double maxValue = subtractedCurve.Maximum();
+            PeakList peakList = subtractedCurve.Peaks;
+            Peak mainPeak = peakList[0];
+            double peakHeight = mainPeak.PeakValue;
 
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
 
-            if (maxValue >= 0.001)
+            if (peakHeight <= -0.001)
             {
                 _database.IsInfected = true;
             }
@@ -159,20 +160,20 @@ namespace AgroPathogenMeterApp.Droid
             //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
         }
 
-        private void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
+        public void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
         {
             _activeSimpleCurve = activeSimpleCurve;
             _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
             _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
         }
 
-        private void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
+        public void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
         {
             _activeSimpleCurve.NewDataAdded -= _activeCurve_NewDataAdded;
             _activeSimpleCurve.CurveFinished -= _activeSimpleCurve_CurveFinished;
         }
 
-        private void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        public void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
         {
             int startIndex = e.StartIndex;
             int count = e.Count;
@@ -180,35 +181,35 @@ namespace AgroPathogenMeterApp.Droid
             (sender as SimpleCurve).YAxisValues.CopyTo(newData, startIndex);
         }
 
-        private void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        public void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
+        public void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
         //Below allows for starting the necessary measurements on the APM
-        private void Comm_ReceiveStatus(object sender, StatusEventArgs e)
+        public void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
             Status status = e.GetStatus();
         }
 
-        private void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
+        public void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
             measurement = newMeasurement;
         }
 
-        private void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
+        public void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
         {
             _activeCurve = e.GetCurve();
             _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
             _activeCurve.Finished += _activeCurve_Finished;
         }
 
-        private void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        public void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
         {
             int startIndex = e.StartIndex;
             int count = e.Count;
@@ -216,14 +217,14 @@ namespace AgroPathogenMeterApp.Droid
             (sender as Curve).GetYValues().CopyTo(newData, startIndex);
         }
 
-        private void _activeCurve_Finished(object sender, EventArgs e)
+        public void _activeCurve_Finished(object sender, EventArgs e)
         {
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
             _activeCurve.Finished -= _activeCurve_Finished;
         }
 
         //Below runs the necessary scan on the APM
-        private async Task<Method> RunScan()
+        public async Task<Method> RunScan()
         {
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);

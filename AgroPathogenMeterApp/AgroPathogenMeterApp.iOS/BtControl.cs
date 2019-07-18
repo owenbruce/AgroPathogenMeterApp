@@ -12,10 +12,6 @@ namespace AgroPathogenMeterApp.iOS
         {
         }
 
-        public static void Init()
-        {
-        }
-
         public async Task<BtDatabase> TestConn()
         {
             BtDatabase _database = null;

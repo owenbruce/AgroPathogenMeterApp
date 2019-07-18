@@ -28,5 +28,10 @@ namespace AgroPathogenMeterApp.Views
         {
             await Navigation.PushAsync(new TestingDb { });
         }
+
+        private async void OnClearDbClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ClearDb { });
+        }
     }
 }
