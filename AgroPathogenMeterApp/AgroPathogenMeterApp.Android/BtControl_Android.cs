@@ -11,12 +11,10 @@ using PalmSens.Comm;
 using PalmSens.Data;
 using PalmSens.Devices;
 using PalmSens.Plottables;
-using PalmSens.PSAndroid.Comm;
 using PalmSens.Techniques;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl_Android))]
 
@@ -25,9 +23,9 @@ namespace AgroPathogenMeterApp.Droid
     [Android.Runtime.Preserve(AllMembers = true)]
     public class BtControl_Android : IBtControl
     {
-        Measurement measurement;
-        Curve _activeCurve;
-        SimpleCurve _activeSimpleCurve;
+        private Measurement measurement;
+        private Curve _activeCurve;
+        private SimpleCurve _activeSimpleCurve;
 
         public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
@@ -63,12 +61,10 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void Connect(bool simple)
         {
-            if (simple)
-            {
-                SimpleConnect();
-                return;
-            }
+            SimpleConnect();
+            return;
 
+            /*
             Context context = Application.Context;
             Device[] devices = new Device[0];
             DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
@@ -107,6 +103,7 @@ namespace AgroPathogenMeterApp.Droid
                 Crashes.TrackError(ex);
                 device.Close();
             }
+            */
         }
 
         public async void SimpleConnect()

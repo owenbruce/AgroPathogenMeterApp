@@ -32,7 +32,6 @@ namespace AgroPathogenMeterApp.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-
             base.OnCreate(savedInstanceState);
 
             Android.Content.Context context = Android.App.Application.Context;

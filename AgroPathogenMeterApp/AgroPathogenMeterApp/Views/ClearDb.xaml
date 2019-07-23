@@ -14,7 +14,7 @@
                     Clicked="OnClearRecentClicked" />
             <Button Text="Clear all databases (Broken, Disabled)"
                     Clicked="OnClearAllClicked"
-                    IsEnabled="False"/>
+                    IsEnabled="False" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

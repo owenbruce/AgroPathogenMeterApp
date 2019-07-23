@@ -14,11 +14,11 @@ namespace AgroPathogenMeterApp.Droid
         {
         }
 
-        internal Context Context;
+        internal Context Context = Android.App.Application.Context;
         internal DeviceDiscoverer _deviceDiscoverer;
 
         internal bool EnableBluetooth = true;
-        internal bool EnableUSB = true;
+        internal bool EnableUSB = false;
 
         /// <summary>
         /// Scans for connected devices.

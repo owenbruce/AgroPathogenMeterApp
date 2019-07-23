@@ -3,7 +3,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System;
 using Xamarin.Forms;
-using XamarinUniversity.Infrastructure;
 
 namespace AgroPathogenMeterApp.Views
 {
@@ -22,14 +21,15 @@ namespace AgroPathogenMeterApp.Views
                 bool simple = true;
                 BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();
 
-                Text.Text = btDatabase.Name;
+                Name.Text = btDatabase.Name;
+                ID.Text = btDatabase.ID.ToString();
+                Address.Text = btDatabase.Address;
             }
             catch (Exception ex)
             {
                 Crashes.TrackError(ex);
                 await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
             }
-
         }
     }
 }

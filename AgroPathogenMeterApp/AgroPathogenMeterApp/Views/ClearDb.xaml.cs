@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgroPathogenMeterApp.Data;
+﻿using AgroPathogenMeterApp.Data;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,7 +24,7 @@ namespace AgroPathogenMeterApp.Views
         {
             var allDb = await App.Database.GetScanDatabasesAsync();
 
-            for(int i = 0; i < allDb.Count; i++)
+            for (int i = 0; i < allDb.Count; i++)
             {
                 await App.Database.DeleteScanAsync(allDb[i]);
             }

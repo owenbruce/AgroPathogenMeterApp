@@ -8,10 +8,18 @@
              x:Class="AgroPathogenMeterApp.Views.Bluetooth">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Bluetooth"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                   x:Name="Text"/>
+            <Label Text="Name"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"
+                   x:Name="Name"/>
+            <Label Text="Address"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"
+                   x:Name="ID" />
+            <Label Text="Address"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"
+                   x:Name="Address" />
             <Button Clicked="OnBtClicked" Text="bt" />
         </StackLayout>
     </ContentPage.Content>
