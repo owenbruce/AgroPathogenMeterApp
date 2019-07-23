@@ -31,7 +31,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -43,10 +43,10 @@
     <MandroidI18n />
     <DocumentationFile>
     </DocumentationFile>
-    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <AndroidEnableMultiDex>false</AndroidEnableMultiDex>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <AndroidDexTool>d8</AndroidDexTool>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AndroidDexTool>dx</AndroidDexTool>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AndroidLinkMode>None</AndroidLinkMode>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core;Microsoft.TestPlatform</AndroidLinkSkip>

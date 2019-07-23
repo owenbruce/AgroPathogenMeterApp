@@ -10,7 +10,8 @@
         <StackLayout>
             <Label Text="Welcome to Bluetooth"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                   x:Name="Text"/>
             <Button Clicked="OnBtClicked" Text="bt" />
         </StackLayout>
     </ContentPage.Content>

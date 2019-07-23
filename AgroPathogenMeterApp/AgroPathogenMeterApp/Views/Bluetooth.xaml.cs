@@ -20,7 +20,9 @@ namespace AgroPathogenMeterApp.Views
             try
             {
                 bool simple = true;
-                var btDatabase = DependencyService.Get<IBtControl>().TestConn();
+                BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();
+
+                Text.Text = btDatabase.Name;
             }
             catch (Exception ex)
             {
@@ -28,7 +30,6 @@ namespace AgroPathogenMeterApp.Views
                 await DisplayAlert("Error", "Cannot find devices with error: " + ex, "OK");
             }
 
-            ObservableDictionary<string, string> displayString = new ObservableDictionary<string, string>();
         }
     }
 }

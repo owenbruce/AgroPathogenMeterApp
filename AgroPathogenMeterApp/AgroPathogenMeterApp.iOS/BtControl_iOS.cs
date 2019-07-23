@@ -1,8 +1,9 @@
 ﻿using AgroPathogenMeterApp.iOS;
 using AgroPathogenMeterApp.Models;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
-[assembly: Xamarin.Forms.Dependency(typeof(BtControl_iOS))]
+[assembly: Dependency(typeof(BtControl_iOS))]
 
 namespace AgroPathogenMeterApp.iOS
 {
