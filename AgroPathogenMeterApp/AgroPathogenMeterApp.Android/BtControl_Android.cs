@@ -23,9 +23,36 @@ namespace AgroPathogenMeterApp.Droid
     [Android.Runtime.Preserve(AllMembers = true)]
     public class BtControl_Android : IBtControl
     {
-        private Measurement measurement;
         private Curve _activeCurve;
         private SimpleCurve _activeSimpleCurve;
+        private Measurement measurement;
+        public void _activeCurve_Finished(object sender, EventArgs e)
+        {
+            _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
+            _activeCurve.Finished -= _activeCurve_Finished;
+        }
+
+        public void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        {
+            int startIndex = e.StartIndex;
+            int count = e.Count;
+            double[] newData = new double[count];
+            (sender as Curve).GetYValues().CopyTo(newData, startIndex);
+        }
+
+        public void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
+        {
+            _activeSimpleCurve.NewDataAdded -= _activeCurve_NewDataAdded;
+            _activeSimpleCurve.CurveFinished -= _activeSimpleCurve_CurveFinished;
+        }
+
+        public void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        {
+            int startIndex = e.StartIndex;
+            int count = e.Count;
+            double[] newData = new double[count];
+            (sender as SimpleCurve).YAxisValues.CopyTo(newData, startIndex);
+        }
 
         public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
@@ -39,27 +66,25 @@ namespace AgroPathogenMeterApp.Droid
             return btDatabase;
         }
 
-        public async Task<BtDatabase> TestConn()   //Test the connection to the APM
+        public void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
-            BtDatabase junk = new BtDatabase();
-            try
-            {
-                if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
-                {
-                    foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
-                    {
-                        return await AsyncTask(pairedDevice);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-            }
-            return junk;
+            measurement = newMeasurement;
         }
 
-        public async void Connect(bool simple)
+        public void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
+        {
+            _activeCurve = e.GetCurve();
+            _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
+            _activeCurve.Finished += _activeCurve_Finished;
+        }
+
+        //Below allows for starting the necessary measurements on the APM
+        public void Comm_ReceiveStatus(object sender, StatusEventArgs e)
+        {
+            Status status = e.GetStatus();
+        }
+
+        public async Task Connect(bool simple)
         {
             SimpleConnect();
             return;
@@ -106,72 +131,9 @@ namespace AgroPathogenMeterApp.Droid
             */
         }
 
-        public async void SimpleConnect()
+        public string FilePath()
         {
-            Context context = Application.Context;
-            IAttributeSet attributeSet = null;
-            PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
-            Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
-            psCommSimpleAndroid.Connect(devices[0]);
-
-            psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
-            psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
-            psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-            SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(await RunScan());
-
-            /*
-            Method method;
-            using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
-                method = SimpleLoadSaveFunctions.LoadMethod(file);
-            */
-
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
-
-            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-            //Load base null curve
-
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-            subtractedCurve.DetectPeaks();
-            PeakList peakList = subtractedCurve.Peaks;
-            Peak mainPeak = peakList[0];
-            double peakHeight = mainPeak.PeakValue;
-
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-
-            if (peakHeight <= -0.001)
-            {
-                _database.IsInfected = true;
-            }
-            else
-            {
-                _database.IsInfected = false;
-            }
-
-            //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
-        }
-
-        public void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
-        {
-            _activeSimpleCurve = activeSimpleCurve;
-            _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
-            _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
-        }
-
-        public void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
-        {
-            _activeSimpleCurve.NewDataAdded -= _activeCurve_NewDataAdded;
-            _activeSimpleCurve.CurveFinished -= _activeSimpleCurve_CurveFinished;
-        }
-
-        public void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
-        {
-            int startIndex = e.StartIndex;
-            int count = e.Count;
-            double[] newData = new double[count];
-            (sender as SimpleCurve).YAxisValues.CopyTo(newData, startIndex);
+            return "";
         }
 
         public void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
@@ -184,36 +146,11 @@ namespace AgroPathogenMeterApp.Droid
             throw new NotImplementedException();
         }
 
-        //Below allows for starting the necessary measurements on the APM
-        public void Comm_ReceiveStatus(object sender, StatusEventArgs e)
+        public void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
         {
-            Status status = e.GetStatus();
-        }
-
-        public void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
-        {
-            measurement = newMeasurement;
-        }
-
-        public void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
-        {
-            _activeCurve = e.GetCurve();
-            _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
-            _activeCurve.Finished += _activeCurve_Finished;
-        }
-
-        public void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
-        {
-            int startIndex = e.StartIndex;
-            int count = e.Count;
-            double[] newData = new double[count];
-            (sender as Curve).GetYValues().CopyTo(newData, startIndex);
-        }
-
-        public void _activeCurve_Finished(object sender, EventArgs e)
-        {
-            _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
-            _activeCurve.Finished -= _activeCurve_Finished;
+            _activeSimpleCurve = activeSimpleCurve;
+            _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
+            _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
         }
 
         //Below runs the necessary scan on the APM
@@ -268,9 +205,81 @@ namespace AgroPathogenMeterApp.Droid
             }
         }
 
-        public string FilePath()
+        public async void SimpleConnect()
         {
-            return "";
+            Context context = Application.Context;
+            IAttributeSet attributeSet = null;
+            PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+            Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
+            try
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    psCommSimpleAndroid.Connect(devices[i]);
+                }
+            }
+            catch(Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+
+            psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+            psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+            psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+            SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(await RunScan());
+
+            /*
+            Method method;
+            using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
+                method = SimpleLoadSaveFunctions.LoadMethod(file);
+            */
+
+            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
+
+            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+            //Load base null curve
+
+            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+            subtractedCurve.DetectPeaks();
+            PeakList peakList = subtractedCurve.Peaks;
+            Peak mainPeak = peakList[0];
+            double peakHeight = mainPeak.PeakValue;
+
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+
+            if (peakHeight <= -0.001)
+            {
+                _database.IsInfected = true;
+            }
+            else
+            {
+                _database.IsInfected = false;
+            }
+
+            //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
+        }
+
+        public async Task<BtDatabase> TestConn()   //Test the connection to the APM
+        {
+            BtDatabase junk = new BtDatabase();
+            try
+            {
+                if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
+                {
+                    foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
+                    {
+                        return await AsyncTask(pairedDevice);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+            return junk;
         }
     }
 }

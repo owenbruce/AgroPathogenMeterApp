@@ -9,19 +9,19 @@ namespace AgroPathogenMeterApp.iOS
 {
     public class BtControl_iOS : IBtControl
     {
-        public async Task<BtDatabase> TestConn()
-        {
-            BtDatabase _database = null;
-            return _database;
-        }
-
-        public async void Connect(bool simple)
+        public async Task Connect(bool simple)
         {
         }
 
         public string FilePath()
         {
             return "";
+        }
+
+        public async Task<BtDatabase> TestConn()
+        {
+            BtDatabase _database = null;
+            return _database;
         }
     }
 }
