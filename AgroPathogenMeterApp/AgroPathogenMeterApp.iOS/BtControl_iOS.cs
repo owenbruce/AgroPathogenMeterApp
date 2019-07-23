@@ -1,5 +1,4 @@
-﻿using AgroPathogenMeterApp.Droid;
-using AgroPathogenMeterApp.iOS;
+﻿using AgroPathogenMeterApp.iOS;
 using AgroPathogenMeterApp.Models;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
