@@ -16,7 +16,7 @@ using Xamarin.Forms;
 
 namespace AgroPathogenMeterApp.iOS
 {
-    public class BtControl_iOS : IBtControl   //Implement ios specific code if supported
+    public class BtControl_iOS : IBtControl   //Note, this is currently breaking the ablility to build remotely, remove if building remotely is required
     {
         private Curve _activeCurve;
         private SimpleCurve _activeSimpleCurve;
