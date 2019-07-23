@@ -47,6 +47,9 @@ namespace AgroPathogenMeterApp.Droid
 
             RegisterReceiver(_receiver, new IntentFilter(BluetoothDevice.ActionFound));
 
+            //LinkerPleaseInclude linkerPleaseInclude = new LinkerPleaseInclude();
+            //linkerPleaseInclude.Include();
+
             LoadApplication(new App());
         }
     }

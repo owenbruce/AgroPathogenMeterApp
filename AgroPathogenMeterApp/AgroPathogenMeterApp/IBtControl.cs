@@ -7,8 +7,8 @@ namespace AgroPathogenMeterApp
     {
         Task<BtDatabase> TestConn();   //Test (and connect to) an APM
 
-        void Connect(bool simple);
+        //void Connect(bool simple);
 
-        string FilePath();   //Get an external file location to store on android
+        //string FilePath();   //Get an external file location to store on android
     }
 }

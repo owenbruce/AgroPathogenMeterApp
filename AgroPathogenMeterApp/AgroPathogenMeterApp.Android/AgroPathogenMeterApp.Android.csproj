@@ -118,8 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BluetoothDeviceReceiver.cs" />
-    <Compile Include="BtControl.cs" />
+    <Compile Include="BtControl_Android.cs" />
     <Compile Include="DeviceHandler.cs" />
+    <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PlatformDependentInterfaces.cs" />
     <Compile Include="PSCommSimple.cs" />

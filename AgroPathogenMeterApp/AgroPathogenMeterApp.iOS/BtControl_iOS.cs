@@ -2,16 +2,12 @@
 using AgroPathogenMeterApp.Models;
 using System.Threading.Tasks;
 
-[assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
+[assembly: Xamarin.Forms.Dependency(typeof(BtControl_iOS))]
 
 namespace AgroPathogenMeterApp.iOS
 {
-    public class BtControl : IBtControl
+    public class BtControl_iOS : IBtControl
     {
-        public BtControl()
-        {
-        }
-
         public async Task<BtDatabase> TestConn()
         {
             BtDatabase _database = null;

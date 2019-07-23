@@ -20,9 +20,7 @@ namespace AgroPathogenMeterApp.Views
             try
             {
                 bool simple = true;
-                var platform = DependencyService.Get<IBtControl>();
-                string btDatabase = platform.FilePath();   //Connect to bluetooth differently depending on the operating system being used
-                await DisplayAlert("Error", btDatabase, "OK");
+                var btDatabase = DependencyService.Get<IBtControl>().TestConn();
             }
             catch (Exception ex)
             {

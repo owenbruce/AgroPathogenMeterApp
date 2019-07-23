@@ -17,21 +17,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-[assembly: Xamarin.Forms.Dependency(typeof(BtControl))]
+[assembly: Xamarin.Forms.Dependency(typeof(BtControl_Android))]
 
 namespace AgroPathogenMeterApp.Droid
 {
     [Android.Runtime.Preserve(AllMembers = true)]
-    public class BtControl : IBtControl
+    public class BtControl_Android : IBtControl
     {
-        public Measurement measurement;
-        public Curve _activeCurve;
-        public SimpleCurve _activeSimpleCurve;
-
-        public BtControl()
-        {
-        }
-
+        Measurement measurement;
+        Curve _activeCurve;
+        SimpleCurve _activeSimpleCurve;
 
         public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
