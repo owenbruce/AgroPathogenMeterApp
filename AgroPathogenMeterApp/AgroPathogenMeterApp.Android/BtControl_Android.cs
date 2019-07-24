@@ -28,6 +28,7 @@ namespace AgroPathogenMeterApp.Droid
         private Curve _activeCurve;
         private SimpleCurve _activeSimpleCurve;
         private Measurement measurement;
+
         public void _activeCurve_Finished(object sender, EventArgs e)
         {
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
@@ -86,9 +87,9 @@ namespace AgroPathogenMeterApp.Droid
             Status status = e.GetStatus();
         }
 
-        public async Task Connect(bool simple)
+        public async Task Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
-            SimpleConnect();
+            SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal);
             return;
 
             /*
@@ -207,13 +208,9 @@ namespace AgroPathogenMeterApp.Droid
             }
         }
 
-        public async void SimpleConnect()
+        public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
             //Below sets which option the code will execute
-
-            bool RunningPC = true;
-            bool RunningNC = false;
-            bool RunningReal = false;
 
             if (RunningReal)
             {
@@ -247,12 +244,13 @@ namespace AgroPathogenMeterApp.Droid
                 subtractedCurve.DetectPeaks();
                 PeakList peakList = subtractedCurve.Peaks;
                 Peak mainPeak = peakList[0];
+                double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
 
                 var allDb = await App.Database.GetScanDatabasesAsync();
                 var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                if (peakHeight <= -0.001)
+                if (peakLocation <= -0.3)
                 {
                     _database.IsInfected = true;
                 }
@@ -260,12 +258,15 @@ namespace AgroPathogenMeterApp.Droid
                 {
                     _database.IsInfected = false;
                 }
+
+                _database.PeakVoltage = peakHeight;
+                await App.Database.SaveScanAsync(_database);
             }
             else if (RunningNC || RunningPC)
             {
                 SimpleMeasurement baseline;
                 AssetManager assetManager = Application.Context.Assets;
-                using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe.pssession")))
+                using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
                     baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                 List<SimpleCurve> baselineCurves = baseline.SimpleCurveCollection;
@@ -273,7 +274,7 @@ namespace AgroPathogenMeterApp.Droid
                 if (RunningPC)
                 {
                     SimpleMeasurement positiveControl;
-                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterTarget.pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterTarget" + fileNum + ".pssession")))
                         positiveControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
@@ -283,12 +284,13 @@ namespace AgroPathogenMeterApp.Droid
                     subtractedCurve.DetectPeaks();
                     PeakList positivePeakList = subtractedCurve.Peaks;
                     Peak positivePeak = positivePeakList[0];
-                    double positivePeakHeight = positivePeak.PeakValue;
+                    double positivePeakLocation = positivePeak.PeakX;
+                    double positivePeakValue = positivePeak.PeakValue;
 
                     var allDb = await App.Database.GetScanDatabasesAsync();
                     var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                    if (positivePeakHeight <= -0.001)
+                    if (positivePeakLocation <= -0.3)
                     {
                         _database.IsInfected = true;
                     }
@@ -296,36 +298,53 @@ namespace AgroPathogenMeterApp.Droid
                     {
                         _database.IsInfected = false;
                     }
+
+                    _database.PeakVoltage = positivePeakValue;
+                    await App.Database.SaveScanAsync(_database);
                 }
                 else if (RunningNC)
                 {
                     SimpleMeasurement negativeControl;
-                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe.pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
                         negativeControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> negativeCurves = negativeControl.SimpleCurveCollection;
 
                     SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]);
-
-                    subtractedCurve.DetectPeaks();
-                    PeakList negativePeakList = subtractedCurve.Peaks;
-                    Peak negativePeak = negativePeakList[0];
-                    double negativePeakHeight = negativePeak.PeakValue;
-
-                    var allDb = await App.Database.GetScanDatabasesAsync();
-                    var _database = await App.Database.GetScanAsync(allDb.Count);
-
-                    if (negativePeakHeight <= -0.001)
+                    try
                     {
-                        _database.IsInfected = true;
+                        subtractedCurve.DetectPeaks();
+                        PeakList negativePeakList = subtractedCurve.Peaks;
+                        Peak negativePeak = negativePeakList[0];
+                        double negativePeakLocation = negativePeak.PeakX;
+                        double negativePeakValue = negativePeak.PeakValue;
+
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                        if (negativePeakLocation <= -0.3)
+                        {
+                            _database.IsInfected = true;
+                        }
+                        else
+                        {
+                            _database.IsInfected = false;
+                        }
+
+                        _database.PeakVoltage = negativePeakValue;
+                        await App.Database.SaveScanAsync(_database);
                     }
-                    else
+                    catch
                     {
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
                         _database.IsInfected = false;
+                        _database.PeakVoltage = 0.0;
+                        await App.Database.SaveScanAsync(_database);
                     }
                 }
             }
-
         }
 
         public async Task<BtDatabase> TestConn()   //Test the connection to the APM

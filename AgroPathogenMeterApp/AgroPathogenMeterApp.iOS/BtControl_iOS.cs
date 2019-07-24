@@ -21,6 +21,7 @@ namespace AgroPathogenMeterApp.iOS
         private Curve _activeCurve;
         private SimpleCurve _activeSimpleCurve;
         private Measurement measurement;
+
         public void _activeCurve_Finished(object sender, EventArgs e)
         {
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;

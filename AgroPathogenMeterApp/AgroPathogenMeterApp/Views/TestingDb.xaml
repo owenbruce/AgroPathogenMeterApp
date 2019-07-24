@@ -7,10 +7,16 @@
              x:Class="AgroPathogenMeterApp.Views.TestingDb">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text=""
+            <Label Text="Testing Scans and Processing"
                    x:Name="Label1" />
-            <Button Text="View Result"
+            <Entry Placeholder="FileNumber"
+                   x:Name="fileNumber" />
+            <Button Text="Real Test"
                     Clicked="OnViewResultClicked" />
+            <Button Text="Positive Control Test"
+                    Clicked="OnPositiveResultClicked" />
+            <Button Text="Negative Control Test"
+                    Clicked="OnNegativeResultClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

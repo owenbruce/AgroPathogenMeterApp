@@ -11,7 +11,7 @@
             <Label Text="Name"
                    VerticalOptions="Start"
                    HorizontalOptions="CenterAndExpand"
-                   x:Name="Name"/>
+                   x:Name="Name" />
             <Label Text="Address"
                    VerticalOptions="Start"
                    HorizontalOptions="CenterAndExpand"

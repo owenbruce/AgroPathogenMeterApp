@@ -98,8 +98,8 @@ namespace AgroPathogenMeterApp.Views
                 displayStrings.Add("Name", "Name: " + Scan.Name);
                 displayStrings.Add("ID", "ID: " + i);
                 displayStrings.Add("Date", "Date: " + Scan.Date);
-                displayStrings.Add("AmountBacteria", "There is " + Scan.AmountBacteria + "cfu of Bacteria in the urine.");
-                displayStrings.Add("ConcentrationBacteria", "There is " + Scan.ConcentrationBacteria + "cfu/ml of Bacteria in the urine.");
+                displayStrings.Add("AmountBacteria", "The peak voltage was " + Scan.PeakVoltage + "V");
+                displayStrings.Add("ConcentrationBacteria", "There is approximately " + Scan.ConcentrationBacteria + " cfu/ml of Bacteria in the urine.");
                 displayStrings.Add("VoltamType", "A " + Scan.VoltamType + " scan was run.");
             }
             catch (Exception ex)
