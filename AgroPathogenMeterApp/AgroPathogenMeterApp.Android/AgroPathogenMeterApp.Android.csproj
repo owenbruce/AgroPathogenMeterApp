@@ -132,6 +132,8 @@
     <Compile Include="SimpleMeasurement.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\2525AfterProbe.pssession" />
+    <AndroidAsset Include="Assets\2525AfterTarget.pssession" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

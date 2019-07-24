@@ -3,6 +3,7 @@ using AgroPathogenMeterApp.Models;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
+using Android.Content.Res;
 using Android.Util;
 using Microsoft.AppCenter.Crashes;
 using PalmSens;
@@ -14,6 +15,7 @@ using PalmSens.Plottables;
 using PalmSens.Techniques;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl_Android))]
@@ -207,61 +209,123 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void SimpleConnect()
         {
-            Context context = Application.Context;
-            IAttributeSet attributeSet = null;
-            PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
-            Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
+            //Below sets which option the code will execute
 
-            for (int i = 0; i < 10; i++)
+            bool RunningPC = true;
+            bool RunningNC = false;
+            bool RunningReal = false;
+
+            if (RunningReal)
             {
-                try
+                Context context = Application.Context;
+                IAttributeSet attributeSet = null;
+                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+                Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
+
+                for (int i = 0; i < 10; i++)
                 {
-                    psCommSimpleAndroid.Connect(devices[i]);
+                    try
+                    {
+                        psCommSimpleAndroid.Connect(devices[i]);
+                    }
+                    catch (Exception ex)
+                    {
+                        Crashes.TrackError(ex);
+                    }
                 }
-                catch(Exception ex)
+                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+                psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+                var runScan = await RunScan();
+                SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
+
+                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+                subtractedCurve.DetectPeaks();
+                PeakList peakList = subtractedCurve.Peaks;
+                Peak mainPeak = peakList[0];
+                double peakHeight = mainPeak.PeakValue;
+
+                var allDb = await App.Database.GetScanDatabasesAsync();
+                var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                if (peakHeight <= -0.001)
                 {
-                    Crashes.TrackError(ex);
+                    _database.IsInfected = true;
+                }
+                else
+                {
+                    _database.IsInfected = false;
+                }
+            }
+            else if (RunningNC || RunningPC)
+            {
+                SimpleMeasurement baseline;
+                AssetManager assetManager = Application.Context.Assets;
+                using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe.pssession")))
+                    baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
+
+                List<SimpleCurve> baselineCurves = baseline.SimpleCurveCollection;
+
+                if (RunningPC)
+                {
+                    SimpleMeasurement positiveControl;
+                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterTarget.pssession")))
+                        positiveControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
+
+                    List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
+
+                    SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]);
+
+                    subtractedCurve.DetectPeaks();
+                    PeakList positivePeakList = subtractedCurve.Peaks;
+                    Peak positivePeak = positivePeakList[0];
+                    double positivePeakHeight = positivePeak.PeakValue;
+
+                    var allDb = await App.Database.GetScanDatabasesAsync();
+                    var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                    if (positivePeakHeight <= -0.001)
+                    {
+                        _database.IsInfected = true;
+                    }
+                    else
+                    {
+                        _database.IsInfected = false;
+                    }
+                }
+                else if (RunningNC)
+                {
+                    SimpleMeasurement negativeControl;
+                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe.pssession")))
+                        negativeControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
+
+                    List<SimpleCurve> negativeCurves = negativeControl.SimpleCurveCollection;
+
+                    SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]);
+
+                    subtractedCurve.DetectPeaks();
+                    PeakList negativePeakList = subtractedCurve.Peaks;
+                    Peak negativePeak = negativePeakList[0];
+                    double negativePeakHeight = negativePeak.PeakValue;
+
+                    var allDb = await App.Database.GetScanDatabasesAsync();
+                    var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                    if (negativePeakHeight <= -0.001)
+                    {
+                        _database.IsInfected = true;
+                    }
+                    else
+                    {
+                        _database.IsInfected = false;
+                    }
                 }
             }
 
-            psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
-            psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
-            psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-            var runScan = await RunScan();
-            SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
-
-            /*
-            Method method;
-            using (System.IO.StreamReader file = new System.IO.StreamReader(Assets.Open(asset)))
-                method = SimpleLoadSaveFunctions.LoadMethod(file);
-            */
-
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
-
-            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-            //Load base null curve
-
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-            subtractedCurve.DetectPeaks();
-            PeakList peakList = subtractedCurve.Peaks;
-            Peak mainPeak = peakList[0];
-            double peakHeight = mainPeak.PeakValue;
-
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-
-            if (peakHeight <= -0.001)
-            {
-                _database.IsInfected = true;
-            }
-            else
-            {
-                _database.IsInfected = false;
-            }
-
-            //Add equations to calculate the amount of bacteria and concentration based on the peak from either detecting the peak
         }
 
         public async Task<BtDatabase> TestConn()   //Test the connection to the APM
