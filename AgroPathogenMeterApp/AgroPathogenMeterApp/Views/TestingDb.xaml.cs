@@ -46,6 +46,7 @@ namespace AgroPathogenMeterApp.Views
             {
             });
         }
+
         private async void OnPositiveResultClicked(object sender, EventArgs e)
         {
             bool RunningReal = false;
@@ -76,6 +77,7 @@ namespace AgroPathogenMeterApp.Views
             {
             });
         }
+
         private async void OnNegativeResultClicked(object sender, EventArgs e)
         {
             bool RunningReal = false;

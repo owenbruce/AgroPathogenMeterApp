@@ -211,6 +211,12 @@ namespace AgroPathogenMeterApp.Droid
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
             //Below sets which option the code will execute
+            SimpleMeasurement baseline;
+            AssetManager assetManager = Application.Context.Assets;
+            using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
+                baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
+
+            List<SimpleCurve> baselineCurves = baseline.SimpleCurveCollection;
 
             if (RunningReal)
             {
@@ -239,7 +245,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
-                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(simpleCurves[1]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
                 subtractedCurve.DetectPeaks();
                 PeakList peakList = subtractedCurve.Peaks;
@@ -264,13 +270,6 @@ namespace AgroPathogenMeterApp.Droid
             }
             else if (RunningNC || RunningPC)
             {
-                SimpleMeasurement baseline;
-                AssetManager assetManager = Application.Context.Assets;
-                using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
-                    baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
-
-                List<SimpleCurve> baselineCurves = baseline.SimpleCurveCollection;
-
                 if (RunningPC)
                 {
                     SimpleMeasurement positiveControl;
