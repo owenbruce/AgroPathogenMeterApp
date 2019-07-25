@@ -132,12 +132,15 @@
     <Compile Include="SimpleMeasurement.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\2525AfterProbe1.pssession" />
     <AndroidAsset Include="Assets\2525AfterTarget1.pssession" />
-    <AndroidAsset Include="Assets\2525AfterProbe2.pssession" />
-    <AndroidAsset Include="Assets\2525AfterProbe3.pssession" />
     <AndroidAsset Include="Assets\2525AfterTarget2.pssession" />
     <AndroidAsset Include="Assets\2525AfterTarget3.pssession" />
+    <AndroidAsset Include="Assets\2525AfterMch1.pssession" />
+    <AndroidAsset Include="Assets\2525AfterMch2.pssession" />
+    <AndroidAsset Include="Assets\2525AfterMch3.pssession" />
+    <AndroidAsset Include="Assets\2525AfterProbe1.pssession" />
+    <AndroidAsset Include="Assets\2525AfterProbe2.pssession" />
+    <AndroidAsset Include="Assets\2525AfterProbe3.pssession" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

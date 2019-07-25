@@ -279,27 +279,39 @@ namespace AgroPathogenMeterApp.Droid
                     List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
 
                     SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]);
-
-                    subtractedCurve.DetectPeaks();
-                    PeakList positivePeakList = subtractedCurve.Peaks;
-                    Peak positivePeak = positivePeakList[0];
-                    double positivePeakLocation = positivePeak.PeakX;
-                    double positivePeakValue = positivePeak.PeakValue;
-
-                    var allDb = await App.Database.GetScanDatabasesAsync();
-                    var _database = await App.Database.GetScanAsync(allDb.Count);
-
-                    if (positivePeakLocation <= -0.3)
+                    try
                     {
-                        _database.IsInfected = true;
+                        subtractedCurve.DetectPeaks();
+                        PeakList positivePeakList = subtractedCurve.Peaks;
+                        Peak positivePeak = positivePeakList[0];
+                        double positivePeakLocation = positivePeak.PeakX;
+                        double positivePeakValue = positivePeak.PeakValue;
+
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                        if (positivePeakLocation <= -0.3)
+                        {
+                            _database.IsInfected = true;
+                        }
+                        else
+                        {
+                            _database.IsInfected = false;
+                        }
+
+                        _database.PeakVoltage = positivePeakValue;
+                        await App.Database.SaveScanAsync(_database);
                     }
-                    else
+                    catch (Exception ex)
                     {
+                        Crashes.TrackError(ex);
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
                         _database.IsInfected = false;
+                        _database.PeakVoltage = 0.0;
+                        await App.Database.SaveScanAsync(_database);
                     }
-
-                    _database.PeakVoltage = positivePeakValue;
-                    await App.Database.SaveScanAsync(_database);
                 }
                 else if (RunningNC)
                 {
@@ -333,8 +345,9 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = negativePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Crashes.TrackError(ex);
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
