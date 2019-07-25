@@ -210,10 +210,11 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
+            int testRun = 2;
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
             AssetManager assetManager = Application.Context.Assets;
-            using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
+            using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterMch" + fileNum + ".pssession")))
                 baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
             List<SimpleCurve> baselineCurves = baseline.SimpleCurveCollection;
@@ -273,7 +274,7 @@ namespace AgroPathogenMeterApp.Droid
                 if (RunningPC)
                 {
                     SimpleMeasurement positiveControl;
-                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterTarget" + fileNum + ".pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterTarget" + fileNum + ".pssession")))
                         positiveControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
@@ -316,7 +317,7 @@ namespace AgroPathogenMeterApp.Droid
                 else if (RunningNC)
                 {
                     SimpleMeasurement negativeControl;
-                    using (StreamReader sr = new StreamReader(assetManager.Open("2525AfterProbe" + fileNum + ".pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterMch" + fileNum + ".pssession")))
                         negativeControl = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> negativeCurves = negativeControl.SimpleCurveCollection;
