@@ -250,7 +250,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 subtractedCurve.DetectPeaks();
                 PeakList peakList = subtractedCurve.Peaks;
-                Peak mainPeak = peakList[0];
+                Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
                 double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
 
@@ -280,11 +280,13 @@ namespace AgroPathogenMeterApp.Droid
                     List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
 
                     SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]);
-                    try
+
+                    subtractedCurve.DetectPeaks();
+                    PeakList positivePeakList = subtractedCurve.Peaks;
+                    if (positivePeakList.nPeaks != 0)
                     {
-                        subtractedCurve.DetectPeaks();
-                        PeakList positivePeakList = subtractedCurve.Peaks;
-                        Peak positivePeak = positivePeakList[0];
+                        Peak positivePeak = positivePeakList[positivePeakList.nPeaks - 1];
+
                         double positivePeakLocation = positivePeak.PeakX;
                         double positivePeakValue = positivePeak.PeakValue;
 
@@ -303,14 +305,14 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = positivePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Crashes.TrackError(ex);
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
+                        _database.VoltamType = "Failed";
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
@@ -323,11 +325,11 @@ namespace AgroPathogenMeterApp.Droid
                     List<SimpleCurve> negativeCurves = negativeControl.SimpleCurveCollection;
 
                     SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]);
-                    try
-                    {
-                        subtractedCurve.DetectPeaks();
-                        PeakList negativePeakList = subtractedCurve.Peaks;
-                        Peak negativePeak = negativePeakList[0];
+
+                    subtractedCurve.DetectPeaks();
+                    PeakList negativePeakList = subtractedCurve.Peaks;
+                    if(negativePeakList.nPeaks != 0) {
+                        Peak negativePeak = negativePeakList[negativePeakList.nPeaks - 1];
                         double negativePeakLocation = negativePeak.PeakX;
                         double negativePeakValue = negativePeak.PeakValue;
 
@@ -346,14 +348,14 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = negativePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Crashes.TrackError(ex);
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
+                        _database.VoltamType = "failed";
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
