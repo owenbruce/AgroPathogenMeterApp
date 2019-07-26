@@ -210,7 +210,7 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
-            int testRun = 2;
+            string testRun = "2";
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
             AssetManager assetManager = Application.Context.Assets;

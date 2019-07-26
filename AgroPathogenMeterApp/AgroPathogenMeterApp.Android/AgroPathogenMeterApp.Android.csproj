@@ -51,6 +51,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core;Microsoft.TestPlatform</AndroidLinkSkip>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,7 +115,7 @@
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.1.0.581479</Version>
+      <Version>4.1.0.618606</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -138,36 +140,36 @@
     <AndroidAsset Include="Assets\1_2525AfterMch1.pssession" />
     <AndroidAsset Include="Assets\1_2525AfterMch2.pssession" />
     <AndroidAsset Include="Assets\1_2525AfterMch3.pssession" />
-    <None Include="Assets\2_2525AfterMch1.pssession" />
-    <None Include="Assets\2_2525AfterMch10.pssession" />
-    <None Include="Assets\2_2525AfterMch11.pssession" />
-    <None Include="Assets\2_2525AfterMch12.pssession" />
-    <None Include="Assets\2_2525AfterMch13.pssession" />
-    <None Include="Assets\2_2525AfterMch14.pssession" />
-    <None Include="Assets\2_2525AfterMch15.pssession" />
-    <None Include="Assets\2_2525AfterMch2.pssession" />
-    <None Include="Assets\2_2525AfterMch3.pssession" />
-    <None Include="Assets\2_2525AfterMch4.pssession" />
-    <None Include="Assets\2_2525AfterMch5.pssession" />
-    <None Include="Assets\2_2525AfterMch6.pssession" />
-    <None Include="Assets\2_2525AfterMch7.pssession" />
-    <None Include="Assets\2_2525AfterMch8.pssession" />
-    <None Include="Assets\2_2525AfterMch9.pssession" />
-    <None Include="Assets\2_2525AfterTarget1.pssession" />
-    <None Include="Assets\2_2525AfterTarget10.pssession" />
-    <None Include="Assets\2_2525AfterTarget11.pssession" />
-    <None Include="Assets\2_2525AfterTarget12.pssession" />
-    <None Include="Assets\2_2525AfterTarget13.pssession" />
-    <None Include="Assets\2_2525AfterTarget14.pssession" />
-    <None Include="Assets\2_2525AfterTarget15.pssession" />
-    <None Include="Assets\2_2525AfterTarget2.pssession" />
-    <None Include="Assets\2_2525AfterTarget3.pssession" />
-    <None Include="Assets\2_2525AfterTarget4.pssession" />
-    <None Include="Assets\2_2525AfterTarget5.pssession" />
-    <None Include="Assets\2_2525AfterTarget6.pssession" />
-    <None Include="Assets\2_2525AfterTarget7.pssession" />
-    <None Include="Assets\2_2525AfterTarget8.pssession" />
-    <None Include="Assets\2_2525AfterTarget9.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch1.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch10.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch11.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch12.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch13.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch14.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch15.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch2.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch3.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch4.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch5.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch6.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch7.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch8.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterMch9.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget1.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget10.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget11.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget12.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget13.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget14.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget15.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget2.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget3.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget4.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget5.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget6.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget7.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget8.pssession" />
+    <AndroidAsset Include="Assets\2_2525AfterTarget9.pssession" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

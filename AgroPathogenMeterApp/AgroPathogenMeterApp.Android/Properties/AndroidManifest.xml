@@ -11,15 +11,4 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-feature android:name="android.hardware.bluetooth" />
-	<DeviceCapability Name="serialcommunication">
-		<Device Id="any">
-			<Function Type="name:serialPort" />
-		</Device>
-	</DeviceCapability>
-	<DeviceCapability Name="usb">
-		<Device Id="vidpid:0403 D182">
-			<Function Type="classId:02 * *" />
-			<Function Type="name:cdcControl" />
-		</Device>
-	</DeviceCapability>
 </manifest>
