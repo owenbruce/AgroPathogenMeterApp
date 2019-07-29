@@ -289,7 +289,7 @@ namespace AgroPathogenMeterApp.Droid
 
                     PeakList avgBaselinePeakList = avgBaselineCurve.Peaks;
 
-                    if(avgBaselinePeakList.nPeaks != 0)
+                    if (avgBaselinePeakList.nPeaks != 0)
                     {
                         Peak avgBaselinePeak = avgBaselinePeakList[avgBaselinePeakList.nPeaks - 1];
 
