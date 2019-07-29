@@ -210,6 +210,7 @@ namespace AgroPathogenMeterApp.Droid
 
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
+            bool RunningBL = true;
             string testRun = "2";
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
@@ -248,8 +249,11 @@ namespace AgroPathogenMeterApp.Droid
 
                 SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
-                subtractedCurve.DetectPeaks();
-                PeakList peakList = subtractedCurve.Peaks;
+                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+
+                baselineCurve.DetectPeaks();
+
+                PeakList peakList = baselineCurve.Peaks;
                 Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
                 double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
@@ -269,9 +273,56 @@ namespace AgroPathogenMeterApp.Droid
                 _database.PeakVoltage = peakHeight;
                 await App.Database.SaveScanAsync(_database);
             }
-            else if (RunningNC || RunningPC)
+            else if (RunningNC || RunningPC || RunningBL)
             {
-                if (RunningPC)
+                if (RunningBL)
+                {
+                    SimpleMeasurement baselineMeasurement;
+                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnly" + fileNum + ".pssession")))
+                        baselineMeasurement = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
+
+                    List<SimpleCurve> avgBaselineCurves = baselineMeasurement.SimpleCurveCollection;
+
+                    SimpleCurve avgBaselineCurve = avgBaselineCurves[0];
+
+                    avgBaselineCurve.DetectPeaks();
+
+                    PeakList avgBaselinePeakList = avgBaselineCurve.Peaks;
+
+                    if(avgBaselinePeakList.nPeaks != 0)
+                    {
+                        Peak avgBaselinePeak = avgBaselinePeakList[avgBaselinePeakList.nPeaks - 1];
+
+                        double avgBaselinePeakLocation = avgBaselinePeak.PeakX;
+                        double avgBaselinePeakValue = avgBaselinePeak.PeakValue;
+
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                        if (avgBaselinePeakLocation <= -0.3)
+                        {
+                            _database.IsInfected = true;
+                        }
+                        else
+                        {
+                            _database.IsInfected = false;
+                        }
+
+                        _database.PeakVoltage = avgBaselinePeakValue;
+                        await App.Database.SaveScanAsync(_database);
+                    }
+                    else
+                    {
+                        var allDb = await App.Database.GetScanDatabasesAsync();
+                        var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                        _database.IsInfected = false;
+                        _database.PeakVoltage = 0.0;
+                        _database.VoltamType = "Failed PC";
+                        await App.Database.SaveScanAsync(_database);
+                    }
+                }
+                else if (RunningPC)
                 {
                     SimpleMeasurement positiveControl;
                     using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterTarget" + fileNum + ".pssession")))
@@ -281,8 +332,12 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]);
 
-                    subtractedCurve.DetectPeaks();
-                    PeakList positivePeakList = subtractedCurve.Peaks;
+                    SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+
+                    baselineCurve.DetectPeaks();
+
+                    PeakList positivePeakList = baselineCurve.Peaks;
+
                     if (positivePeakList.nPeaks != 0)
                     {
                         Peak positivePeak = positivePeakList[positivePeakList.nPeaks - 1];
@@ -312,7 +367,7 @@ namespace AgroPathogenMeterApp.Droid
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
-                        _database.VoltamType = "Failed";
+                        _database.VoltamType = "Failed PC";
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
@@ -326,9 +381,13 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]);
 
-                    subtractedCurve.DetectPeaks();
-                    PeakList negativePeakList = subtractedCurve.Peaks;
-                    if(negativePeakList.nPeaks != 0) {
+                    SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+
+                    baselineCurve.DetectPeaks();
+
+                    PeakList negativePeakList = baselineCurve.Peaks;
+                    if (negativePeakList.nPeaks != 0)
+                    {
                         Peak negativePeak = negativePeakList[negativePeakList.nPeaks - 1];
                         double negativePeakLocation = negativePeak.PeakX;
                         double negativePeakValue = negativePeak.PeakValue;
@@ -355,7 +414,7 @@ namespace AgroPathogenMeterApp.Droid
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
-                        _database.VoltamType = "failed";
+                        _database.VoltamType = "Failed NC";
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
