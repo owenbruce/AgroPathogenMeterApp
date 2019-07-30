@@ -211,7 +211,7 @@ namespace AgroPathogenMeterApp.Droid
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
         {
             bool RunningBL = true;
-            string testRun = "2";
+            string testRun = "3";
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
             AssetManager assetManager = Application.Context.Assets;
@@ -261,7 +261,7 @@ namespace AgroPathogenMeterApp.Droid
                 var allDb = await App.Database.GetScanDatabasesAsync();
                 var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                if (peakLocation <= -0.3)
+                if (peakLocation <= -0.3 && peakLocation >= -0.4)
                 {
                     _database.IsInfected = true;
                 }
@@ -278,7 +278,7 @@ namespace AgroPathogenMeterApp.Droid
                 if (RunningBL)
                 {
                     SimpleMeasurement baselineMeasurement;
-                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnly" + fileNum + ".pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnlySmooth" + fileNum + ".pssession")))
                         baselineMeasurement = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> avgBaselineCurves = baselineMeasurement.SimpleCurveCollection;
@@ -299,7 +299,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (avgBaselinePeakLocation <= -0.3)
+                        if (avgBaselinePeakLocation <= -0.3 && avgBaselinePeakLocation >= -0.4)
                         {
                             _database.IsInfected = true;
                         }
@@ -348,7 +348,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (positivePeakLocation <= -0.3)
+                        if (positivePeakLocation <= -0.3 && positivePeakLocation >= -0.4)
                         {
                             _database.IsInfected = true;
                         }
@@ -395,7 +395,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (negativePeakLocation <= -0.3)
+                        if (negativePeakLocation <= -0.3 && negativePeakLocation >= -0.4)
                         {
                             _database.IsInfected = true;
                         }

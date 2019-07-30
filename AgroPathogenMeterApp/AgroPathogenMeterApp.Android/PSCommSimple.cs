@@ -1,4 +1,5 @@
-﻿using PalmSens;
+﻿using Microsoft.AppCenter.Crashes;
+using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.Plottables;
@@ -268,6 +269,7 @@ namespace AgroPathogenMeterApp.Droid
             try { _platform.Disconnect(_comm); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new NullReferenceException("Not connected to a device.");
             }
             Comm = null;
