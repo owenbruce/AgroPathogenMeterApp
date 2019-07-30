@@ -227,17 +227,15 @@ namespace AgroPathogenMeterApp.Droid
                 PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
                 Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
-                for (int i = 0; i < 10; i++)
+                try
                 {
-                    try
-                    {
-                        psCommSimpleAndroid.Connect(devices[i]);
-                    }
-                    catch (Exception ex)
-                    {
-                        Crashes.TrackError(ex);
-                    }
+                    psCommSimpleAndroid.Connect(devices[0]);
                 }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
+
                 psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
                 psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
                 psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;

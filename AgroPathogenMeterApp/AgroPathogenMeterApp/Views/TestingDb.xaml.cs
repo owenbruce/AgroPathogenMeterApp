@@ -27,7 +27,7 @@ namespace AgroPathogenMeterApp.Views
                 AmountBacteria = 0,
                 ConcentrationBacteria = 0,
                 Date = DateTime.Now,
-                VoltamType = "Real Test"
+                VoltamType = "Linear Voltammetry"
             };
             await App.Database.SaveScanAsync(scan);
 
