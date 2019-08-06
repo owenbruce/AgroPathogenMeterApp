@@ -144,7 +144,7 @@ namespace AgroPathogenMeterApp.Droid
 
         protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
+            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
             List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
