@@ -152,7 +152,7 @@ namespace AgroPathogenMeterApp.Droid
 
             SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
 
-            baselineCurve.DetectPeaks();
+            baselineCurve.DetectPeaks(0.05, 0, true, false);
 
             PeakList peakList = baselineCurve.Peaks;
             Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
@@ -324,7 +324,7 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve avgBaselineCurve = avgBaselineCurves[0];
 
-                    avgBaselineCurve.DetectPeaks();
+                    avgBaselineCurve.DetectPeaks(0.05, 0, true, false);
 
                     PeakList avgBaselinePeakList = avgBaselineCurve.Peaks;
 
@@ -373,7 +373,7 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
 
-                    baselineCurve.DetectPeaks();
+                    baselineCurve.DetectPeaks(0.05, 0, true, false);
 
                     PeakList positivePeakList = baselineCurve.Peaks;
 
@@ -422,7 +422,7 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
 
-                    baselineCurve.DetectPeaks();
+                    baselineCurve.DetectPeaks(0.05, 0, true, false);
 
                     PeakList negativePeakList = baselineCurve.Peaks;
                     if (negativePeakList.nPeaks != 0)
