@@ -15,13 +15,16 @@ namespace AgroPathogenMeterApp.Models
         public double Amplitude { get; set; }
         public double ConcentrationBacteria { get; set; }
         public double EndingPotential { get; set; }
+        public double EquilTime { get; set; }
         public double Frequency { get; set; }
         public double NegativeVertex { get; set; }
         public double PeakVoltage { get; set; }
         public double PositiveVertex { get; set; }
+        public double PotentialPulse { get; set; }
         public double PotentialStep { get; set; }
         public double ScanRate { get; set; }
         public double StartingPotential { get; set; }
+        public double TimePulse { get; set; }
         public string Name { get; set; }
         public string VoltamType { get; set; }
     }

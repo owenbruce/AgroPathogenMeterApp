@@ -32,13 +32,13 @@ namespace AgroPathogenMeterApp.Droid
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
 
-        public void _activeCurve_Finished(object sender, EventArgs e)
+        protected virtual void _activeCurve_Finished(object sender, EventArgs e)
         {
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
             _activeCurve.Finished -= _activeCurve_Finished;
         }
 
-        public void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        protected virtual void _activeCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
         {
             int startIndex = e.StartIndex;
             int count = e.Count;
@@ -46,13 +46,13 @@ namespace AgroPathogenMeterApp.Droid
             (sender as Curve).GetYValues().CopyTo(newData, startIndex);
         }
 
-        public void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
+        protected virtual void _activeSimpleCurve_CurveFinished(object sender, EventArgs e)
         {
             _activeSimpleCurve.NewDataAdded -= _activeCurve_NewDataAdded;
             _activeSimpleCurve.CurveFinished -= _activeSimpleCurve_CurveFinished;
         }
 
-        public void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        protected virtual void _activeSimpleCurve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
         {
             int startIndex = e.StartIndex;
             int count = e.Count;
@@ -60,7 +60,7 @@ namespace AgroPathogenMeterApp.Droid
             (sender as SimpleCurve).YAxisValues.CopyTo(newData, startIndex);
         }
 
-        public async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
+        protected virtual async Task<BtDatabase> AsyncTask(BluetoothDevice pairedDevice)
         {
             BtDatabase btDatabase = new BtDatabase
             {
@@ -72,12 +72,12 @@ namespace AgroPathogenMeterApp.Droid
             return btDatabase;
         }
 
-        public void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
+        protected virtual void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
             measurement = newMeasurement;
         }
 
-        public void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
+        protected virtual void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
         {
             _activeCurve = e.GetCurve();
             _activeCurve.NewDataAdded += _activeCurve_NewDataAdded;
@@ -85,14 +85,14 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         //Below allows for starting the necessary measurements on the APM
-        public void Comm_ReceiveStatus(object sender, StatusEventArgs e)
+        protected virtual void Comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
             Status status = e.GetStatus();
         }
 
-        public async Task Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
+        public async Task Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
-            SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal);
+            SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             return;
 
             /*
@@ -142,12 +142,7 @@ namespace AgroPathogenMeterApp.Droid
             return "";
         }
 
-        public void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
-        {
-            MeasurementRunning = false;
-        }
-
-        public async void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
+        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
             SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, null);
 
@@ -178,9 +173,16 @@ namespace AgroPathogenMeterApp.Droid
 
             _database.PeakVoltage = peakHeight;
             await App.Database.SaveScanAsync(_database);
+
+            MeasurementRunning = false;
         }
 
-        public void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
+        protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
+        {
+            MeasurementRunning = true;
+        }
+
+        protected virtual void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
         {
             _activeSimpleCurve = activeSimpleCurve;
             _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
@@ -196,14 +198,14 @@ namespace AgroPathogenMeterApp.Droid
 
             switch (_database.VoltamType)
             {
-                case "Linear Voltammetry":
-                    LinearSweep linSweep = instance.LinSweep(_database);
+                case "Alternating Current Voltammetry":
+                    ACVoltammetry acVoltammetry = instance.ACV(_database);
 
-                    linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
-                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                    acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    return linSweep;
+                    return acVoltammetry;
 
                 case "Cyclic Voltammetry":
                     CyclicVoltammetry cVoltammetry = instance.CV(_database);
@@ -214,6 +216,24 @@ namespace AgroPathogenMeterApp.Droid
 
                     return cVoltammetry;
 
+                case "Differential Pulse Voltammetry":
+                    DifferentialPulse differentialPulse = instance.DPV(_database);
+
+                    differentialPulse.Ranging.StartCurrentRange = new CurrentRange(5);
+                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(5);
+                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return differentialPulse;
+
+                case "Linear Voltammetry":
+                    LinearSweep linSweep = instance.LinSweep(_database);
+
+                    linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
+                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
+
+                    return linSweep;
+
                 case "Square Wave Voltammetry":
                     SquareWave squareWave = instance.SWV(_database);
 
@@ -223,15 +243,6 @@ namespace AgroPathogenMeterApp.Droid
 
                     return squareWave;
 
-                case "Alternating Current Voltammetry":
-                    ACVoltammetry acVoltammetry = instance.ACV(_database);
-
-                    acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
-                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
-
-                    return acVoltammetry;
-
                 default:
                     //Add code to notify user that something has gone wrong and needs to be fixed
 
@@ -239,7 +250,7 @@ namespace AgroPathogenMeterApp.Droid
             }
         }
 
-        public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal)
+        public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
             bool RunningBL = true;
             string testRun = "3";
@@ -273,6 +284,31 @@ namespace AgroPathogenMeterApp.Droid
                 var runScan = await RunScan();
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+            }
+            else if (RunningDPV)
+            {
+                Context context = Application.Context;
+                IAttributeSet attributeSet = null;
+                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+                Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
+
+                try
+                {
+                    psCommSimpleAndroid.Connect(devices[0]);
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
+
+                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+                psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+                var runScan = await RunScan();
+
+                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+
+                //Add in processing stuff here
             }
             else if (RunningNC || RunningPC || RunningBL)
             {

@@ -5,6 +5,51 @@ namespace AgroPathogenMeterApp.Droid
 {
     internal class ScanParams
     {
+        public ACVoltammetry ACV(ScanDatabase _database)   //Set the parameters for an alternating current scan
+        {
+            ACVoltammetry acVoltammetry = new ACVoltammetry
+            {
+                BeginPotential = (float)_database.StartingPotential,
+                EndPotential = (float)_database.EndingPotential,
+                StepPotential = (float)_database.PotentialStep,
+                SineWaveAmplitude = (float)_database.ACPotential,
+                Scanrate = (float)_database.ScanRate,
+                Frequency = (float)_database.Frequency
+            };
+
+            return acVoltammetry;
+        }
+
+        public CyclicVoltammetry CV(ScanDatabase _database)   //Set the parameters for a cyclic scan
+        {
+            CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry
+            {
+                BeginPotential = (float)_database.StartingPotential,
+                Vtx1Potential = (float)_database.NegativeVertex,
+                Vtx2Potential = (float)_database.PositiveVertex,
+                StepPotential = (float)_database.PotentialStep,
+                Scanrate = (float)_database.ScanRate
+            };
+
+            return cyclicVoltammetry;
+        }
+
+        public DifferentialPulse DPV(ScanDatabase _database)
+        {
+            DifferentialPulse differentialPulse = new DifferentialPulse
+            {
+                EquilibrationTime = (float)_database.EquilTime,
+                BeginPotential = (float)_database.StartingPotential,
+                EndPotential = (float)_database.EndingPotential,
+                StepPotential = (float)_database.PotentialStep,
+                PulsePotential = (float)_database.PotentialPulse,
+                PulseTime = (float)_database.TimePulse,
+                Scanrate = (float)_database.ScanRate
+            };
+
+            return differentialPulse;
+        }
+
         public LinearSweep LinSweep(ScanDatabase _database)   //Set the parameters for a linear sweep scan
         {
             LinearSweep linearSweep = new LinearSweep
@@ -30,35 +75,6 @@ namespace AgroPathogenMeterApp.Droid
             };
 
             return squareWave;
-        }
-
-        public CyclicVoltammetry CV(ScanDatabase _database)   //Set the parameters for a cyclic scan
-        {
-            CyclicVoltammetry cyclicVoltammetry = new CyclicVoltammetry
-            {
-                BeginPotential = (float)_database.StartingPotential,
-                Vtx1Potential = (float)_database.NegativeVertex,
-                Vtx2Potential = (float)_database.PositiveVertex,
-                StepPotential = (float)_database.PotentialStep,
-                Scanrate = (float)_database.ScanRate
-            };
-
-            return cyclicVoltammetry;
-        }
-
-        public ACVoltammetry ACV(ScanDatabase _database)   //Set the parameters for an alternating current scan
-        {
-            ACVoltammetry acVoltammetry = new ACVoltammetry
-            {
-                BeginPotential = (float)_database.StartingPotential,
-                EndPotential = (float)_database.EndingPotential,
-                StepPotential = (float)_database.PotentialStep,
-                SineWaveAmplitude = (float)_database.ACPotential,
-                Scanrate = (float)_database.ScanRate,
-                Frequency = (float)_database.Frequency
-            };
-
-            return acVoltammetry;
         }
     }
 }

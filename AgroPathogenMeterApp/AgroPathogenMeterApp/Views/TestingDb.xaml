@@ -17,6 +17,8 @@
                     Clicked="OnPositiveResultClicked" />
             <Button Text="Negative Control Test"
                     Clicked="OnNegativeResultClicked" />
+            <Button Text="DPV Peak Detection Test"
+                    Clicked="OnDPVResultClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

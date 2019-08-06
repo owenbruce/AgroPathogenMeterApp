@@ -21,6 +21,7 @@ namespace AgroPathogenMeterApp.Views
             bool RunningReal = true;
             bool RunningNC = false;
             bool RunningPC = false;
+            bool RunningDPV = false;
 
             ScanDatabase scan = new ScanDatabase
             {
@@ -34,7 +35,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal);
+                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
@@ -52,6 +53,7 @@ namespace AgroPathogenMeterApp.Views
             bool RunningReal = false;
             bool RunningNC = false;
             bool RunningPC = true;
+            bool RunningDPV = false;
 
             ScanDatabase scan = new ScanDatabase
             {
@@ -65,7 +67,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal);
+                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
@@ -83,6 +85,7 @@ namespace AgroPathogenMeterApp.Views
             bool RunningReal = false;
             bool RunningNC = true;
             bool RunningPC = false;
+            bool RunningDPV = false;
 
             ScanDatabase scan = new ScanDatabase
             {
@@ -96,7 +99,45 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal);
+                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Failed with error message: " + ex, "OK");
+                Crashes.TrackError(ex);
+            }
+
+            await Navigation.PushAsync(new AllData
+            {
+            });
+        }
+        private async void OnDPVResultClicked(object sender, EventArgs e)
+        {
+            bool RunningReal = false;
+            bool RunningNC = false;
+            bool RunningPC = false;
+            bool RunningDPV = true;
+
+            ScanDatabase scan = new ScanDatabase
+            {
+                AmountBacteria = 0,
+                ConcentrationBacteria = 0,
+                Date = DateTime.Now,
+                VoltamType = "Differential Pulse Voltammetry",
+                EquilTime = 8,
+                StartingPotential = -0.5,
+                EndingPotential = 0.5,
+                PotentialStep = 0.005,
+                PotentialPulse = 0.025,
+                TimePulse = 0.07,
+                ScanRate = 0.025
+            };
+            await App.Database.SaveScanAsync(scan);
+
+            int fileNum = Convert.ToInt32(fileNumber.Text);
+            try
+            {
+                await DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
