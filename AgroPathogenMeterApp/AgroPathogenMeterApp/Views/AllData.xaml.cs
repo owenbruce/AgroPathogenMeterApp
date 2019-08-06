@@ -19,7 +19,7 @@ namespace AgroPathogenMeterApp.Views
         private List<ScanDatabase> allDB;
         private int i;
 
-        public AllData()   //Allow the user to view more specific information about scan such as extimated amount of bacteria, date, and more
+        public AllData()
         {
             Analytics.TrackEvent("AllData opened");
             SetDatabaseList();
