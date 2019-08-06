@@ -32,6 +32,8 @@ namespace AgroPathogenMeterApp.Droid
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
 
+        #region Flags
+
         protected virtual void _activeCurve_Finished(object sender, EventArgs e)
         {
             _activeCurve.NewDataAdded -= _activeCurve_NewDataAdded;
@@ -90,6 +92,55 @@ namespace AgroPathogenMeterApp.Droid
             Status status = e.GetStatus();
         }
 
+        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        {
+            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+            SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+
+            baselineCurve.DetectPeaks(0.05, 0, true, false);
+
+            PeakList peakList = baselineCurve.Peaks;
+            Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
+            double peakLocation = mainPeak.PeakX;
+            double peakHeight = mainPeak.PeakValue;
+
+            var allDb = await App.Database.GetScanDatabasesAsync();
+            var _database = await App.Database.GetScanAsync(allDb.Count);
+
+            if (peakLocation <= -0.3 && peakLocation >= -0.4)
+            {
+                _database.IsInfected = true;
+            }
+            else
+            {
+                _database.IsInfected = false;
+            }
+
+            _database.PeakVoltage = peakHeight;
+            await App.Database.SaveScanAsync(_database);
+
+            MeasurementRunning = false;
+        }
+
+        protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
+        {
+            MeasurementRunning = true;
+        }
+
+        protected virtual void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
+        {
+            _activeSimpleCurve = activeSimpleCurve;
+            _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
+            _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
+        }
+
+        #endregion Flags
+
         public async Task Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
             SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
@@ -140,53 +191,6 @@ namespace AgroPathogenMeterApp.Droid
         public string FilePath()
         {
             return "";
-        }
-
-        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
-        {
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-
-            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-            SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
-
-            baselineCurve.DetectPeaks(0.05, 0, true, false);
-
-            PeakList peakList = baselineCurve.Peaks;
-            Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
-            double peakLocation = mainPeak.PeakX;
-            double peakHeight = mainPeak.PeakValue;
-
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-
-            if (peakLocation <= -0.3 && peakLocation >= -0.4)
-            {
-                _database.IsInfected = true;
-            }
-            else
-            {
-                _database.IsInfected = false;
-            }
-
-            _database.PeakVoltage = peakHeight;
-            await App.Database.SaveScanAsync(_database);
-
-            MeasurementRunning = false;
-        }
-
-        protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
-        {
-            MeasurementRunning = true;
-        }
-
-        protected virtual void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
-        {
-            _activeSimpleCurve = activeSimpleCurve;
-            _activeSimpleCurve.NewDataAdded += _activeSimpleCurve_NewDataAdded;
-            _activeSimpleCurve.CurveFinished += _activeSimpleCurve_CurveFinished;
         }
 
         //Below runs the necessary scan on the APM

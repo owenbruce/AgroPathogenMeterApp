@@ -49,12 +49,12 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AndroidLinkMode>None</AndroidLinkMode>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core;Microsoft.TestPlatform</AndroidLinkSkip>
+    <AndroidLinkSkip>Palmsens.Core;PalmSens.PSAndroid.Core;Microsoft.TestPlatform;System.Reflection</AndroidLinkSkip>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidUseAapt2>true</AndroidUseAapt2>
-    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -72,7 +72,7 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidLinkSkip>
     </AndroidLinkSkip>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
   </PropertyGroup>
   <ItemGroup>

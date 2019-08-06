@@ -7,6 +7,7 @@ using Android.Runtime;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Plugin.Permissions;
 using System.Security;
 
 namespace AgroPathogenMeterApp.Droid
@@ -16,8 +17,7 @@ namespace AgroPathogenMeterApp.Droid
     {
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
@@ -36,6 +36,8 @@ namespace AgroPathogenMeterApp.Droid
 
             Android.Content.Context context = Android.App.Application.Context;
             PalmSens.PSAndroid.Utils.CoreDependencies.Init(context);
+
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
