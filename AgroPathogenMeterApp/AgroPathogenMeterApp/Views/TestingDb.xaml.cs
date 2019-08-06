@@ -111,6 +111,7 @@ namespace AgroPathogenMeterApp.Views
             {
             });
         }
+
         private async void OnDPVResultClicked(object sender, EventArgs e)
         {
             bool RunningReal = false;

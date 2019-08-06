@@ -287,6 +287,8 @@ namespace AgroPathogenMeterApp.Droid
             }
             else if (RunningDPV)
             {
+                using (StreamReader sr = new StreamReader(assetManager.Open("blank.pssession")))
+                    baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
                 Context context = Application.Context;
                 IAttributeSet attributeSet = null;
                 PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
