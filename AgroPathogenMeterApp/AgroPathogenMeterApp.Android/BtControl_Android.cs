@@ -16,6 +16,7 @@ using PalmSens.Techniques;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BtControl_Android))]
@@ -27,8 +28,6 @@ namespace AgroPathogenMeterApp.Droid
     {
         private Curve _activeCurve;
         private SimpleCurve _activeSimpleCurve;
-        private Measurement measurement;
-        private bool MeasurementRunning;
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
 
@@ -76,7 +75,6 @@ namespace AgroPathogenMeterApp.Droid
 
         protected virtual void Comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
-            measurement = newMeasurement;
         }
 
         protected virtual void Comm_BeginReceiveCurve(object sender, CurveEventArgs e)
@@ -92,14 +90,12 @@ namespace AgroPathogenMeterApp.Droid
             Status status = e.GetStatus();
         }
 
-        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        protected virtual void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
-            MeasurementRunning = false;
         }
 
         protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
         {
-            MeasurementRunning = true;
         }
 
         protected virtual void PsCommSimpleAndroid_SimpleCurveStartReceivingData(object sender, SimpleCurve activeSimpleCurve)
@@ -111,7 +107,7 @@ namespace AgroPathogenMeterApp.Droid
 
         #endregion Flags
 
-        public async Task Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
+        public void Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
             SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             return;
@@ -283,6 +279,8 @@ namespace AgroPathogenMeterApp.Droid
                 DifferentialPulse runScan = await RunScan();
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+
+                Thread.Sleep(20000);   //Temporary workaround
 
                 //Add in processing stuff here
                 SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));

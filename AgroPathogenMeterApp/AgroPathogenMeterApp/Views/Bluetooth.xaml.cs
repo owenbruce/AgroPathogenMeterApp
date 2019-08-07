@@ -18,7 +18,6 @@ namespace AgroPathogenMeterApp.Views
         {
             try
             {
-                bool simple = true;
                 BtDatabase btDatabase = await DependencyService.Get<IBtControl>().TestConn();
 
                 Name.Text = btDatabase.Name;

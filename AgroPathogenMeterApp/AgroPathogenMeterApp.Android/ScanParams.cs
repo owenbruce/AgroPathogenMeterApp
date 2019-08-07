@@ -16,7 +16,7 @@ namespace AgroPathogenMeterApp.Droid
                 Scanrate = (float)_database.ScanRate,
                 Frequency = (float)_database.Frequency
             };
-
+            acVoltammetry.Technique = 4;
             return acVoltammetry;
         }
 
@@ -30,7 +30,7 @@ namespace AgroPathogenMeterApp.Droid
                 StepPotential = (float)_database.PotentialStep,
                 Scanrate = (float)_database.ScanRate
             };
-
+            cyclicVoltammetry.Technique = 5;
             return cyclicVoltammetry;
         }
 
@@ -59,7 +59,7 @@ namespace AgroPathogenMeterApp.Droid
                 Scanrate = (float)_database.ScanRate,
                 StepPotential = (float)_database.PotentialStep    //Add in additional required values once determined
             };
-
+            linearSweep.Technique = 0;
             return linearSweep;
         }
 
@@ -73,7 +73,7 @@ namespace AgroPathogenMeterApp.Droid
                 PulseAmplitude = (float)_database.Amplitude,
                 Frequency = (float)_database.Frequency
             };
-
+            squareWave.Technique = 2;
             return squareWave;
         }
     }

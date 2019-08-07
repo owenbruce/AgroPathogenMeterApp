@@ -80,7 +80,7 @@ namespace AgroPathogenMeterApp.iOS
             Status status = e.GetStatus();
         }
 
-        public async Task Connect(bool simple)
+        public void Connect(bool simple)
         {
             SimpleConnect();
             return;
