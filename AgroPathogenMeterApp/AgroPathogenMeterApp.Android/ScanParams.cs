@@ -46,7 +46,7 @@ namespace AgroPathogenMeterApp.Droid
                 PulseTime = (float)_database.TimePulse,
                 Scanrate = (float)_database.ScanRate
             };
-
+            differentialPulse.Technique = 1;
             return differentialPulse;
         }
 

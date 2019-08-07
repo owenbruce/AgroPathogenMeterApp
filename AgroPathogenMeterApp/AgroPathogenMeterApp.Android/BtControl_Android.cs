@@ -94,36 +94,6 @@ namespace AgroPathogenMeterApp.Droid
 
         protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
-            SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-
-            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-            SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
-
-            baselineCurve.DetectPeaks(0.05, 0, true, false);
-
-            PeakList peakList = baselineCurve.Peaks;
-            Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
-            double peakLocation = mainPeak.PeakX;
-            double peakHeight = mainPeak.PeakValue;
-
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-
-            if (peakLocation <= -0.3 && peakLocation >= -0.4)
-            {
-                _database.IsInfected = true;
-            }
-            else
-            {
-                _database.IsInfected = false;
-            }
-
-            _database.PeakVoltage = peakHeight;
-            await App.Database.SaveScanAsync(_database);
-
             MeasurementRunning = false;
         }
 
@@ -194,7 +164,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         //Below runs the necessary scan on the APM
-        public async Task<Method> RunScan()
+        public async Task<DifferentialPulse> RunScan()
         {
             var allDb = await App.Database.GetScanDatabasesAsync();
             var _database = await App.Database.GetScanAsync(allDb.Count);
@@ -209,7 +179,7 @@ namespace AgroPathogenMeterApp.Droid
                     acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
                     acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    return acVoltammetry;
+                    return null;
 
                 case "Cyclic Voltammetry":
                     CyclicVoltammetry cVoltammetry = instance.CV(_database);
@@ -218,14 +188,14 @@ namespace AgroPathogenMeterApp.Droid
                     cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
                     cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    return cVoltammetry;
+                    return null;
 
                 case "Differential Pulse Voltammetry":
                     DifferentialPulse differentialPulse = instance.DPV(_database);
 
-                    differentialPulse.Ranging.StartCurrentRange = new CurrentRange(5);
-                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(5);
+                    differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);
                     differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(1);
 
                     return differentialPulse;
 
@@ -236,7 +206,7 @@ namespace AgroPathogenMeterApp.Droid
                     linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
                     linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    return linSweep;
+                    return null;
 
                 case "Square Wave Voltammetry":
                     SquareWave squareWave = instance.SWV(_database);
@@ -245,7 +215,7 @@ namespace AgroPathogenMeterApp.Droid
                     squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
                     squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    return squareWave;
+                    return null;
 
                 default:
                     //Add code to notify user that something has gone wrong and needs to be fixed
@@ -310,11 +280,40 @@ namespace AgroPathogenMeterApp.Droid
                 psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
                 psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
                 psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-                var runScan = await RunScan();
+                DifferentialPulse runScan = await RunScan();
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
 
                 //Add in processing stuff here
+                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+
+                baselineCurve.DetectPeaks(0.05, 0, true, false);
+
+                PeakList peakList = baselineCurve.Peaks;
+                Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
+                double peakLocation = mainPeak.PeakX;
+                double peakHeight = mainPeak.PeakValue;
+
+                var allDb = await App.Database.GetScanDatabasesAsync();
+                var _database = await App.Database.GetScanAsync(allDb.Count);
+
+                if (peakLocation <= -0.3 && peakLocation >= -0.4)
+                {
+                    _database.IsInfected = true;
+                }
+                else
+                {
+                    _database.IsInfected = false;
+                }
+
+                _database.PeakVoltage = peakHeight;
+                await App.Database.SaveScanAsync(_database);
             }
             else if (RunningNC || RunningPC || RunningBL)
             {
