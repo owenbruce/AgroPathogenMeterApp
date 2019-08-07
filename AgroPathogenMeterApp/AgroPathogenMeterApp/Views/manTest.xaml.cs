@@ -82,6 +82,7 @@ namespace AgroPathogenMeterApp.Views
             }
             return true;
         }
+
         private bool OnlyDotDash(string value1,
                                  string value2,
                                  string value3,
