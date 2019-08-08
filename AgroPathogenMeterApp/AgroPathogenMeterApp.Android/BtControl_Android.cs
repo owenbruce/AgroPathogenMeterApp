@@ -169,49 +169,54 @@ namespace AgroPathogenMeterApp.Droid
             switch (_database.VoltamType)
             {
                 case "Alternating Current Voltammetry":
-                    ACVoltammetry acVoltammetry = instance.ACV(_database);
+                    using (ACVoltammetry acVoltammetry = instance.ACV(_database))
+                    {
+                        acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
-                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
-
-                    return null;
+                        return null;
+                    }
 
                 case "Cyclic Voltammetry":
-                    CyclicVoltammetry cVoltammetry = instance.CV(_database);
+                    using (CyclicVoltammetry cVoltammetry = instance.CV(_database))
+                    {
+                        cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
-                    cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
-
-                    return null;
+                        return null;
+                    }
 
                 case "Differential Pulse Voltammetry":
-                    DifferentialPulse differentialPulse = instance.DPV(_database);
+                    using (DifferentialPulse differentialPulse = instance.DPV(_database))
+                    {
+                        differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);
+                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(1);
 
-                    differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);
-                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
-                    differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(1);
-
-                    return differentialPulse;
+                        return differentialPulse;
+                    }
 
                 case "Linear Voltammetry":
-                    LinearSweep linSweep = instance.LinSweep(_database);
+                    using (LinearSweep linSweep = instance.LinSweep(_database))
+                    {
+                        linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
+                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
-                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
-
-                    return null;
+                        return null;
+                    }
 
                 case "Square Wave Voltammetry":
-                    SquareWave squareWave = instance.SWV(_database);
+                    using (SquareWave squareWave = instance.SWV(_database))
+                    {
+                        squareWave.Ranging.StartCurrentRange = new CurrentRange(5);
+                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
+                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                    squareWave.Ranging.StartCurrentRange = new CurrentRange(5);
-                    squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                    squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
-
-                    return null;
+                        return null;
+                    }
 
                 default:
                     //Add code to notify user that something has gone wrong and needs to be fixed
@@ -236,24 +241,27 @@ namespace AgroPathogenMeterApp.Droid
             {
                 Context context = Application.Context;
                 IAttributeSet attributeSet = null;
-                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
-                Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
-
-                try
+                using (PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet))
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);
-                }
-                catch (Exception ex)
-                {
-                    Crashes.TrackError(ex);
-                }
+                    Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
-                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
-                psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
-                psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-                var runScan = await RunScan();
+                    try
+                    {
+                        psCommSimpleAndroid.Connect(devices[0]);
+                    }
+                    catch (Exception ex)
+                    {
+                        Crashes.TrackError(ex);
+                    }
 
-                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+                    psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                    psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+                    psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+                    using (var runScan = await RunScan())
+                    {
+                        activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+                    }
+                }
             }
             else if (RunningDPV)
             {
@@ -261,24 +269,27 @@ namespace AgroPathogenMeterApp.Droid
                     baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
                 Context context = Application.Context;
                 IAttributeSet attributeSet = null;
-                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
-                Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
-
-                try
+                using (PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet))
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);
-                }
-                catch (Exception ex)
-                {
-                    Crashes.TrackError(ex);
-                }
+                    Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
-                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
-                psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
-                psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-                DifferentialPulse runScan = await RunScan();
+                    try
+                    {
+                        psCommSimpleAndroid.Connect(devices[0]);
+                    }
+                    catch (Exception ex)
+                    {
+                        Crashes.TrackError(ex);
+                    }
 
-                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+                    psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                    psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
+                    psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
+                    using (DifferentialPulse runScan = await RunScan())
+                    {
+                        activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
+                    }
+                }
 
                 Thread.Sleep(20000);   //Temporary workaround
 
@@ -287,13 +298,18 @@ namespace AgroPathogenMeterApp.Droid
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
-                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+                SimpleCurve baselineCurve;
 
-                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+                using (SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]))    //Note, replace simpleCurves[1] w/ the standard blank curve
+                {
+                    baselineCurve = subtractedCurve.MovingAverageBaseline();
+                }
 
-                baselineCurve.DetectPeaks(0.05, 0, true, false);
 
                 PeakList peakList = baselineCurve.Peaks;
+
+                baselineCurve.Dispose();
+
                 Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
                 double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
@@ -370,13 +386,17 @@ namespace AgroPathogenMeterApp.Droid
 
                     List<SimpleCurve> positiveCurves = positiveControl.SimpleCurveCollection;
 
-                    SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]);
+                    SimpleCurve baselineCurve;
 
-                    SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+                    using (SimpleCurve subtractedCurve = positiveCurves[0].Subtract(baselineCurves[0]))
+
+                        baselineCurve = subtractedCurve.MovingAverageBaseline();
 
                     baselineCurve.DetectPeaks(0.05, 0, true, false);
 
                     PeakList positivePeakList = baselineCurve.Peaks;
+
+                    baselineCurve.Dispose();
 
                     if (positivePeakList.nPeaks != 0)
                     {
@@ -419,13 +439,19 @@ namespace AgroPathogenMeterApp.Droid
 
                     List<SimpleCurve> negativeCurves = negativeControl.SimpleCurveCollection;
 
-                    SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]);
+                    SimpleCurve baselineCurve;
 
-                    SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();
+                    using (SimpleCurve subtractedCurve = negativeCurves[0].Subtract(baselineCurves[0]))
+                    {
+                        baselineCurve = subtractedCurve.MovingAverageBaseline();
+                    }
 
                     baselineCurve.DetectPeaks(0.05, 0, true, false);
 
                     PeakList negativePeakList = baselineCurve.Peaks;
+
+                    baselineCurve.Dispose();
+
                     if (negativePeakList.nPeaks != 0)
                     {
                         Peak negativePeak = negativePeakList[negativePeakList.nPeaks - 1];
