@@ -305,7 +305,6 @@ namespace AgroPathogenMeterApp.Droid
                     baselineCurve = subtractedCurve.MovingAverageBaseline();
                 }
 
-
                 PeakList peakList = baselineCurve.Peaks;
 
                 baselineCurve.Dispose();
