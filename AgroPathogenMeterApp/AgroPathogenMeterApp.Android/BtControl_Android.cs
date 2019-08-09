@@ -320,6 +320,10 @@ namespace AgroPathogenMeterApp.Droid
                 //Add in processing stuff here
                 //SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
+                var instance = new FileHack();
+
+                activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
+
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
                 SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
