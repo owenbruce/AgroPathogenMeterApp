@@ -174,7 +174,7 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         //Sets the scan parameters
-        public async Task<DifferentialPulse> RunScan()
+        public async Task<Method> RunScan()
         {
             //Grabs the most recent database to get the required parameters
             var allDb = await App.Database.GetScanDatabasesAsync();
@@ -183,32 +183,32 @@ namespace AgroPathogenMeterApp.Droid
             //Gets an instance of ScanParams
             var instance = new ScanParams();
 
-            switch (_database.VoltamType)
+            switch (_database.VoltamType)   //Switch which invokes the correct type of scan
             {
                 case "Alternating Current Voltammetry":   //Sets an alternating current voltammetric scan
                     using (ACVoltammetry acVoltammetry = instance.ACV(_database))
                     {
-                        acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                        acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
                         acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
                         acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                        return null;
+                        return acVoltammetry;
                     }
 
                 case "Cyclic Voltammetry":   //Sets a cyclic voltammetric scan
                     using (CyclicVoltammetry cVoltammetry = instance.CV(_database))
                     {
-                        cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);
+                        cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
                         cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
                         cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                        return null;
+                        return cVoltammetry;
                     }
 
                 case "Differential Pulse Voltammetry":   //Sets a differential pulse voltammetric scan
                     using (DifferentialPulse differentialPulse = instance.DPV(_database))
                     {
-                        differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);
+                        differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);   //Sets the range that the potentiostat will use to detect the current
                         differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
                         differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(1);
 
@@ -218,21 +218,21 @@ namespace AgroPathogenMeterApp.Droid
                 case "Linear Voltammetry":   //Sets a linear voltammetric scan
                     using (LinearSweep linSweep = instance.LinSweep(_database))
                     {
-                        linSweep.Ranging.StartCurrentRange = new CurrentRange(5);
+                        linSweep.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
                         linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
                         linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                        return null;
+                        return linSweep;
                     }
 
                 case "Square Wave Voltammetry":   //Sets a square wave voltammetric scan
                     using (SquareWave squareWave = instance.SWV(_database))
                     {
-                        squareWave.Ranging.StartCurrentRange = new CurrentRange(5);
+                        squareWave.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
                         squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
                         squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
 
-                        return null;
+                        return squareWave;
                     }
 
                 default:
@@ -250,7 +250,7 @@ namespace AgroPathogenMeterApp.Droid
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
             AssetManager assetManager = Application.Context.Assets;
-            using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterMch" + fileNum + ".pssession")))
+            using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterMch" + fileNum + ".pssession")))   //Loads a blank baseline curve to subtract from the scanned/loaded curve
                 baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
             baselineCurves = baseline.SimpleCurveCollection;
@@ -258,89 +258,88 @@ namespace AgroPathogenMeterApp.Droid
             //Runs a real scan depending on whatever parameters the person has set
             if (RunningReal)
             {
-                Context context = Application.Context;
+                Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
                 PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Uses a simple comm with the palmsens
                 Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
                 try
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);
+                    psCommSimpleAndroid.Connect(devices[0]);   //Connect to the first palmsens found
                 }
                 catch (Exception ex)
                 {
                     Crashes.TrackError(ex);
                 }
 
-                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;   //Loads the necessary flags
                 psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
                 psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-                using (var runScan = await RunScan())
-                {
-                    activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
-                }
 
-                Thread.Sleep(20000);
+                var runScan = await RunScan();   //Sets the scan parameters
 
-                psCommSimpleAndroid.Dispose();
+                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
+
+                Thread.Sleep(50000);   //Pauses while the scan is running, temporary measure
+
+                psCommSimpleAndroid.Dispose();   //Dispose of the comm when it is done being used
             }
 
             //Runs a differential pulse voltammetric scan for testing
             else if (RunningDPV)
             {
-                using (StreamReader sr = new StreamReader(assetManager.Open("blank.pssession")))
+                using (StreamReader sr = new StreamReader(assetManager.Open("blank.pssession")))   //Loads a blank curve as a baseline to be subtracted
                     baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
-                Context context = Application.Context;
+
+                Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
-                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Initializes the palmsens comm
                 Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
                 try
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);
+                    psCommSimpleAndroid.Connect(devices[0]);   //Connects to the first palmsens found
                 }
                 catch (Exception ex)
                 {
                     Crashes.TrackError(ex);
                 }
 
-                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
+                psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;   //Loads the necessary flags
                 psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
                 psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-                using (DifferentialPulse runScan = await RunScan())
-                {
-                    activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
-                }
+
+                Method runScan = await RunScan();   //Sets the scan parameters
+
+                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
                 Thread.Sleep(50000);   //Temporary workaround
 
-                psCommSimpleAndroid.Dispose();
+                psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
                 //Add in processing stuff here
-                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+                //SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
-                SimpleCurve baselineCurve;
-
                 SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
-                baselineCurve = subtractedCurve.MovingAverageBaseline();
+                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
 
-                subtractedCurve.Dispose();
+                subtractedCurve.Dispose();   //Disposes of the subtracted curve
 
-                PeakList peakList = baselineCurve.Peaks;
+                PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
 
-                baselineCurve.Dispose();
+                baselineCurve.Dispose();   //Disposes of the baseline curve
 
                 Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
                 double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
 
-                var allDb = await App.Database.GetScanDatabasesAsync();
+                var allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
                 var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                if (peakLocation <= -0.3 && peakLocation >= -0.4)
+                if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
                 {
                     _database.IsInfected = true;
                 }
@@ -350,11 +349,11 @@ namespace AgroPathogenMeterApp.Droid
                 }
 
                 _database.PeakVoltage = peakHeight;
-                await App.Database.SaveScanAsync(_database);
+                await App.Database.SaveScanAsync(_database);   //Saves the current database
             }
-            else if (RunningNC || RunningPC || RunningBL)
+            else if (RunningNC || RunningPC || RunningBL)   //If a test scan is being run
             {
-                if (RunningBL)
+                if (RunningBL)   //If a simple baseline test is run with no subtraction or curve manipulation
                 {
                     SimpleMeasurement baselineMeasurement;
                     using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnlySmooth" + fileNum + ".pssession")))
@@ -364,13 +363,13 @@ namespace AgroPathogenMeterApp.Droid
 
                     SimpleCurve avgBaselineCurve = avgBaselineCurves[0];
 
-                    avgBaselineCurve.DetectPeaks(0.05, 0, true, false);
+                    avgBaselineCurve.DetectPeaks(0.05, 0, true, false);   //Detect peaks only if they are wider than 0.05 V
 
                     PeakList avgBaselinePeakList = avgBaselineCurve.Peaks;
 
-                    if (avgBaselinePeakList.nPeaks != 0)
+                    if (avgBaselinePeakList.nPeaks != 0)   //If it detects a peak run below code
                     {
-                        Peak avgBaselinePeak = avgBaselinePeakList[avgBaselinePeakList.nPeaks - 1];
+                        Peak avgBaselinePeak = avgBaselinePeakList[avgBaselinePeakList.nPeaks - 1];   //Use the last peak detected which should be the wanted peak
 
                         double avgBaselinePeakLocation = avgBaselinePeak.PeakX;
                         double avgBaselinePeakValue = avgBaselinePeak.PeakValue;
@@ -378,7 +377,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (avgBaselinePeakLocation <= -0.3 && avgBaselinePeakLocation >= -0.4)
+                        if (avgBaselinePeakLocation <= -0.3 && avgBaselinePeakLocation >= -0.4)   //If a peak is between a certain range, the sample is infected, add in a minimal value once determined
                         {
                             _database.IsInfected = true;
                         }
@@ -390,7 +389,7 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = avgBaselinePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    else
+                    else   //If no peak is detected
                     {
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
@@ -401,7 +400,7 @@ namespace AgroPathogenMeterApp.Droid
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
-                else if (RunningPC)
+                else if (RunningPC)   //If a postitive control test is being run with known values
                 {
                     SimpleMeasurement positiveControl;
                     using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterTarget" + fileNum + ".pssession")))
@@ -417,13 +416,13 @@ namespace AgroPathogenMeterApp.Droid
 
                     subtractedCurve.Dispose();
 
-                    baselineCurve.DetectPeaks(0.05, 0, true, false);
+                    baselineCurve.DetectPeaks(0.05, 0, true, false);   //Detect all peaks with width greater than 0.05 V
 
                     PeakList positivePeakList = baselineCurve.Peaks;
 
                     baselineCurve.Dispose();
 
-                    if (positivePeakList.nPeaks != 0)
+                    if (positivePeakList.nPeaks != 0)   //If a peak is detected, execute the code below
                     {
                         Peak positivePeak = positivePeakList[positivePeakList.nPeaks - 1];
 
@@ -433,7 +432,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (positivePeakLocation <= -0.3 && positivePeakLocation >= -0.4)
+                        if (positivePeakLocation <= -0.3 && positivePeakLocation >= -0.4)   //If a peak is between a certain range, the sample is infected, add in minimum value once determined
                         {
                             _database.IsInfected = true;
                         }
@@ -445,7 +444,7 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = positivePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    else
+                    else   //If no peak is detected, execute the code below
                     {
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
@@ -456,7 +455,7 @@ namespace AgroPathogenMeterApp.Droid
                         await App.Database.SaveScanAsync(_database);
                     }
                 }
-                else if (RunningNC)
+                else if (RunningNC)   //If a negative control test is being run
                 {
                     SimpleMeasurement negativeControl;
                     using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_2525AfterMch" + fileNum + ".pssession")))
@@ -472,13 +471,13 @@ namespace AgroPathogenMeterApp.Droid
 
                     subtractedCurve.Dispose();
 
-                    baselineCurve.DetectPeaks(0.05, 0, true, false);
+                    baselineCurve.DetectPeaks(0.05, 0, true, false);   //Detect all peaks with a width greater than 0.05 V
 
                     PeakList negativePeakList = baselineCurve.Peaks;
 
                     baselineCurve.Dispose();
 
-                    if (negativePeakList.nPeaks != 0)
+                    if (negativePeakList.nPeaks != 0)   //If a peak is detected, execute the code below
                     {
                         Peak negativePeak = negativePeakList[negativePeakList.nPeaks - 1];
                         double negativePeakLocation = negativePeak.PeakX;
@@ -487,7 +486,7 @@ namespace AgroPathogenMeterApp.Droid
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
 
-                        if (negativePeakLocation <= -0.3 && negativePeakLocation >= -0.4)
+                        if (negativePeakLocation <= -0.3 && negativePeakLocation >= -0.4)   //If a peak is in a certain range, the sample is infected, add a minimum value once determined
                         {
                             _database.IsInfected = true;
                         }
@@ -499,7 +498,7 @@ namespace AgroPathogenMeterApp.Droid
                         _database.PeakVoltage = negativePeakValue;
                         await App.Database.SaveScanAsync(_database);
                     }
-                    else
+                    else   //If a peak is not detected
                     {
                         var allDb = await App.Database.GetScanDatabasesAsync();
                         var _database = await App.Database.GetScanAsync(allDb.Count);
