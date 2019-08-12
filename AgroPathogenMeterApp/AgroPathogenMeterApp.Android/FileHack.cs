@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace AgroPathogenMeterApp.Droid
 {
-    class FileHack
+    internal class FileHack
     {
         public List<int> AddLocations(List<int> locations)
         {
@@ -92,8 +84,10 @@ namespace AgroPathogenMeterApp.Droid
                                 "\"type\":\"PalmSens.Plottables.Curve\",\"xaxis\":0,\"yaxis\":0,\"xaxisdataarray\":{\"type\":" +
                                 "\"PalmSens.Data.DataArrayPotentials\",\"arraytype\":1,\"description\":\"potential\",\"unit\":{\"type\":" +
                                 "\"PalmSens.Units.Volt\",\"s\":\"V\",\"q\":\"Potential\",\"a\":\"E\"}");
+
             return stringLocations;
         }
+
         public SimpleMeasurement HackDPV(SimpleMeasurement unHackedMeasurement)
         {
             List<SimpleMeasurement> hackedMeasurements;
@@ -104,6 +98,7 @@ namespace AgroPathogenMeterApp.Droid
 
             List<int> locations = new List<int>();
             List<string> stringLocations = new List<string>();
+
             int startSubstring = 0;
 
             String file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv.pssession");
@@ -119,7 +114,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 unHackedMeasurementString = sr.ReadToEnd();
 
-            for(int i = 0; i<locations.Count; i++)
+            for (int i = 0; i < locations.Count; i++)
             {
                 hackedMeasurementString += unHackedMeasurementString.Substring(startSubstring, locations[i]) + stringLocations[i];
                 startSubstring += locations[i] + stringLocations[i].Length;

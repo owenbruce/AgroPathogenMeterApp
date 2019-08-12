@@ -244,10 +244,11 @@ namespace AgroPathogenMeterApp.Droid
                     return null;
             }
         }
+
         private void CheckRunning()
         {
-
         }
+
         //Simple connection to the palmsens, currently the only one used
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
@@ -323,7 +324,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 Thread.Sleep(50000);   //Temporary workaround
 
-                while(running == true)
+                while (running == true)
                 {
                     CheckRunning();
                 }
