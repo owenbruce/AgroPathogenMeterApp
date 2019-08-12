@@ -1,5 +1,7 @@
 ﻿using AgroPathogenMeterApp.Data;
+using AgroPathogenMeterApp.Models;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,14 +17,14 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnClearRecentClicked(object sender, EventArgs e)
         {
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
             await App.Database.DeleteScanAsync(_database);
         }
 
         private async void OnClearAllClicked(object sender, EventArgs e)   //Broken(Don't Use)
         {
-            var allDb = await App.Database.GetScanDatabasesAsync();
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
 
             for (int i = 0; i < allDb.Count; i++)
             {

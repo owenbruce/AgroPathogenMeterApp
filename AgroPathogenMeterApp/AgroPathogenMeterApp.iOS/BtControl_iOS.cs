@@ -152,9 +152,9 @@ namespace AgroPathogenMeterApp.iOS
         //Below runs the necessary scan on the APM
         public async Task<Method> RunScan()
         {
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
-            var instance = new ScanParams();
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
+            ScanParams instance = new ScanParams();
 
             switch (_database.VoltamType)
             {
@@ -223,7 +223,7 @@ namespace AgroPathogenMeterApp.iOS
             psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;
             psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
             psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
-            var runScan = await RunScan();
+            RunScan runScan = await RunScan();
             SimpleMeasurement activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);
 
             /*
@@ -245,8 +245,8 @@ namespace AgroPathogenMeterApp.iOS
             Peak mainPeak = peakList[0];
             double peakHeight = mainPeak.PeakValue;
 
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
             if (peakHeight <= -0.001)
             {

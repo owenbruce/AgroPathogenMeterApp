@@ -177,11 +177,11 @@ namespace AgroPathogenMeterApp.Droid
         public async Task<Method> RunScan()
         {
             //Grabs the most recent database to get the required parameters
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
             //Gets an instance of ScanParams
-            var instance = new ScanParams();
+            ScanParams instance = new ScanParams();
 
             switch (_database.VoltamType)   //Switch which invokes the correct type of scan
             {
@@ -276,7 +276,7 @@ namespace AgroPathogenMeterApp.Droid
                 psCommSimpleAndroid.MeasurementEnded += PsCommSimpleAndroid_MeasurementEnded;
                 psCommSimpleAndroid.SimpleCurveStartReceivingData += PsCommSimpleAndroid_SimpleCurveStartReceivingData;
 
-                var runScan = await RunScan();   //Sets the scan parameters
+                Method runScan = await RunScan();   //Sets the scan parameters
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
@@ -317,12 +317,13 @@ namespace AgroPathogenMeterApp.Droid
 
                 psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
+                List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
                 //Add in processing stuff here
-                //SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
 
-                var instance = new FileHack();
+                FileHack instance = new FileHack();
 
-                activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
+                //activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
@@ -340,8 +341,7 @@ namespace AgroPathogenMeterApp.Droid
                 double peakLocation = mainPeak.PeakX;
                 double peakHeight = mainPeak.PeakValue;
 
-                var allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
-                var _database = await App.Database.GetScanAsync(allDb.Count);
+                ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                 if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
                 {
@@ -378,8 +378,8 @@ namespace AgroPathogenMeterApp.Droid
                         double avgBaselinePeakLocation = avgBaselinePeak.PeakX;
                         double avgBaselinePeakValue = avgBaselinePeak.PeakValue;
 
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         if (avgBaselinePeakLocation <= -0.3 && avgBaselinePeakLocation >= -0.4)   //If a peak is between a certain range, the sample is infected, add in a minimal value once determined
                         {
@@ -395,8 +395,8 @@ namespace AgroPathogenMeterApp.Droid
                     }
                     else   //If no peak is detected
                     {
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
@@ -433,8 +433,8 @@ namespace AgroPathogenMeterApp.Droid
                         double positivePeakLocation = positivePeak.PeakX;
                         double positivePeakValue = positivePeak.PeakValue;
 
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         if (positivePeakLocation <= -0.3 && positivePeakLocation >= -0.4)   //If a peak is between a certain range, the sample is infected, add in minimum value once determined
                         {
@@ -450,8 +450,8 @@ namespace AgroPathogenMeterApp.Droid
                     }
                     else   //If no peak is detected, execute the code below
                     {
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
@@ -487,8 +487,8 @@ namespace AgroPathogenMeterApp.Droid
                         double negativePeakLocation = negativePeak.PeakX;
                         double negativePeakValue = negativePeak.PeakValue;
 
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         if (negativePeakLocation <= -0.3 && negativePeakLocation >= -0.4)   //If a peak is in a certain range, the sample is infected, add a minimum value once determined
                         {
@@ -504,8 +504,8 @@ namespace AgroPathogenMeterApp.Droid
                     }
                     else   //If a peak is not detected
                     {
-                        var allDb = await App.Database.GetScanDatabasesAsync();
-                        var _database = await App.Database.GetScanAsync(allDb.Count);
+                        List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                        ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
 
                         _database.IsInfected = false;
                         _database.PeakVoltage = 0.0;
@@ -524,7 +524,7 @@ namespace AgroPathogenMeterApp.Droid
             {
                 if (BluetoothAdapter.DefaultAdapter != null && BluetoothAdapter.DefaultAdapter.IsEnabled)
                 {
-                    foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
+                    foreach (BluetoothDevice pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
                     {
                         return await AsyncTask(pairedDevice);
                     }

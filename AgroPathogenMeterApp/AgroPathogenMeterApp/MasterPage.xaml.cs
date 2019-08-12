@@ -49,7 +49,7 @@ namespace AgroPathogenMeterApp
                 }
             }
 
-            var newPage = MenuPages[id];
+            NavigationPage newPage = MenuPages[id];
 
             if (newPage != null && Detail != newPage)   //Set the detail to be the new page opened
             {

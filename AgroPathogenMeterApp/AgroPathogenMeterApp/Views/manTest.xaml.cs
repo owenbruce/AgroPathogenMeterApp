@@ -376,7 +376,7 @@ namespace AgroPathogenMeterApp.Views
         private async void OnManTestClicked(object sender, EventArgs e)   //When you click the button to run the manual test
         {
             Scanner scanner = App.Database;
-            var Scan = new ScanDatabase
+            ScanDatabase Scan = new ScanDatabase
             {
                 VoltamType = VoltammetryScan.SelectedItem.ToString(),   //Sets the type of voltammetric scan to be run
                 IsInfected = false   //Sets isinfected to false temporarily

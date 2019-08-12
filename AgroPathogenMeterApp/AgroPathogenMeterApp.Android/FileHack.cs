@@ -16,6 +16,7 @@ namespace AgroPathogenMeterApp.Droid
     {
         public List<int> AddLocations(List<int> locations)
         {
+
             return locations;
         }
 
@@ -34,7 +35,7 @@ namespace AgroPathogenMeterApp.Droid
             List<int> locations = new List<int>();
             List<string> stringLocations = new List<string>();
 
-            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv.pssession");
+            String file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv.pssession");
 
             locations = AddLocations(locations);
             stringLocations = AddStringLocations(stringLocations);
@@ -52,7 +53,7 @@ namespace AgroPathogenMeterApp.Droid
                 hackedMeasurementString += unHackedMeasurementString.Substring(0, locations[i]) + stringLocations[i];
             }
 
-            using (var writer = File.CreateText(file))
+            using (StreamWriter writer = File.CreateText(file))
 
                 writer.Write(hackedMeasurementString);
 

@@ -1,6 +1,7 @@
 ﻿using AgroPathogenMeterApp.Models;
 using Android.Bluetooth;
 using Android.Content;
+using System;
 
 namespace AgroPathogenMeterApp.Droid
 {
@@ -8,14 +9,14 @@ namespace AgroPathogenMeterApp.Droid
     {
         public override async void OnReceive(Context context, Intent intent)
         {
-            var action = intent.Action;
+            String action = intent.Action;
 
             if (action != BluetoothDevice.ActionFound)
             {
                 return;
             }
 
-            var device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
+            BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
 
             if (device.BondState != Bond.Bonded)
             {

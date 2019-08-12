@@ -1,5 +1,7 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using AgroPathogenMeterApp.Models;
+using Microsoft.AppCenter.Analytics;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,8 +19,8 @@ namespace AgroPathogenMeterApp.Views
 
         private async void GetContext()   //Get the database which was just scanned and display whether or not the sample is infected
         {
-            var allDb = await App.Database.GetScanDatabasesAsync();
-            var _database = await App.Database.GetScanAsync(allDb.Count);
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
             BindingContext = _database;
         }
 
