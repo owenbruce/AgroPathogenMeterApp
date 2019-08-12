@@ -32,6 +32,7 @@ namespace AgroPathogenMeterApp.Droid
         private SimpleCurve _activeSimpleCurve;
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
+        private bool running;
 
         #region Flags
 
@@ -89,11 +90,13 @@ namespace AgroPathogenMeterApp.Droid
         //Notifies when a measurement is finished, nothing currently implemented
         protected virtual void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
+            running = false;
         }
 
         //Notifies when a measurement is started, nothing currently implemented
         protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
         {
+            running = true;
         }
 
         //Notifies when a curve starts to receive data
@@ -241,7 +244,10 @@ namespace AgroPathogenMeterApp.Droid
                     return null;
             }
         }
+        private void CheckRunning()
+        {
 
+        }
         //Simple connection to the palmsens, currently the only one used
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
@@ -313,7 +319,14 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
+                running = true;
+
                 Thread.Sleep(50000);   //Temporary workaround
+
+                while(running == true)
+                {
+                    CheckRunning();
+                }
 
                 psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
