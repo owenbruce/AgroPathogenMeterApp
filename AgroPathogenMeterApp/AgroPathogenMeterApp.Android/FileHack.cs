@@ -6,14 +6,14 @@ namespace AgroPathogenMeterApp.Droid
 {
     internal class FileHack
     {
-        public List<int> AddLocations(List<int> locations)
+        public List<int> AddLocationsDPV(List<int> locations)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
         {
             locations.Add(279);
             locations.Add(20194);
             return locations;
         }
 
-        public List<string> AddStringLocations(List<string> stringLocations)
+        public List<string> AddStringLocationsDPV(List<string> stringLocations)   //Adds the (very long) strings which need to be swapped out for the scan to process correctly
         {
             stringLocations.Add("dpv\\r\\nTECHNIQUE = 1\\r" +
                                 "\\nNOTES = DPV % 20measurement:% 205 % 20pulses % 20per % 20second % crlfUse % 20PSDummyCell % 20WE_A\\r" +
@@ -88,7 +88,7 @@ namespace AgroPathogenMeterApp.Droid
             return stringLocations;
         }
 
-        public SimpleMeasurement HackDPV(SimpleMeasurement unHackedMeasurement)
+        public SimpleMeasurement HackDPV(SimpleMeasurement unHackedMeasurement)   
         {
             List<SimpleMeasurement> hackedMeasurements;
             SimpleMeasurement hackedMeasurement;
@@ -103,8 +103,8 @@ namespace AgroPathogenMeterApp.Droid
 
             String file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv.pssession");
 
-            locations = AddLocations(locations);
-            stringLocations = AddStringLocations(stringLocations);
+            locations = AddLocationsDPV(locations);
+            stringLocations = AddStringLocationsDPV(stringLocations);
 
             SimpleLoadSaveFunctions.SaveMeasurement(unHackedMeasurement, file);
 

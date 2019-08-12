@@ -11,7 +11,8 @@
                 VerticalOptions="StartAndExpand"
                 HorizontalOptions="CenterAndExpand" />
             <Button Text="Clear most recent database"
-                    Clicked="OnClearRecentClicked" />
+                    Clicked="OnClearRecentClicked"
+                    IsEnabled="False"/>
             <Button Text="Clear all databases (Broken, Disabled)"
                     Clicked="OnClearAllClicked"
                     IsEnabled="False" />
