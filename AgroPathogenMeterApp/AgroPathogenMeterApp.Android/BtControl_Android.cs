@@ -287,7 +287,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
-                Thread.Sleep(50000);   //Pauses while the scan is running, temporary measure
+                Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
 
                 psCommSimpleAndroid.Dispose();   //Dispose of the comm when it is done being used
             }

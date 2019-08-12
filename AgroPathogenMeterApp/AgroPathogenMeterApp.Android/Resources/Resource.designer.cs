@@ -2065,6 +2065,7 @@ namespace AgroPathogenMeterApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense = global::AgroPathogenMeterApp.Droid.Resource.Style.Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_MaterialComponents_Toolbar = global::AgroPathogenMeterApp.Droid.Resource.Style.Widget_MaterialComponents_Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_Support_CoordinatorLayout = global::AgroPathogenMeterApp.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.collectionViewStyle = global::AgroPathogenMeterApp.Droid.Resource.Style.collectionViewStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar = global::AgroPathogenMeterApp.Droid.Resource.Styleable.ActionBar;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar_background = global::AgroPathogenMeterApp.Droid.Resource.Styleable.ActionBar_background;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ActionBar_backgroundSplit = global::AgroPathogenMeterApp.Droid.Resource.Styleable.ActionBar_backgroundSplit;
@@ -8678,6 +8679,9 @@ namespace AgroPathogenMeterApp.Droid
 			
 			// aapt resource value: 0x7F0F00CC
 			public const int CardView_Light = 2131689676;
+			
+			// aapt resource value: 0x7F0F020C
+			public const int collectionViewStyle = 2131689996;
 			
 			// aapt resource value: 0x7F0F00CD
 			public const int DrawerArrowStyle = 2131689677;
