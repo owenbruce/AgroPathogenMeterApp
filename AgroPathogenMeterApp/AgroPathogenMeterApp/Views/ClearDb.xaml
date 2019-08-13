@@ -12,7 +12,7 @@
                 HorizontalOptions="CenterAndExpand" />
             <Button Text="Clear most recent database (Broken, Disabled)"
                     Clicked="OnClearRecentClicked"
-                    IsEnabled="False"/>
+                    IsEnabled="False" />
             <Button Text="Clear all databases (Broken, Disabled)"
                     Clicked="OnClearAllClicked"
                     IsEnabled="False" />

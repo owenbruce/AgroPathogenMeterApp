@@ -7,6 +7,7 @@ namespace AgroPathogenMeterApp.Droid
     internal class FileHack
     {
         #region DPV
+
         public List<int> AddLocationsDPV(List<int> locations)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
         {
             locations.Add(279);
@@ -133,9 +134,11 @@ namespace AgroPathogenMeterApp.Droid
 
             return hackedMeasurement;
         }
+
         #endregion DPV
 
         #region SWV
+
         public List<int> AddLocationsSWV(List<int> locations)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
         {
             locations.Add(272);
@@ -260,6 +263,7 @@ namespace AgroPathogenMeterApp.Droid
 
             return hackedMeasurement;
         }
+
         #endregion SWV
     }
 }
