@@ -10,7 +10,7 @@
             <Label Text="Clear the stored Database below"
                 VerticalOptions="StartAndExpand"
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="Clear most recent database"
+            <Button Text="Clear most recent database (Broken, Disabled)"
                     Clicked="OnClearRecentClicked"
                     IsEnabled="False"/>
             <Button Text="Clear all databases (Broken, Disabled)"

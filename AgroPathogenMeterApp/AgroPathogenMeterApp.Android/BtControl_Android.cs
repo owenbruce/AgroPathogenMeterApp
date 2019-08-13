@@ -289,7 +289,42 @@ namespace AgroPathogenMeterApp.Droid
 
                 Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
 
+                FileHack instance = new FileHack();
+
+                activeSimpleMeasurement = instance.HackSWV(activeSimpleMeasurement);
+
                 psCommSimpleAndroid.Dispose();   //Dispose of the comm when it is done being used
+
+                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+
+                subtractedCurve.Dispose();   //Disposes of the subtracted curve
+
+                PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
+
+                baselineCurve.Dispose();   //Disposes of the baseline curve
+
+                Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
+                double peakLocation = mainPeak.PeakX;
+                double peakHeight = mainPeak.PeakValue;
+
+                List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+                ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
+
+                if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
+                {
+                    _database.IsInfected = true;
+                }
+                else
+                {
+                    _database.IsInfected = false;
+                }
+
+                _database.PeakVoltage = peakHeight;
+                await App.Database.SaveScanAsync(_database);   //Saves the current database
             }
 
             //Runs a differential pulse voltammetric scan for testing
@@ -333,11 +368,11 @@ namespace AgroPathogenMeterApp.Droid
 
                 List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
                 //Add in processing stuff here
-                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
+                //SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
 
                 FileHack instance = new FileHack();
 
-                //activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
+                activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 

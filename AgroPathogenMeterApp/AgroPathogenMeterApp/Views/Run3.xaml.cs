@@ -18,7 +18,7 @@ namespace AgroPathogenMeterApp.Views
             //Setup the standard scan
             ScanDatabase scan = new ScanDatabase
             {
-                VoltamType = "Standard",
+                VoltamType = "Square Wave Voltammetry",
                 Date = DateTime.Now,
 
                 StartingPotential = 0.0,
