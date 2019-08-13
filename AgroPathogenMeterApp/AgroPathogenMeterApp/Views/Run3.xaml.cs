@@ -20,7 +20,6 @@ namespace AgroPathogenMeterApp.Views
             {
                 VoltamType = "Square Wave Voltammetry",
                 Date = DateTime.Now,
-
                 StartingPotential = 0.0,
                 EndingPotential = -0.6,
                 PotentialStep = 0.001,
