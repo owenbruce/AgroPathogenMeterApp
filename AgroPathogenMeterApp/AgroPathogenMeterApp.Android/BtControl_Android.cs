@@ -29,7 +29,6 @@ namespace AgroPathogenMeterApp.Droid
         public static readonly TimeSpan MaxWait = TimeSpan.FromSeconds(15);
         private AutoResetEvent _measurementEnded;
 
-
         //Initializes the parameters required for the scan and processing
         private Curve _activeCurve;
 
@@ -38,7 +37,8 @@ namespace AgroPathogenMeterApp.Droid
         private List<SimpleCurve> baselineCurves;
         private bool running;
 
-        public BtControl_Android() {
+        public BtControl_Android()
+        {
             Context context = Application.Context;   //Loads the current android context
             IAttributeSet attributeSet = null;
             PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Uses a simple comm with the palmsens
@@ -46,7 +46,6 @@ namespace AgroPathogenMeterApp.Droid
             this._measurementEnded = new AutoResetEvent(false);
             psCommSimpleAndroid.MeasurementEnded += this.PsCommSimpleAndroid_MeasurementEnded;
         }
-
 
         #region Flags
 
