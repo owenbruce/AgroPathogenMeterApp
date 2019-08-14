@@ -26,6 +26,10 @@ namespace AgroPathogenMeterApp.Droid
     [Android.Runtime.Preserve(AllMembers = true)]
     public class BtControl_Android : IBtControl
     {
+        public static readonly TimeSpan MaxWait = TimeSpan.FromSeconds(15);
+        private AutoResetEvent _measurementEnded;
+
+
         //Initializes the parameters required for the scan and processing
         private Curve _activeCurve;
 
@@ -33,6 +37,16 @@ namespace AgroPathogenMeterApp.Droid
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
         private bool running;
+
+        public BtControl_Android() {
+            Context context = Application.Context;   //Loads the current android context
+            IAttributeSet attributeSet = null;
+            PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Uses a simple comm with the palmsens
+
+            this._measurementEnded = new AutoResetEvent(false);
+            psCommSimpleAndroid.MeasurementEnded += this.PsCommSimpleAndroid_MeasurementEnded;
+        }
+
 
         #region Flags
 
@@ -88,15 +102,47 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         //Notifies when a measurement is finished, nothing currently implemented
-        protected virtual void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
-            running = false;
+            FileHack instance = new FileHack();
+
+            activeSimpleMeasurement = instance.HackSWV(activeSimpleMeasurement);
+
+            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+
+            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+            SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+
+            subtractedCurve.Dispose();   //Disposes of the subtracted curve
+
+            PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
+
+            baselineCurve.Dispose();   //Disposes of the baseline curve
+
+            Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
+            double peakLocation = mainPeak.PeakX;
+            double peakHeight = mainPeak.PeakValue;
+
+            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
+            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
+
+            if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
+            {
+                _database.IsInfected = true;
+            }
+            else
+            {
+                _database.IsInfected = false;
+            }
+
+            _database.PeakVoltage = peakHeight;
+            await App.Database.SaveScanAsync(_database);   //Saves the current database
         }
 
         //Notifies when a measurement is started, nothing currently implemented
         protected virtual void PsCommSimpleAndroid_MeasurementStarted(object sender, EventArgs e)
         {
-            running = true;
         }
 
         //Notifies when a curve starts to receive data
@@ -287,44 +333,9 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
-                Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
+                //Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
 
-                FileHack instance = new FileHack();
-
-                activeSimpleMeasurement = instance.HackSWV(activeSimpleMeasurement);
-
-                psCommSimpleAndroid.Dispose();   //Dispose of the comm when it is done being used
-
-                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
-
-                subtractedCurve.Dispose();   //Disposes of the subtracted curve
-
-                PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
-
-                baselineCurve.Dispose();   //Disposes of the baseline curve
-
-                Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
-                double peakLocation = mainPeak.PeakX;
-                double peakHeight = mainPeak.PeakValue;
-
-                List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
-                ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
-
-                if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
-                {
-                    _database.IsInfected = true;
-                }
-                else
-                {
-                    _database.IsInfected = false;
-                }
-
-                _database.PeakVoltage = peakHeight;
-                await App.Database.SaveScanAsync(_database);   //Saves the current database
+                this._measurementEnded.WaitOne(MaxWait);
             }
 
             //Runs a differential pulse voltammetric scan for testing
