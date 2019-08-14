@@ -26,7 +26,7 @@ namespace AgroPathogenMeterApp.Droid
     [Android.Runtime.Preserve(AllMembers = true)]
     public class BtControl_Android : IBtControl
     {
-        public static readonly TimeSpan MaxWait = TimeSpan.FromSeconds(15);
+        public static readonly TimeSpan MaxWait = TimeSpan.FromSeconds(50);
         private AutoResetEvent _measurementEnded;
 
         //Initializes the parameters required for the scan and processing
@@ -105,7 +105,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             FileHack instance = new FileHack();
 
-            activeSimpleMeasurement = instance.HackSWV(activeSimpleMeasurement);
+            activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
 
             List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
 
@@ -355,6 +355,7 @@ namespace AgroPathogenMeterApp.Droid
                 catch (Exception ex)
                 {
                     Crashes.TrackError(ex);
+                    return;
                 }
 
                 psCommSimpleAndroid.MeasurementStarted += PsCommSimpleAndroid_MeasurementStarted;   //Loads the necessary flags
@@ -367,8 +368,11 @@ namespace AgroPathogenMeterApp.Droid
 
                 running = true;
 
-                Thread.Sleep(50000);   //Temporary workaround
+                //Thread.Sleep(50000);   //Temporary workaround
 
+                this._measurementEnded.WaitOne(MaxWait);
+
+                /*
                 while (running == true)
                 {
                     CheckRunning();
@@ -413,6 +417,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 _database.PeakVoltage = peakHeight;
                 await App.Database.SaveScanAsync(_database);   //Saves the current database
+                */
             }
             else if (RunningNC || RunningPC || RunningBL)   //If a test scan is being run
             {
