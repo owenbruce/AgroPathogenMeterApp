@@ -298,7 +298,7 @@ namespace AgroPathogenMeterApp.Droid
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
             bool RunningBL = true;
-            string testRun = "3";
+            string testRun = "5";
             //Below sets which option the code will execute
             SimpleMeasurement baseline;
             AssetManager assetManager = Application.Context.Assets;
@@ -424,7 +424,7 @@ namespace AgroPathogenMeterApp.Droid
                 if (RunningBL)   //If a simple baseline test is run with no subtraction or curve manipulation
                 {
                     SimpleMeasurement baselineMeasurement;
-                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnlySmooth" + fileNum + ".pssession")))
+                    using (StreamReader sr = new StreamReader(assetManager.Open(testRun + "_baselineOnly" + fileNum + ".pssession")))
                         baselineMeasurement = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
                     List<SimpleCurve> avgBaselineCurves = baselineMeasurement.SimpleCurveCollection;
