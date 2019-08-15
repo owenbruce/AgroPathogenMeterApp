@@ -53,9 +53,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidUseAapt2>true</AndroidUseAapt2>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
+    <AndroidLinkTool>proguard</AndroidLinkTool>
+    <AndroidStoreUncompressedFileExtensions>.pssession</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
