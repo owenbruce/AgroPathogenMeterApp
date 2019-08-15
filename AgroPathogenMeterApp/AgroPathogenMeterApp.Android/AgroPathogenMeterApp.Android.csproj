@@ -53,8 +53,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidUseAapt2>true</AndroidUseAapt2>
-    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
     <AndroidLinkTool>proguard</AndroidLinkTool>
     <AndroidStoreUncompressedFileExtensions>.pssession</AndroidStoreUncompressedFileExtensions>
