@@ -139,12 +139,12 @@ namespace AgroPathogenMeterApp.Droid
 
         #region SWV
 
-        public List<int> AddLocationsSWV(List<int> locations)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
+        public List<int> AddLocationsSWV(List<int> locations, string unHackedMeasurementString)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
         {
-            locations.Add(272);
-            locations.Add(58829);
-            locations.Add(489);
-            locations.Add(11544);
+            locations.Add(unHackedMeasurementString.IndexOf("METHOD_ID=") + "Method_ID=".Length);
+            locations.Add(unHackedMeasurementString.LastIndexOf("METHOD_ID=") + "Method_ID=".Length);
+            locations.Add(unHackedMeasurementString.LastIndexOf("PalmSens.Data.DataArrayTime") + "PalmSens.Data.DataArray.".Length);
+            locations.Add(unHackedMeasurementString.LastIndexOf("PalmSens.Data.GenericValue") + "PalmSens.Data.".Length);
             return locations;
         }
 
@@ -234,9 +234,6 @@ namespace AgroPathogenMeterApp.Droid
 
             String file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "swv.pssession");
 
-            locations = AddLocationsSWV(locations);
-            stringLocations = AddStringLocationsSWV(stringLocations);
-
             SimpleLoadSaveFunctions.SaveMeasurement(unHackedMeasurement, file);
 
             //Code here for manipulation the file
@@ -244,6 +241,9 @@ namespace AgroPathogenMeterApp.Droid
             using (StreamReader sr = new StreamReader(file))
 
                 unHackedMeasurementString = sr.ReadToEnd();
+
+            locations = AddLocationsSWV(locations, unHackedMeasurementString);
+            stringLocations = AddStringLocationsSWV(stringLocations);
 
             for (int i = 0; i < locations.Count; i++)
             {
