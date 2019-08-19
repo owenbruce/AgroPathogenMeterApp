@@ -8,10 +8,10 @@ namespace AgroPathogenMeterApp.Droid
     {
         #region DPV
 
-        public List<int> AddLocationsDPV(List<int> locations)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
+        public List<int> AddLocationsDPV(List<int> locations, string unHackedMeasurementString)   //Adds the locations of the strings which need to be swapped for the scan to process correctly
         {
-            locations.Add(279);
-            locations.Add(20194);
+            locations.Add(unHackedMeasurementString.IndexOf("METHOD_ID=") + "METHOD_ID=".Length);
+            locations.Add(unHackedMeasurementString.LastIndexOf("METHOD_ID=") + "METHOD_ID=".Length);
             return locations;
         }
 
@@ -105,9 +105,6 @@ namespace AgroPathogenMeterApp.Droid
 
             String file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv.pssession");
 
-            locations = AddLocationsDPV(locations);
-            stringLocations = AddStringLocationsDPV(stringLocations);
-
             SimpleLoadSaveFunctions.SaveMeasurement(unHackedMeasurement, file);
 
             //Code here for manipulation the file
@@ -115,6 +112,9 @@ namespace AgroPathogenMeterApp.Droid
             using (StreamReader sr = new StreamReader(file))
 
                 unHackedMeasurementString = sr.ReadToEnd();
+
+            locations = AddLocationsDPV(locations, unHackedMeasurementString);
+            stringLocations = AddStringLocationsDPV(stringLocations);
 
             for (int i = 0; i < locations.Count; i++)
             {
