@@ -1,5 +1,5 @@
 using Android.Content;
-using Microsoft.AppCenter.Crashes;
+using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.PSAndroid.Comm;
@@ -10,15 +10,15 @@ namespace AgroPathogenMeterApp.Droid
 {
     internal class DeviceHandler
     {
-        public DeviceHandler()
+        internal DeviceHandler()
         {
         }
 
-        internal Context Context = Android.App.Application.Context;
+        internal Context Context;
         internal DeviceDiscoverer _deviceDiscoverer;
 
         internal bool EnableBluetooth = true;
-        internal bool EnableUSB = false;
+        internal bool EnableUSB = true;
 
         /// <summary>
         /// Scans for connected devices.
@@ -28,7 +28,7 @@ namespace AgroPathogenMeterApp.Droid
         /// Returns an array of connected devices
         /// </returns>
         /// <exception cref="System.ArgumentException">An error occured while attempting to scan for connected devices.</exception>
-        internal async Task<Device[]> ScanDevices(int timeOut = 20000)
+        internal async Task<Device[]> ScanDevicesAsync(int timeOut = 20000)
         {
             Device[] devices = new Device[0];
 
@@ -40,8 +40,7 @@ namespace AgroPathogenMeterApp.Droid
             }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
-                throw new ArgumentException($"An error occured while attempting to scan for connected devices.");
+                throw new ArgumentException($"An error occured while attempting to scan for connected devices. {ex.Message}");
             }
             return devices;
         }
@@ -55,19 +54,48 @@ namespace AgroPathogenMeterApp.Droid
         /// </returns>
         /// <exception cref="System.ArgumentNullException">The specified device cannot be null.</exception>
         /// <exception cref="System.Exception">Could not connect to the specified device.</exception>
-        internal CommManager Connect(Device device)
+        internal async Task<CommManager> Connect(Device device)
         {
             if (device == null)
-            {
                 throw new ArgumentNullException("The specified device cannot be null.");
+            CommManager comm = null;
+
+            await new SynchronizationContextRemover();
+
+            try
+            {
+                await device.OpenAsync(); //Open the device to allow a connection
+                comm = await CommManager.CommManagerAsync(device); //Connect to the selected device
+            }
+            catch (Exception ex)
+            {
+                device.Close();
+                throw new Exception($"Could not connect to the specified device. {ex.Message}");
             }
 
+            return comm;
+        }
+
+        /// <summary>
+        /// Connects to the specified device and returns its CommManager.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <returns>
+        /// The CommManager of the device or null
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">The specified device cannot be null.</exception>
+        /// <exception cref="System.Exception">Could not connect to the specified device.</exception>
+        [Obsolete("Compatible with SDKs 5.4 and earlier. Please use asynchronous functions, as development of synchronous functions will be fased out")]
+        internal CommManager ConnectBC(Device device)
+        {
+            if (device == null)
+                throw new ArgumentNullException("The specified device cannot be null.");
             CommManager comm = null;
 
             try
             {
                 device.Open(); //Open the device to allow a connection
-                comm = new CommManager(device, 3000); //Connect to the selected device
+                comm = new CommManager(device); //Connect to the selected device
             }
             catch (Exception ex)
             {
@@ -86,10 +114,7 @@ namespace AgroPathogenMeterApp.Droid
         internal void Disconnect(CommManager comm)
         {
             if (comm == null)
-            {
                 throw new ArgumentNullException("The specified CommManager cannot be null.");
-            }
-
             comm.Disconnect();
             comm = null;
         }

@@ -130,6 +130,7 @@
     <Compile Include="PlatformDependentInterfaces.cs" />
     <Compile Include="PSCommSimple.cs" />
     <Compile Include="PSCommSimpleAndroid.cs" />
+    <Compile Include="PSMultiCommSimple.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanParams.cs" />
@@ -373,13 +374,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\FTDI.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidAsset Include="Assets\PalmSens.Core.dll" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\PalmSens.PSAndroid.Core.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\FTDI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

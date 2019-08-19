@@ -1,4 +1,3 @@
-using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Data;
 using PalmSens.DataFiles;
@@ -22,9 +21,7 @@ namespace AgroPathogenMeterApp.Droid
         public static List<SimpleMeasurement> LoadMeasurements(string filepath)
         {
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
 
             List<SimpleMeasurement> simpleMeasurements = new List<SimpleMeasurement>();
             SessionManager session = null;
@@ -32,17 +29,12 @@ namespace AgroPathogenMeterApp.Droid
             try { session = LoadSaveHelperFunctions.LoadSessionFile(filepath); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
             if (session != null)
-            {
                 foreach (Measurement measurement in session)
-                {
                     simpleMeasurements.Add(new SimpleMeasurement(measurement));
-                }
-            }
 
             return simpleMeasurements;
         }
@@ -57,9 +49,7 @@ namespace AgroPathogenMeterApp.Droid
         public static List<SimpleMeasurement> LoadMeasurements(StreamReader streamReader)
         {
             if (streamReader == null)
-            {
                 throw new ArgumentException("Stream reader cannot be null");
-            }
 
             List<SimpleMeasurement> simpleMeasurements = new List<SimpleMeasurement>();
             SessionManager session = new SessionManager();
@@ -67,17 +57,12 @@ namespace AgroPathogenMeterApp.Droid
             try { session.Load(streamReader.BaseStream, ""); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file in the stream reader is valid");
             }
 
             if (session != null)
-            {
                 foreach (Measurement measurement in session)
-                {
                     simpleMeasurements.Add(new SimpleMeasurement(measurement));
-                }
-            }
 
             return simpleMeasurements;
         }
@@ -93,14 +78,9 @@ namespace AgroPathogenMeterApp.Droid
         public static void SaveMeasurement(SimpleMeasurement simpleMeasurement, string filepath)
         {
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
-
             if (simpleMeasurement == null)
-            {
                 throw new ArgumentNullException("SimpleMeasurement cannot be null");
-            }
 
             SessionManager session = new SessionManager();
             session.AddMeasurement(simpleMeasurement.Measurement);
@@ -109,7 +89,6 @@ namespace AgroPathogenMeterApp.Droid
             try { LoadSaveHelperFunctions.SaveSessionFile(filepath, session); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }
@@ -125,30 +104,19 @@ namespace AgroPathogenMeterApp.Droid
         public static void SaveMeasurements(SimpleMeasurement[] simpleMeasurements, string filepath)
         {
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
-
             if (simpleMeasurements == null || simpleMeasurements.Where(meas => meas == null).Count() > 0)
-            {
                 throw new ArgumentNullException("SimpleMeasurements cannot be null");
-            }
 
             SessionManager session = new SessionManager();
             foreach (SimpleMeasurement measurement in simpleMeasurements)
-            {
                 if (measurement != null)
-                {
                     session.AddMeasurement(measurement.Measurement);
-                }
-            }
-
             session.MethodForEditor = simpleMeasurements[0].Measurement.Method;
 
             try { LoadSaveHelperFunctions.SaveSessionFile(filepath, session); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }
@@ -163,14 +131,9 @@ namespace AgroPathogenMeterApp.Droid
         public static void SaveMeasurements(List<SimpleMeasurement> simpleMeasurements, string filepath)
         {
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
-
             if (simpleMeasurements == null || simpleMeasurements.Where(meas => meas == null).Count() > 0)
-            {
                 throw new ArgumentNullException("SimpleMeasurements cannot be null");
-            }
 
             SaveMeasurements(simpleMeasurements.ToArray(), filepath);
         }
@@ -186,14 +149,11 @@ namespace AgroPathogenMeterApp.Droid
         {
             Method method = null;
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
 
             try { method = LoadSaveHelperFunctions.LoadMethod(filepath); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
@@ -210,16 +170,12 @@ namespace AgroPathogenMeterApp.Droid
         public static Method LoadMethod(StreamReader streamReader)
         {
             if (streamReader == null)
-            {
                 throw new ArgumentException("Stream reader cannot be null");
-            }
-
             Method method = null;
 
             try { method = MethodFile2.FromStream(streamReader); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
@@ -237,19 +193,13 @@ namespace AgroPathogenMeterApp.Droid
         public static void SaveMethod(Method method, string filepath)
         {
             if (string.IsNullOrEmpty(filepath))
-            {
                 throw new ArgumentException("File path must be specified");
-            }
-
             if (method == null)
-            {
                 throw new ArgumentNullException("Method cannot be null");
-            }
 
             try { LoadSaveHelperFunctions.SaveMethod(method, filepath); }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }

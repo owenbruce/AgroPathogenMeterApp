@@ -330,7 +330,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 Method runScan = await RunScan();   //Sets the scan parameters
 
-                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
+                activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
                 //Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
 
@@ -364,7 +364,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 Method runScan = await RunScan();   //Sets the scan parameters
 
-                activeSimpleMeasurement = psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
+                activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
                 running = true;
 

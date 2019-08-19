@@ -1,12 +1,54 @@
-﻿using PalmSens;
-using PalmSens.Analysis;
+﻿using PalmSens.Analysis;
 using PalmSens.Data;
+using PalmSens.Fitting;
+using PalmSens.Fitting.Models;
 using PalmSens.Plottables;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Droid
 {
+    /// <summary>
+    /// Predifined smooth settings for the Savitsky-Golay filter
+    /// </summary>
+    public enum SmoothLevel
+    {
+        None = -1,
+
+        //Remove spikes
+        SpikeRejection = 0,
+
+        //Window of 5 samples
+        Low = 1,
+
+        //Window of 9 samples
+        Medium = 2,
+
+        //Window of 15 samples
+        High = 3,
+
+        //Window of 25 samples
+        VeryHigh = 4
+    }
+
+    /// <summary>
+    /// Peak detect algorithms
+    /// </summary>
+    public enum PeakTypes
+    {
+        //Detect peaks using derivative
+        Default = 0,
+
+        //Detect peaks using second derivative
+        Shoulder = 1,
+
+        //Detect peaks using semiderivative
+        LSVCV = 2
+    }
+
     public class SimpleCurve : IDisposable
     {
         /// <summary>
@@ -21,7 +63,10 @@ namespace AgroPathogenMeterApp.Droid
 
             Curve = curve;
             if (!Curve.IsFinished)
-                Curve.Finished += _curve_Finished;
+            {
+                Curve.Finished += Curve_Finished;
+                Curve.NewDataAdded += Curve_NewDataAdded;
+            }
             _simpleMeasurement = simpleMeasurement;
         }
 
@@ -72,10 +117,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The unit.
         /// </value>
-        public string XUnit
-        {
-            get { return Curve.XUnit.ToString(); }
-        }
+        public string XUnit { get { return Curve.XUnit.ToString(); } }
 
         /// <summary>
         /// Gets the type data on the X-Axis.
@@ -83,20 +125,14 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The type data on the X-Axis.
         /// </value>
-        public DataArrayType XAxisDataType
-        {
-            get { return Curve.XArrayType; }
-        }
+        public DataArrayType XAxisDataType { get { return Curve.XArrayType; } }
 
         /// <summary>
         /// Gets the X-Axis value at a specified index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public double XAxisValue(int index)
-        {
-            return Curve.GetXValue(index);
-        }
+        public double XAxisValue(int index) { return Curve.GetXValue(index); }
 
         /// <summary>
         /// Gets the X-Axis values.
@@ -104,10 +140,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The X-Axis values.
         /// </value>
-        public double[] XAxisValues
-        {
-            get { return Curve.GetXValues(); }
-        }
+        public double[] XAxisValues { get { return Curve.GetXValues(); } }
 
         /// <summary>
         /// Gets the unit of the Y-Axis.
@@ -115,10 +148,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The unit.
         /// </value>
-        public string YUnit
-        {
-            get { return Curve.YUnit.ToString(); }
-        }
+        public string YUnit { get { return Curve.YUnit.ToString(); } }
 
         /// <summary>
         /// Gets the type data on the Y-Axis.
@@ -126,20 +156,14 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The type data on the Y-Axis.
         /// </value>
-        public DataArrayType YAxisDataType
-        {
-            get { return Curve.YArrayType; }
-        }
+        public DataArrayType YAxisDataType { get { return Curve.YArrayType; } }
 
         /// <summary>
-        /// Gets the Y-Axis value at a specified index.
+        /// Gets the X-Axis value at a specified index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public double YAxisValue(int index)
-        {
-            return Curve.GetYValue(index);
-        }
+        public double YAxisValue(int index) { return Curve.GetYValue(index); }
 
         /// <summary>
         /// Gets the Y-Axis values.
@@ -147,10 +171,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The Y-Axis values.
         /// </value>
-        public double[] YAxisValues
-        {
-            get { return Curve.GetYValues(); }
-        }
+        public double[] YAxisValues { get { return Curve.GetYValues(); } }
 
         /// <summary>
         /// Gets the amount of data points in the SimpleCurve.
@@ -158,10 +179,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The amount of data points.
         /// </value>
-        public int NDataPoints
-        {
-            get { return (XAxisValues.Length < YAxisValues.Length) ? XAxisValues.Length : YAxisValues.Length; }
-        }
+        public int NDataPoints { get { return (XAxisValues.Length < YAxisValues.Length) ? XAxisValues.Length : YAxisValues.Length; } }
 
         /// <summary>
         /// Gets the list of peaks detected in this curve.
@@ -169,10 +187,15 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The peaklist.
         /// </value>
-        public PeakList Peaks
-        {
-            get { return Curve.Peaks; }
-        }
+        public PeakList Peaks { get { return Curve.Peaks; } }
+
+        /// <summary>
+        /// Gets the list of levels detected in this curve.
+        /// </summary>
+        /// <value>
+        /// The peaklist.
+        /// </value>
+        public CFALevelList Levels { get { return Curve.Levels; } }
 
         /// <summary>
         /// Gets the mux channel that the curve was measured on.
@@ -180,10 +203,15 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The mux channel.
         /// </value>
-        public int MuxChannel
-        {
-            get { return Curve.MuxChannel; }
-        }
+        public int MuxChannel { get { return Curve.MuxChannel; } }
+
+        /// <summary>
+        /// Gets the channel that the measurement was measured on.
+        /// </summary>
+        /// <value>
+        /// The channel.
+        /// </value>
+        public int Channel { get { return _simpleMeasurement == null ? -1 : _simpleMeasurement.Channel; } }
 
         /// <summary>
         /// Gets a value indicating whether this SimpleCurve is finished measuring.
@@ -220,17 +248,159 @@ namespace AgroPathogenMeterApp.Droid
         /// </summary>
         /// <param name="minPeakWidth">Minimum width of the peak.</param>
         /// <param name="minPeakHeight">Minimum height of the peak.</param>
-        /// <param name="clearPeaks">if set to <c>true</c> [clear previous peaks].</param>
+        /// <param name="clearPeaks">if set to <c>true</c> [clear existing peaks].</param>
         /// <param name="useHiddenPeakDetectionAlgorithm">if set to <c>true</c> [use hidden peak detection algorithm].</param>
+        /// <param name="mergeOverlappingPeaks">if set to <c>true</c> [merge overlapping peaks].</param>
+        /// <exception cref="Exception">Wait untill SimpleCurve is finished before detecting peaks</exception>
         /// <exception cref="System.Exception">Wait untill SimpleCurve is finished before detecting peaks</exception>
-        public void DetectPeaks(double minPeakWidth = 0.0, double minPeakHeight = 0.0, bool clearPeaks = true, bool useHiddenPeakDetectionAlgorithm = false)
+        public void DetectPeaks(double minPeakWidth = 0.0, double minPeakHeight = 0.0, bool clearPeaks = true, bool useHiddenPeakDetectionAlgorithm = false, bool mergeOverlappingPeaks = false)
         {
             if (!IsFinished)
                 throw new Exception("Wait untill SimpleCurve is finished before detecting peaks");
             if (clearPeaks)
                 Curve.ClearPeaks(); //Clear previous peaks from curve
-            Curve.FindPeaks(minPeakWidth, minPeakHeight, useHiddenPeakDetectionAlgorithm); //Detect peaks
+            Curve.FindPeaks(minPeakWidth, minPeakHeight, useHiddenPeakDetectionAlgorithm, mergeOverlappingPeaks); //Detect peaks
             OnDetectedPeaks();
+        }
+
+        /// <summary>
+        /// Detects the peaks asynchronous.
+        /// </summary>
+        /// <param name="minPeakWidth">Minimum width of the peak.</param>
+        /// <param name="minPeakHeight">Minimum height of the peak.</param>
+        /// <param name="clearPeaks">if set to <c>true</c> [clear existing peaks].</param>
+        /// <param name="peakType">Type of peak.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Wait untill SimpleCurve is finished before detecting peaks</exception>
+        public async Task DetectPeaksAsync(double minPeakWidth = 0.0, double minPeakHeight = 0.0, bool clearPeaks = true, PeakTypes peakType = PeakTypes.Default, PeakDetectProgress peakDetectProgress = null)
+        {
+            if (!IsFinished)
+                throw new Exception("Wait untill SimpleCurve is finished before detecting peaks");
+            if (clearPeaks)
+                Curve.ClearPeaks(); //Clear previous peaks from curve
+
+            switch (peakType)
+            {
+                case PeakTypes.Default:
+                    await Task.Run(() => Curve.FindPeaks(minPeakWidth, minPeakHeight, false, false)); //Detect peaks
+                    break;
+
+                case PeakTypes.Shoulder:
+                    await Task.Run(() => Curve.FindPeaks(minPeakWidth, minPeakHeight, true, false)); //Detect peaks
+                    break;
+
+                case PeakTypes.LSVCV:
+                    SemiDerivativePeakDetection semiDerivativePeakDetection = new SemiDerivativePeakDetection();
+                    Dictionary<Curve, double> curves = new Dictionary<Curve, double>();
+                    curves.Add(Curve, minPeakHeight);
+                    await semiDerivativePeakDetection.GetNonOverlappingPeaksAsync(curves, peakDetectProgress); //Detect peaks
+                    break;
+            }
+
+            OnDetectedPeaks();
+        }
+
+        /// <summary>
+        /// Detects the levels asynchronous.
+        /// </summary>
+        /// <param name="minLevelWidth">Minimum width of the level.</param>
+        /// <param name="minLevelHeight">Minimum height of the level.</param>
+        /// <param name="clearLevels">if set to <c>true</c> [clear existing levels].</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Wait untill SimpleCurve is finished before detecting peaks</exception>
+        public async Task DetectLevelsAsync(double minLevelWidth, double minLevelHeight, bool clearLevels = true, LevelDetectProgress levelDetectProgress = null)
+        {
+            if (!IsFinished)
+                throw new Exception("Wait untill SimpleCurve is finished before detecting levels");
+            if (clearLevels)
+                Curve.ClearLevels(); //Clear previous levels from curve
+
+            CFALevelList levelList = new CFALevelList(Curve, minLevelWidth, minLevelHeight);
+            await levelList.FindLevelsAsync(minLevelWidth, minLevelHeight, levelDetectProgress);
+            Curve.Levels = levelList;
+        }
+
+        /// <summary>
+        /// Fits the equivalent circuit.
+        /// </summary>
+        /// <param name="cdc">The circuit descriptor code (CDC) defining the circuit.</param>
+        /// <param name="initialParameters">The initial parameters.</param>
+        /// <param name="fitOptions">The fit options.</param>
+        /// <param name="fitProgress">The fit progress.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">
+        /// Wait untill SimpleCurve is finished before detecting peaks
+        /// or
+        /// No impedimetric readings available in parent SimpleMeasurement
+        /// </exception>
+        /// <exception cref="ArgumentNullException">The circuit descriptor code (cdc) must be specified</exception>
+        /// <exception cref="ArgumentException">
+        /// Invalid circuit descriptor code (cdc)
+        /// or
+        /// The amount of parameters in the model does not match the number of parameters specified in the initial parameter array
+        /// </exception>
+        public async Task<FitResult> FitEquivalentCircuit(string cdc, double[] initialParameters = null, FitOptionsCircuit fitOptions = null, FitProgress fitProgress = null)
+        {
+            if (!IsFinished)
+                throw new Exception("Wait untill SimpleCurve is finished before fitting equivalent circuits");
+            if (_simpleMeasurement.Measurement.nEISdata == 0)
+                throw new Exception("No impedimetric readings available in parent SimpleMeasurement");
+            if (string.IsNullOrEmpty(cdc))
+                throw new ArgumentNullException("The circuit descriptor code (cdc) must be specified");
+
+            CircuitModel circuitModel = new CircuitModel();
+            circuitModel.SetEISdata(_simpleMeasurement.Measurement.EISdata[0]); //Sets reference to measured data
+            try
+            {
+                circuitModel.SetCircuit(cdc); //Sets the circuit defined in the CDC code string, in this case a Randles circuit
+            }
+            catch
+            {
+                throw new ArgumentException("Invalid circuit descriptor code (cdc)");
+            }
+
+            if (initialParameters != null)
+            {
+                if (circuitModel.InitialParameters.Count != initialParameters.Length)
+                    throw new ArgumentException("The amount of parameters in the model does not match the number of parameters specified in the initial parameter array");
+                circuitModel.SetInitialParameters(initialParameters);
+            }
+
+            return await FitEquivalentCircuit(circuitModel, fitOptions, fitProgress);
+        }
+
+        /// <summary>
+        /// Fits the equivalent circuit.
+        /// </summary>
+        /// <param name="circuitModel">The circuit model.</param>
+        /// <param name="fitOptions">The fit options.</param>
+        /// <param name="fitProgress">The fit progress.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">
+        /// Wait untill SimpleCurve is finished before detecting peaks
+        /// or
+        /// No impedimetric readings available in parent SimpleMeasurement
+        /// or
+        /// The circuit model must be defined
+        /// </exception>
+        public async Task<FitResult> FitEquivalentCircuit(CircuitModel circuitModel, FitOptionsCircuit fitOptions = null, FitProgress fitProgress = null)
+        {
+            if (!IsFinished)
+                throw new Exception("Wait untill SimpleCurve is finished before detecting peaks");
+            if (_simpleMeasurement.Measurement.nEISdata == 0)
+                throw new Exception("No impedimetric readings available in parent SimpleMeasurement");
+            if (circuitModel == null)
+                throw new Exception("The circuit model must be defined");
+
+            if (fitOptions == null)
+            {
+                fitOptions = new FitOptionsCircuit();
+                fitOptions.Model = circuitModel;
+                fitOptions.RawData = _simpleMeasurement.Measurement.EISdata[0];
+            }
+
+            FitAlgorithm fit = FitAlgorithm.FromAlgorithm(fitOptions);
+            return await fit.ApplyFitCircuitAsync(fitProgress);
         }
 
         /// <summary>
@@ -252,16 +422,31 @@ namespace AgroPathogenMeterApp.Droid
         /// <param name="smoothLevel">The smooth level.</param>
         /// <returns>A smoothed copy of this SimpleCurve</returns>
         /// <exception cref="System.Exception">Wait untill SimpleCurve is finished before smoothing</exception>
-        public SimpleCurve Smooth(int smoothLevel)
+        public SimpleCurve Smooth(SmoothLevel smoothLevel)
         {
             if (!IsFinished)
                 throw new Exception("Wait untill SimpleCurve is finished before smoothing");
 
-            //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
-            DataArray smoothedArray = Curve.YAxisDataArray.Clone(true);
-            smoothedArray.Smooth(smoothLevel); //Smooth the data on the Y-Axis
-            Curve smoothedCurve = new Curve(Curve.XAxisDataArray, smoothedArray, $"{Title}, smooth level {smoothLevel}");
-            smoothedCurve.Finish();
+            Curve smoothedCurve = new Curve(Curve, true);
+            smoothedCurve.Smooth((int)smoothLevel);
+            smoothedCurve.Title = $"{Curve.Title}, smooth level {smoothLevel}";
+            return new SimpleCurve(smoothedCurve, _simpleMeasurement);
+        }
+
+        /// <summary>
+        /// Smoothes the data on the Y-axis with the Savitzky-Golay filter.
+        /// </summary>
+        /// <param name="smoothLevel">The window size for filtering.</param>
+        /// <returns>A smoothed copy of this SimpleCurve</returns>
+        /// <exception cref="System.Exception">Wait untill SimpleCurve is finished before smoothing</exception>
+        public SimpleCurve Smooth(int windowSize)
+        {
+            if (!IsFinished)
+                throw new Exception("Wait untill SimpleCurve is finished before smoothing");
+
+            Curve smoothedCurve = new Curve(Curve, true);
+            smoothedCurve.Smooth(windowSize);
+            smoothedCurve.Title = $"{Curve.Title}, smooth window {windowSize}";
             return new SimpleCurve(smoothedCurve, _simpleMeasurement);
         }
 
@@ -317,9 +502,7 @@ namespace AgroPathogenMeterApp.Droid
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray log10Array = Curve.YAxisDataArray.Clone(true);
             for (int i = 0; i < NDataPoints; i++)
-            {
                 log10Array[i].Value = Math.Log10(Math.Abs(log10Array[i].Value));
-            }
             Curve log10Curve = new Curve(Curve.XAxisDataArray, log10Array, $"{Title}, Log10");
             log10Curve.Finish();
             return new SimpleCurve(log10Curve, _simpleMeasurement);
@@ -339,10 +522,7 @@ namespace AgroPathogenMeterApp.Droid
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray expArray = Curve.YAxisDataArray.Clone(true);
             for (int i = 0; i < NDataPoints; i++)
-            {
                 expArray[i].Value = Math.Pow(expArray[i].Value, power);
-            }
-
             Curve expCurve = new Curve(Curve.XAxisDataArray, expArray, $"{Title}, ^ {power}");
             expCurve.Finish();
             return new SimpleCurve(expCurve, _simpleMeasurement);
@@ -357,17 +537,12 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Add(double add)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before adding");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = 0; i < NDataPoints; i++)
-            {
                 newArray[i].Value += add;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, + {add}");
             newCurve.Finish();
             return new SimpleCurve(newCurve, _simpleMeasurement);
@@ -386,14 +561,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Add(SimpleCurve add)
         {
             if (!IsFinished && !add.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before adding");
-            }
-
             if (NDataPoints != add.NDataPoints)
-            {
                 throw new Exception("SimpleCurves must have the same number of data points");
-            }
 
             return Add(add, 0, NDataPoints);
         }
@@ -412,14 +582,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Add(SimpleCurve add, int from)
         {
             if (!IsFinished && !add.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before adding");
-            }
-
             if ((from > NDataPoints || from > add.NDataPoints) && from >= 0)
-            {
                 throw new Exception("The index to start adding from exceeds the bounds of the SimpleCurves");
-            }
 
             int count = (NDataPoints > add.NDataPoints) ? add.NDataPoints - from : NDataPoints - from;
             return Add(add, from, count);
@@ -440,22 +605,14 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Add(SimpleCurve add, int from, int count)
         {
             if (!IsFinished && !add.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before adding");
-            }
-
             if ((from + count > NDataPoints || from + count > add.NDataPoints) && from >= 0)
-            {
                 throw new Exception("The range to add exceeds the bounds of the SimpleCurves");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = from; i < from + count; i++)
-            {
                 newArray[i].Value += add.Curve.YAxisDataArray[i].Value;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, + {add.Title}");
             newCurve.Finish();
             return new SimpleCurve(newCurve, _simpleMeasurement);
@@ -470,17 +627,12 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Subtract(double subtract)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before subtracting");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = 0; i < NDataPoints; i++)
-            {
                 newArray[i].Value += subtract;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, - {subtract}");
             newCurve.Finish();
             return new SimpleCurve(newCurve, _simpleMeasurement);
@@ -501,14 +653,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Subtract(SimpleCurve subtract)
         {
             if (!IsFinished && !subtract.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before subtracting");
-            }
-
             if (NDataPoints != subtract.NDataPoints)
-            {
                 throw new Exception("SimpleCurves must have the same number of data points");
-            }
 
             return Subtract(subtract, 0, NDataPoints);
         }
@@ -529,14 +676,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Subtract(SimpleCurve subtract, int from)
         {
             if (!IsFinished && !subtract.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before subtracting");
-            }
-
             if ((from > NDataPoints || from > subtract.NDataPoints) && from > 0)
-            {
                 throw new Exception("The index to start adding from exceeds the bounds of the SimpleCurves");
-            }
 
             int count = (NDataPoints > subtract.NDataPoints) ? subtract.NDataPoints - from : NDataPoints - from;
             return Subtract(subtract, from, count);
@@ -559,22 +701,14 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Subtract(SimpleCurve subtract, int from, int count)
         {
             if (!IsFinished && !subtract.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before subtracting");
-            }
-
             if ((from + count > NDataPoints || from + count > subtract.NDataPoints) && from >= 0)
-            {
                 throw new Exception("The range to add exceeds the bounds of the SimpleCurves");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = from; i < from + count; i++)
-            {
                 newArray[i].Value -= subtract.Curve.YAxisDataArray[i].Value;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, - {subtract.Title}");
             newCurve.Finish();
             return new SimpleCurve(newCurve, _simpleMeasurement);
@@ -591,17 +725,12 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Multiply(double multiply)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before multiplying");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = 0; i < NDataPoints; i++)
-            {
                 newArray[i].Value *= multiply;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, * {multiply}");
             return new SimpleCurve(newCurve, _simpleMeasurement);
         }
@@ -621,14 +750,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Multiply(SimpleCurve multiply)
         {
             if (!IsFinished && !multiply.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before multiplying");
-            }
-
             if (NDataPoints != multiply.NDataPoints)
-            {
                 throw new Exception("SimpleCurves must have the same number of data points");
-            }
 
             return Multiply(multiply, 0, NDataPoints);
         }
@@ -649,14 +773,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Multiply(SimpleCurve multiply, int from)
         {
             if (!IsFinished && !multiply.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before multiplying");
-            }
-
             if ((from > NDataPoints || from > multiply.NDataPoints) && from >= 0)
-            {
                 throw new Exception("The index to start adding from exceeds the bounds of the SimpleCurves");
-            }
 
             int count = (NDataPoints > multiply.NDataPoints) ? multiply.NDataPoints - from : NDataPoints - from;
             return Multiply(multiply, from, count);
@@ -680,22 +799,14 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve Multiply(SimpleCurve multiply, int from, int count)
         {
             if (!IsFinished && !multiply.IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurves are finished before multiplying");
-            }
-
             if ((from + count > NDataPoints || from + count > multiply.NDataPoints) && from >= 0)
-            {
                 throw new Exception("The range to add exceeds the bounds of the SimpleCurves");
-            }
 
             //Create a copy of the Y Axis data to prevent the raw measurement data from being overwritten
             DataArray newArray = Curve.YAxisDataArray.Clone(true);
             for (int i = from; i < from + count; i++)
-            {
                 newArray[i].Value *= multiply.Curve.YAxisDataArray[i].Value;
-            }
-
             Curve newCurve = new Curve(Curve.XAxisDataArray, newArray, $"{Title}, * {multiply.Title}");
             newCurve.Finish();
             return new SimpleCurve(newCurve, _simpleMeasurement);
@@ -717,14 +828,9 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleCurve MovingAverageBaseline(int windowSize = 2, int maxSweeps = 1000)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before determining its moving average baseline");
-            }
-
             if (_simpleMeasurement.MeasurementType == MeasurementTypes.CyclicVoltammetry || _simpleMeasurement.MeasurementType == MeasurementTypes.ImpedanceSpectroscopy || _simpleMeasurement.MeasurementType == MeasurementTypes.MixedMode)
-            {
                 throw new Exception("The PalmSens SDK does not support determing the moving average baseline for Cyclic Voltammetry, Impedance and Mixed Mode measurements");
-            }
 
             Curve baseline = PalmSens.Analysis.BaselineCorrection.GetMovingAverageBaselineCorrected(Curve, windowSize, maxSweeps, true);
             baseline.Title = $"{Title}, moving average baseline";
@@ -740,9 +846,7 @@ namespace AgroPathogenMeterApp.Droid
         public double Average()
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before determining its average");
-            }
 
             double sum = Sum();
             return sum / NDataPoints;
@@ -756,16 +860,11 @@ namespace AgroPathogenMeterApp.Droid
         public double Sum()
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before determining its sum");
-            }
 
             double sum = 0;
             for (int i = 0; i < NDataPoints; i++)
-            {
                 sum += Curve.YAxisDataArray[i].Value;
-            }
-
             return sum;
         }
 
@@ -777,10 +876,7 @@ namespace AgroPathogenMeterApp.Droid
         public double Minimum()
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before determining its minimum");
-            }
-
             return YAxisValues.Min();
         }
 
@@ -792,10 +888,7 @@ namespace AgroPathogenMeterApp.Droid
         public double Maximum()
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before determining its maximum");
-            }
-
             return YAxisValues.Max();
         }
 
@@ -809,10 +902,7 @@ namespace AgroPathogenMeterApp.Droid
         public double Integrate()
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before integration");
-            }
-
             return Integrate(0, NDataPoints);
         }
 
@@ -831,15 +921,9 @@ namespace AgroPathogenMeterApp.Droid
         public double Integrate(int from)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before integration");
-            }
-
             if (from > NDataPoints && from >= 0)
-            {
                 throw new Exception("The index to start adding from exceeds the bounds of the SimpleCurve");
-            }
-
             return Integrate(from, NDataPoints - 1 - from);
         }
 
@@ -859,21 +943,13 @@ namespace AgroPathogenMeterApp.Droid
         public double Integrate(int from, int count)
         {
             if (!IsFinished)
-            {
                 throw new Exception("Wait untill SimpleCurve is finished before integration");
-            }
-
             if (from + count > NDataPoints && from >= 0)
-            {
                 throw new Exception("The range to add exceeds the bounds of the SimpleCurve");
-            }
 
             double area = 0;
             for (int i = from + 1; i <= from + count; i++)
-            {
                 area += ((Curve.YAxisDataArray[i - 1].Value + Curve.YAxisDataArray[i].Value) / 2) * (Curve.XAxisDataArray[i].Value - Curve.XAxisDataArray[i - 1].Value);
-            }
-
             return area;
         }
 
@@ -887,20 +963,21 @@ namespace AgroPathogenMeterApp.Droid
         public event EventHandler CurveFinished;
 
         /// <summary>
-        /// Handles the Finished event of the _curve control.
+        /// Handles the Finished event of the Curve.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void _curve_Finished(object sender, EventArgs e)
+        private void Curve_Finished(object sender, EventArgs e)
         {
             CurveFinished?.Invoke(this, EventArgs.Empty);
-            Curve.Finished -= _curve_Finished;
+            Curve.NewDataAdded -= Curve_NewDataAdded;
+            Curve.Finished -= Curve_Finished;
         }
 
         /// <summary>
         /// Occurs when a [property changed].
         /// </summary>
-        public event CustomPropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Called when a [property changed].
@@ -908,7 +985,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <param name="propertyName">Name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new CustomPropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -920,9 +997,20 @@ namespace AgroPathogenMeterApp.Droid
         /// Raises the <see cref="E:NewDataAdded" /> event.
         /// </summary>
         /// <param name="e">The <see cref="PalmSens.Data.ArrayDataAddedEventArgs"/> instance containing the event data.</param>
-        internal void OnNewDataAdded(PalmSens.Data.ArrayDataAddedEventArgs e)
+        private void OnNewDataAdded(PalmSens.Data.ArrayDataAddedEventArgs e)
         {
             NewDataAdded?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Handles the NewDataAdded event of the Curve control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ArrayDataAddedEventArgs"/> instance containing the event data.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void Curve_NewDataAdded(object sender, ArrayDataAddedEventArgs e)
+        {
+            OnNewDataAdded(e);
         }
 
         /// <summary>
@@ -945,7 +1033,8 @@ namespace AgroPathogenMeterApp.Droid
         /// </summary>
         public void Dispose()
         {
-            Curve.Finished -= _curve_Finished;
+            Curve.NewDataAdded -= Curve_NewDataAdded;
+            Curve.Finished -= Curve_Finished;
             Curve.Dispose();
         }
     }

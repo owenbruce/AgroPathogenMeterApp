@@ -30,6 +30,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             this.Visibility = ViewStates.Gone;
             PalmSens.PSAndroid.Utils.CoreDependencies.Init(Context);
+            InitAsyncFunctionality(System.Environment.ProcessorCount); //Initiate the asynchronous functions in the SDK
             _psCommSimple = new PSCommSimple(this);
             _deviceHandler = new DeviceHandler();
         }
@@ -65,15 +66,20 @@ namespace AgroPathogenMeterApp.Droid
         private DeviceHandler _deviceHandler;
 
         /// <summary>
+        /// Gets the CommManager for the current connection.
+        /// </summary>
+        /// <value>
+        /// The CommManager, null when there is no active connection to a device.
+        /// </value>
+        public CommManager Comm { get { return _psCommSimple.Comm; } }
+
+        /// <summary>
         /// Gets a value indicating whether <see cref="PSCommSimple"/> is connected to a device.
         /// </summary>
         /// <value>
         ///   <c>true</c> if connected; otherwise, <c>false</c>.
         /// </value>
-        public bool Connected
-        {
-            get { return _psCommSimple.Connected; }
-        }
+        public bool Connected { get { return _psCommSimple.Connected; } }
 
         /// <summary>
         /// Gets the connected device type.
@@ -81,23 +87,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The connected device type.
         /// </value>
-        public enumDeviceType ConnectedDevice
-        {
-            get { return _psCommSimple.ConnectedDevice; }
-        }
-
-        /// <summary>
-        /// Returns an array of connected devices.
-        /// </summary>
-        /// <param name="timeOut">Discovery time out in milliseconds.</param>
-        /// <returns></returns>
-        /// <value>
-        /// The connected devices.
-        /// </value>
-        public async Task<Device[]> GetConnectedDevices(int timeOut = 20000)
-        {
-            return await _deviceHandler.ScanDevices(timeOut);
-        }
+        public enumDeviceType ConnectedDevice { get { return _psCommSimple.ConnectedDevice; } }
 
         /// <summary>
         /// Gets the state of the connected device.
@@ -105,10 +95,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The state of the device.
         /// </value>
-        public CommManager.DeviceState DeviceState
-        {
-            get { return _psCommSimple.DeviceState; }
-        }
+        public CommManager.DeviceState DeviceState { get { return _psCommSimple.DeviceState; } }
 
         /// <summary>
         /// Gets a value indicating whether [cell is on].
@@ -116,10 +103,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         ///   <c>true</c> if [cell is on]; otherwise, <c>false</c>.
         /// </value>
-        public bool CellOn
-        {
-            get { return _psCommSimple.IsCellOn; }
-        }
+        public bool CellOn { get { return _psCommSimple.IsCellOn; } }
 
         /// <summary>
         /// Gets the capabilities of the connected device.
@@ -127,10 +111,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         /// The device capabilities.
         /// </value>
-        public DeviceCapabilities Capabilities
-        {
-            get { return _psCommSimple.Capabilities; }
-        }
+        public DeviceCapabilities Capabilities { get { return _psCommSimple.Capabilities; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable devices connected via bluetooth.
@@ -173,63 +154,102 @@ namespace AgroPathogenMeterApp.Droid
         #region Functions
 
         /// <summary>
+        /// Required initialization for using the async functionalities of the PalmSens SDK.
+        /// The amount of simultaneous operations will be limited to prevent performance issues.
+        /// When possible it will leave one core free for the UI.
+        /// </summary>
+        /// <param name="nCores">The number of CPU cores.</param>
+        private void InitAsyncFunctionality(int nCores)
+        {
+            SynchronizationContextRemover.Init(nCores > 1 ? nCores - 1 : 1);
+        }
+
+        /// <summary>
+        /// Returns an array of connected devices.
+        /// </summary>
+        /// <param name="timeOut">Discovery time out in milliseconds.</param>
+        /// <returns></returns>
+        /// <value>
+        /// The connected devices.
+        /// </value>
+        public async Task<Device[]> GetConnectedDevices(int timeOut = 20000) { return await _deviceHandler.ScanDevicesAsync(timeOut); }
+
+        /// <summary>
         /// Connects to the specified device.
         /// </summary>
         /// <param name="device">The device.</param>
-        public void Connect(Device device)
+        public async Task Connect(Device device)
         {
-            _psCommSimple.Comm = _deviceHandler.Connect(device);
+            _psCommSimple.Comm = await _deviceHandler.Connect(device);
         }
 
         /// <summary>
         /// Disconnects from the connected device.
         /// </summary>
-        public void Disconnect()
+        public async Task Disconnect()
         {
-            _psCommSimple.Disconnect();
+            await _psCommSimple.DisconnectAsync();
         }
 
         /// <summary>
         /// Turns the cell on.
         /// </summary>
-        public void TurnCellOn()
+        public async Task TurnCellOn()
         {
-            _psCommSimple.TurnCellOn();
+            await _psCommSimple.TurnCellOnAsync();
         }
 
         /// <summary>
         /// Turns the cell off.
         /// </summary>
-        public void TurnCellOff()
+        public async Task TurnCellOff()
         {
-            _psCommSimple.TurnCellOff();
+            await _psCommSimple.TurnCellOffAsync();
         }
 
         /// <summary>
         /// Sets the cell potential.
         /// </summary>
         /// <param name="potential">The potential.</param>
-        public void SetCellPotential(float potential)
+        public async Task SetCellPotential(float potential)
         {
-            _psCommSimple.SetCellPotential(potential);
+            await _psCommSimple.SetCellPotentialAsync(potential);
+        }
+
+        /// <summary>
+        /// Reads the cell potential.
+        /// </summary>
+        /// <returns>The potential (V).</returns>
+        public async Task<float> ReadCellPotential()
+        {
+            return await _psCommSimple.ReadCellPotentialAsync();
         }
 
         /// <summary>
         /// Sets the cell current.
         /// </summary>
         /// <param name="current">The current.</param>
-        public void SetCellCurrent(float current)
+        public async Task SetCellCurrent(float current)
         {
-            _psCommSimple.SetCellCurrent(current);
+            await _psCommSimple.SetCellCurrentAsync(current);
+        }
+
+        /// <summary>
+        /// Reads the cell current.
+        /// </summary>
+        /// <returns>The current (µA).</returns>
+        public async Task<float> ReadCellCurrent()
+        {
+            return await _psCommSimple.ReadCellCurrentAsync();
         }
 
         /// <summary>
         /// Sets the current range.
         /// </summary>
         /// <param name="currentRange">The current range.</param>
-        public void SetCurrentRange(CurrentRange currentRange)
+        public async Task SetCurrentRange(CurrentRange currentRange)
         {
-            _psCommSimple.SetCurrentRange(currentRange);
+            await _psCommSimple.SetCurrentRangeAsync(currentRange);
         }
 
         /// <summary>
@@ -243,9 +263,9 @@ namespace AgroPathogenMeterApp.Droid
         /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
         /// <exception cref="System.ArgumentException">Method is incompatible with the connected device.</exception>
         /// <exception cref="System.Exception">Could not start measurement.</exception>
-        public SimpleMeasurement Measure(Method method, int muxChannel)
+        public async Task<SimpleMeasurement> Measure(Method method, int muxChannel)
         {
-            return _psCommSimple.Measure(method, muxChannel);
+            return await _psCommSimple.MeasureAsync(method, muxChannel);
         }
 
         /// <summary>
@@ -253,17 +273,17 @@ namespace AgroPathogenMeterApp.Droid
         /// </summary>
         /// <param name="method">The method containing the measurement parameters.</param>
         /// <returns>A SimpleMeasurement instance containing all the data related to the measurement.</returns>
-        public SimpleMeasurement Measure(Method method)
+        public async Task<SimpleMeasurement> Measure(Method method)
         {
-            return _psCommSimple.Measure(method);
+            return await _psCommSimple.MeasureAsync(method);
         }
 
         /// <summary>
-        /// Aborts the active measurement.
+        /// Aborts the current active measurement.
         /// </summary>
-        public void AbortMeasurement()
+        public async Task AbortMeasurement()
         {
-            _psCommSimple.AbortMeasurement();
+            await _psCommSimple.AbortMeasurementAsync();
         }
 
         /// <summary>
@@ -361,6 +381,15 @@ namespace AgroPathogenMeterApp.Droid
         {
             add { _psCommSimple.StateChanged += value; }
             remove { _psCommSimple.StateChanged -= value; }
+        }
+
+        /// <summary>
+        /// Occurs when a device is [disconnected].
+        /// </summary>
+        public event DisconnectedEventHandler Disconnected
+        {
+            add { _psCommSimple.Disconnected += value; }
+            remove { _psCommSimple.Disconnected -= value; }
         }
 
         #endregion events

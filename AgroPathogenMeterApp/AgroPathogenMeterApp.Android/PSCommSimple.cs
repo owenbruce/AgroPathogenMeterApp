@@ -1,5 +1,4 @@
-﻿using Microsoft.AppCenter.Crashes;
-using PalmSens;
+﻿using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.Plottables;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AgroPathogenMeterApp.Droid
 {
-    public partial class PSCommSimple
+    public class PSCommSimple
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PSCommSimple" /> class.
@@ -24,10 +23,7 @@ namespace AgroPathogenMeterApp.Droid
         public PSCommSimple(IPlatform platform)
         {
             if (platform == null)
-            {
                 throw new ArgumentNullException("Platform cannot be null");
-            }
-
             _platform = platform;
         }
 
@@ -44,6 +40,11 @@ namespace AgroPathogenMeterApp.Droid
         private CommManager _comm;
 
         /// <summary>
+        /// The task completion source used to obtain the active measurement in the Measure and MeasureAsync functions
+        /// </summary>
+        private TaskCompletionSource<SimpleMeasurement> _taskCompletionSource = null;
+
+        /// <summary>
         /// Gets or sets the CommManager and (un)subscribes the corresponding events.
         /// </summary>
         /// <value>
@@ -57,21 +58,31 @@ namespace AgroPathogenMeterApp.Droid
                 if (_comm != null) //Unsubscribe events
                 {
                     _comm.BeginMeasurement -= _comm_BeginMeasurement;
+                    _comm.BeginMeasurementAsync -= _comm_BeginMeasurementAsync;
                     _comm.EndMeasurement -= _comm_EndMeasurement;
+                    _comm.EndMeasurementAsync -= _comm_EndMeasurementAsync;
                     _comm.BeginReceiveCurve -= _comm_BeginReceiveCurve;
-                    _comm.BeginReceiveEISData -= _comm_BeginReceiveEISData;
                     _comm.ReceiveStatus -= _comm_ReceiveStatus;
+                    _comm.ReceiveStatusAsync -= _comm_ReceiveStatusAsync;
                     _comm.StateChanged -= _comm_StateChanged;
+                    _comm.StateChangedAsync -= _comm_StateChangedAsync;
+                    _comm.Disconnected -= _comm_Disconnected;
+                    _comm.CommErrorOccurred -= _comm_CommErrorOccurred;
                 }
                 _comm = value;
                 if (_comm != null) //Subscribe events
                 {
                     _comm.BeginMeasurement += _comm_BeginMeasurement;
+                    _comm.BeginMeasurementAsync += _comm_BeginMeasurementAsync;
                     _comm.EndMeasurement += _comm_EndMeasurement;
+                    _comm.EndMeasurementAsync += _comm_EndMeasurementAsync;
                     _comm.BeginReceiveCurve += _comm_BeginReceiveCurve;
-                    _comm.BeginReceiveEISData += _comm_BeginReceiveEISData;
                     _comm.ReceiveStatus += _comm_ReceiveStatus;
+                    _comm.ReceiveStatusAsync += _comm_ReceiveStatusAsync;
                     _comm.StateChanged += _comm_StateChanged;
+                    _comm.StateChangedAsync += _comm_StateChangedAsync;
+                    _comm.Disconnected += _comm_Disconnected;
+                    _comm.CommErrorOccurred += _comm_CommErrorOccurred;
                 }
             }
         }
@@ -82,10 +93,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <value>
         ///   <c>true</c> if connected; otherwise, <c>false</c>.
         /// </value>
-        public bool Connected
-        {
-            get { return Comm != null; }
-        }
+        public bool Connected { get { return Comm != null; } }
 
         /// <summary>
         /// Gets the connected device type.
@@ -99,10 +107,7 @@ namespace AgroPathogenMeterApp.Droid
             get
             {
                 if (_comm == null)
-                {
                     throw new NullReferenceException("Not connected to a device.");
-                }
-
                 return _comm.DeviceType;
             }
         }
@@ -119,29 +124,9 @@ namespace AgroPathogenMeterApp.Droid
             get
             {
                 if (_comm == null)
-                {
                     throw new NullReferenceException("Not connected to a device.");
-                }
-
                 return _comm.State;
             }
-        }
-
-        /// <summary>
-        /// Gets the state of the device.
-        /// </summary>
-        /// <value>
-        /// The state of the device.
-        /// </value>
-        /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
-        public async Task<CommManager.DeviceState> GetDeviceStateAsync()
-        {
-            if (_comm == null)
-            {
-                throw new NullReferenceException("Not connected to a device.");
-            }
-
-            return await _comm.GetStateAsync();
         }
 
         /// <summary>
@@ -156,29 +141,9 @@ namespace AgroPathogenMeterApp.Droid
             get
             {
                 if (_comm == null)
-                {
                     throw new NullReferenceException("Not connected to a device.");
-                }
-
                 return _comm.CellOn;
             }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the connected device's [cell is on].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [cell is on]; otherwise, <c>false</c>.
-        /// </value>
-        /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
-        public async Task<bool> IsCellOnAsync()
-        {
-            if (_comm == null)
-            {
-                throw new NullReferenceException("Not connected to a device.");
-            }
-
-            return await _comm.GetCellOnAsync();
         }
 
         /// <summary>
@@ -193,10 +158,7 @@ namespace AgroPathogenMeterApp.Droid
             get
             {
                 if (_comm == null)
-                {
                     throw new NullReferenceException("Not connected to a device.");
-                }
-
                 return _comm.Capabilities;
             }
         }
@@ -235,14 +197,7 @@ namespace AgroPathogenMeterApp.Droid
             {
                 _activeMeasurement = value;
                 if (_activeMeasurement != null)
-                {
                     _activeSimpleMeasurement = new SimpleMeasurement(_activeMeasurement);
-                }
-                else
-                {
-                    _activeSimpleMeasurement = null;
-                    ClearActiveCurves();
-                }
             }
         }
 
@@ -250,11 +205,6 @@ namespace AgroPathogenMeterApp.Droid
         /// The active SimpleMeasurement
         /// </summary>
         private SimpleMeasurement _activeSimpleMeasurement;
-
-        /// <summary>
-        /// Collection of active curves and their respective simplecurves
-        /// </summary>
-        private Dictionary<Curve, SimpleCurve> _activeCurves = new Dictionary<Curve, SimpleCurve>();
 
         #endregion Properties
 
@@ -266,14 +216,37 @@ namespace AgroPathogenMeterApp.Droid
         /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
         public void Disconnect()
         {
-            try { _platform.Disconnect(_comm); }
+            try
+            {
+                _platform.Disconnect(_comm);
+                Comm = null;
+                _activeMeasurement = null;
+            }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
                 throw new NullReferenceException("Not connected to a device.");
             }
-            Comm = null;
-            _activeMeasurement = null;
+        }
+
+        /// <summary>
+        /// Disconnects from the connected device.
+        /// </summary>
+        /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
+        public async Task DisconnectAsync()
+        {
+            try
+            {
+                await Task.Run(() =>
+                { //The disconnect function should not be run using CommManager.ClientConnection.RunAsync()
+                    _platform.Disconnect(_comm);
+                    Comm = null;
+                    _activeMeasurement = null;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException("Not connected to a device.");
+            }
         }
 
         /// <summary>
@@ -291,27 +264,31 @@ namespace AgroPathogenMeterApp.Droid
         {
             _activeMeasurement = null;
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device.");
-            }
+
+            //Update the autoranging depending on the current ranges supported by the connected device
+            if (Connected)
+                method.Ranging.SupportedCurrentRanges = Capabilities.SupportedRanges;
 
             //Check whether method is compatible with the connected device
             bool isValidMethod;
             List<string> errors;
             ValidateMethod(method, out isValidMethod, out errors);
             if (!isValidMethod)
-            {
                 throw new ArgumentException("Method is incompatible with the connected device.");
-            }
+
+            //Init task to wait for the active measurement to be initiated by CommManager.Measure()
+            _taskCompletionSource = new TaskCompletionSource<SimpleMeasurement>();
+            _comm.BeginMeasurement += GetActiveMeasurement;
 
             //Start the measurement on the connected device, this triggers an event that updates _activeMeasurement
-            string error = _comm.Measure(method, muxChannel);
-            if (!string.IsNullOrEmpty(error))
-            {
+            string error = Run(() => _comm.Measure(method, muxChannel));
+            if (!(string.IsNullOrEmpty(error)))
                 throw new Exception($"Could not start measurement: {error}");
-            }
 
-            return _activeSimpleMeasurement;
+            _taskCompletionSource.Task.Wait();
+
+            return _taskCompletionSource.Task.Result;
         }
 
         /// <summary>
@@ -325,39 +302,74 @@ namespace AgroPathogenMeterApp.Droid
         /// <exception cref="System.NullReferenceException">Not connected to a device.</exception>
         /// <exception cref="System.ArgumentException">Method is incompatible with the connected device.</exception>
         /// <exception cref="System.Exception">Could not start measurement.</exception>
-        public async Task<SimpleMeasurement> MeasureAsync(Method method, int muxChannel)
+        public async Task<SimpleMeasurement> MeasureAsync(Method method, int muxChannel, TaskBarrier taskBarrier = null)
         {
-            try
+            _activeMeasurement = null;
+            if (_comm == null)
+                throw new NullReferenceException("Not connected to a device.");
+
+            //Update the autoranging depending on the current ranges supported by the connected device
+            if (Connected)
+                method.Ranging.SupportedCurrentRanges = Capabilities.SupportedRanges;
+
+            //Check whether method is compatible with the connected device
+            bool isValidMethod;
+            List<string> errors;
+            ValidateMethod(method, out isValidMethod, out errors);
+            if (!isValidMethod)
+                throw new ArgumentException("Method is incompatible with the connected device.");
+
+            //Init task to wait for the active measurement to be initiated by CommManager.MeasureAsync()
+            _taskCompletionSource = new TaskCompletionSource<SimpleMeasurement>();
+            _comm.BeginMeasurementAsync += GetActiveMeasurementAsync;
+
+            string error = "";
+
+            //Start the measurement on the connected device, this triggers an event that updates _activeMeasurement
+            error = await RunAsync<string>(async () =>
             {
-                await _comm.ClientConnection.Semaphore.WaitAsync();
-                _activeMeasurement = null;
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
                 if (_comm == null)
-                {
-                    throw new NullReferenceException("Not connected to a device.");
-                }
+                    throw new NullReferenceException("Not connected to a device");
+                return await _comm.MeasureAsync(method, muxChannel, taskBarrier);
+            });
 
-                //Check whether method is compatible with the connected device
-                bool isValidMethod;
-                List<string> errors;
-                ValidateMethod(method, out isValidMethod, out errors);
-                if (!isValidMethod)
-                {
-                    throw new ArgumentException("Method is incompatible with the connected device.");
-                }
+            if (!(string.IsNullOrEmpty(error)))
+                throw new Exception($"Could not start measurement: {error}");
 
-                //Start the measurement on the connected device, this triggers an event that updates _activeMeasurement
-                string error = await _comm.MeasureAsync(method, muxChannel);
-                if (!string.IsNullOrEmpty(error))
-                {
-                    throw new Exception($"Could not start measurement: {error}");
-                }
+            return await _taskCompletionSource.Task;
+        }
 
-                return _activeSimpleMeasurement;
-            }
-            finally
-            {
-                _comm.ClientConnection.Semaphore.Release();
-            }
+        /// <summary>
+        /// Gets the active measurement when the BeginMeasurement event is raised.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="newMeasurement">The new measurement.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void GetActiveMeasurement(object sender, ActiveMeasurement m)
+        {
+            _comm.BeginMeasurement -= GetActiveMeasurement;
+            ActiveMeasurement = m;
+            ImpedimetricMethod eis = ActiveMeasurement.Method as ImpedimetricMethod;
+            if (eis != null)
+                _activeSimpleMeasurement.NewSimpleCurve(PalmSens.Data.DataArrayType.ZRe, PalmSens.Data.DataArrayType.ZIm, "Nyquist", true); //Create a nyquist curve by default
+            _taskCompletionSource.SetResult(_activeSimpleMeasurement);
+        }
+
+        /// <summary>
+        /// Gets the active measurement asynchronous when the BeginMeasurementAsync event is raised.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="m">The m.</param>
+        /// <returns></returns>
+        private async Task GetActiveMeasurementAsync(object sender, ActiveMeasurement m)
+        {
+            _comm.BeginMeasurementAsync -= GetActiveMeasurementAsync;
+            ActiveMeasurement = m;
+            ImpedimetricMeasurement eis = ActiveMeasurement as ImpedimetricMeasurement;
+            if (eis != null)
+                _activeSimpleMeasurement.NewSimpleCurve(PalmSens.Data.DataArrayType.ZRe, PalmSens.Data.DataArrayType.ZIm, "Nyquist", true); //Create a nyquist curve by default
+            _taskCompletionSource.SetResult(_activeSimpleMeasurement);
         }
 
         /// <summary>
@@ -367,7 +379,10 @@ namespace AgroPathogenMeterApp.Droid
         /// <returns>A SimpleMeasurement instance containing all the data related to the measurement.</returns>
         public SimpleMeasurement Measure(Method method)
         {
-            return method.MuxMethod == MuxMethod.Sequentially ? Measure(method, method.GetNextSelectedMuxChannel(-1)) : Measure(method, -1);
+            if (method.MuxMethod == MuxMethod.Sequentially)
+                return Measure(method, method.GetNextSelectedMuxChannel(-1));
+            else
+                return Measure(method, -1);
         }
 
         /// <summary>
@@ -375,11 +390,12 @@ namespace AgroPathogenMeterApp.Droid
         /// </summary>
         /// <param name="method">The method containing the measurement parameters.</param>
         /// <returns>A SimpleMeasurement instance containing all the data related to the measurement.</returns>
-        public async Task<SimpleMeasurement> MeasureAsync(Method method)
+        public async Task<SimpleMeasurement> MeasureAsync(Method method, TaskBarrier taskBarrier = null)
         {
-            return method.MuxMethod == MuxMethod.Sequentially
-                ? await MeasureAsync(method, method.GetNextSelectedMuxChannel(-1))
-                : await MeasureAsync(method, -1);
+            if (method.MuxMethod == MuxMethod.Sequentially)
+                return await MeasureAsync(method, method.GetNextSelectedMuxChannel(-1), taskBarrier);
+            else
+                return await MeasureAsync(method, -1, taskBarrier);
         }
 
         /// <summary>
@@ -390,16 +406,11 @@ namespace AgroPathogenMeterApp.Droid
         public void AbortMeasurement()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device.");
-            }
-
             if (_comm.ActiveMeasurement == null)
-            {
                 throw new Exception("Device is not measuring.");
-            }
 
-            _comm.Abort();
+            Run(() => _comm.Abort());
         }
 
         /// <summary>
@@ -410,16 +421,19 @@ namespace AgroPathogenMeterApp.Droid
         public async Task AbortMeasurementAsync()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device.");
-            }
-
             if (_comm.ActiveMeasurement == null)
-            {
                 throw new Exception("Device is not measuring.");
-            }
 
-            await _comm.AbortAsync();
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (_comm.ActiveMeasurement == null)
+                    throw new Exception("Device is not measuring.");
+                await _comm.AbortAsync();
+            });
         }
 
         /// <summary>
@@ -430,21 +444,13 @@ namespace AgroPathogenMeterApp.Droid
         public void TurnCellOn()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (_comm.State != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
             if (_comm.CellOn)
-            {
                 return;
-            }
 
-            _comm.CellOn = true;
+            Run(() => { _comm.CellOn = true; });
         }
 
         /// <summary>
@@ -455,21 +461,23 @@ namespace AgroPathogenMeterApp.Droid
         public async Task TurnCellOnAsync()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
-            if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
-            {
+            if (_comm.State != CommManager.DeviceState.Idle)
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
-            if (await _comm.GetCellOnAsync())
-            {
+            if (_comm.CellOn)
                 return;
-            }
 
-            await _comm.SetCellOnAsync(true);
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (_comm.State != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                if (_comm.CellOn)
+                    return;
+                await _comm.SetCellOnAsync(true);
+            });
         }
 
         /// <summary>
@@ -480,21 +488,13 @@ namespace AgroPathogenMeterApp.Droid
         public void TurnCellOff()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (_comm.State != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
             if (!_comm.CellOn)
-            {
                 return;
-            }
 
-            _comm.CellOn = false;
+            Run(() => { _comm.CellOn = false; });
         }
 
         /// <summary>
@@ -505,21 +505,23 @@ namespace AgroPathogenMeterApp.Droid
         public async Task TurnCellOffAsync()
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
-            if (!await _comm.GetCellOnAsync())
-            {
+            if (!_comm.CellOn)
                 return;
-            }
 
-            await _comm.SetCellOnAsync(false);
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (_comm.State != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                if (!_comm.CellOn)
+                    return;
+                await _comm.SetCellOnAsync(false);
+            });
         }
 
         /// <summary>
@@ -531,16 +533,11 @@ namespace AgroPathogenMeterApp.Droid
         public void SetCellPotential(float potential)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (_comm.State != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
 
-            _comm.Potential = potential;
+            Run(() => { _comm.Potential = potential; });
         }
 
         /// <summary>
@@ -552,16 +549,59 @@ namespace AgroPathogenMeterApp.Droid
         public async Task SetCellPotentialAsync(float potential)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
 
-            await _comm.SetPotentialAsync(potential);
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                await _comm.SetPotentialAsync(potential);
+            });
+        }
+
+        /// <summary>
+        /// Reads the cell potential.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException">Not connected to a device</exception>
+        /// <exception cref="Exception">Device must be in idle mode for manual control</exception>
+        public float ReadCellPotential()
+        {
+            if (_comm == null)
+                throw new NullReferenceException("Not connected to a device");
+            if (_comm.State != CommManager.DeviceState.Idle)
+                throw new Exception("Device must be in idle mode for manual control");
+
+            return Run<float>(() => { return _comm.Potential; });
+        }
+
+        /// <summary>
+        /// Reads the cell potential.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException">Not connected to a device</exception>
+        /// <exception cref="Exception">Device must be in idle mode for manual control</exception>
+        public async Task<float> ReadCellPotentialAsync()
+        {
+            if (_comm == null)
+                throw new NullReferenceException("Not connected to a device");
+            if (_comm.State != CommManager.DeviceState.Idle)
+                throw new Exception("Device must be in idle mode for manual control");
+
+            return await RunAsync<float>(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (_comm.State != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                return await _comm.GetPotentialAsync();
+            });
         }
 
         /// <summary>
@@ -573,21 +613,13 @@ namespace AgroPathogenMeterApp.Droid
         public void SetCellCurrent(float current)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (_comm.State != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
             if (!Capabilities.IsGalvanostat)
-            {
                 throw new Exception("Device does not support Galvanostat mode");
-            }
 
-            _comm.Current = current;
+            Run(() => { _comm.Current = current; });
         }
 
         /// <summary>
@@ -599,21 +631,63 @@ namespace AgroPathogenMeterApp.Droid
         public async Task SetCellCurrentAsync(float current)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
-
             if (!Capabilities.IsGalvanostat)
-            {
                 throw new Exception("Device does not support Galvanostat mode");
-            }
 
-            await _comm.SetCurrentAsync(current);
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                if (!Capabilities.IsGalvanostat)
+                    throw new Exception("Device does not support Galvanostat mode");
+                await _comm.SetCurrentAsync(current);
+            });
+        }
+
+        /// <summary>
+        /// Reads the cell current.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException">Not connected to a device</exception>
+        /// <exception cref="Exception">Device must be in idle mode for manual control</exception>
+        public float ReadCellCurrent()
+        {
+            if (_comm == null)
+                throw new NullReferenceException("Not connected to a device");
+            if (_comm.State != CommManager.DeviceState.Idle)
+                throw new Exception("Device must be in idle mode for manual control");
+
+            return Run<float>(() => { return _comm.Current; });
+        }
+
+        /// <summary>
+        /// Reads the cell current.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException">Not connected to a device</exception>
+        /// <exception cref="Exception">Device must be in idle mode for manual control</exception>
+        public async Task<float> ReadCellCurrentAsync()
+        {
+            if (_comm == null)
+                throw new NullReferenceException("Not connected to a device");
+            if (_comm.State != CommManager.DeviceState.Idle)
+                throw new Exception("Device must be in idle mode for manual control");
+
+            return await RunAsync<float>(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (_comm.State != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                return await _comm.GetCurrentAsync();
+            });
         }
 
         /// <summary>
@@ -625,16 +699,11 @@ namespace AgroPathogenMeterApp.Droid
         public void SetCurrentRange(CurrentRange currentRange)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (_comm.State != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
 
-            _comm.CurrentRange = currentRange;
+            Run(() => { _comm.CurrentRange = currentRange; });
         }
 
         /// <summary>
@@ -646,16 +715,19 @@ namespace AgroPathogenMeterApp.Droid
         public async Task SetCurrentRangeAsync(CurrentRange currentRange)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device");
-            }
-
             if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
-            {
                 throw new Exception("Device must be in idle mode for manual control");
-            }
 
-            await _comm.SetCurrentRangeAsync(currentRange);
+            await RunAsync(async () =>
+            {
+                //Need to check again as the task can be scheduled to run at a later point after which this could have changed
+                if (_comm == null)
+                    throw new NullReferenceException("Not connected to a device");
+                if (await _comm.GetStateAsync() != CommManager.DeviceState.Idle)
+                    throw new Exception("Device must be in idle mode for manual control");
+                await _comm.SetCurrentRangeAsync(currentRange);
+            });
         }
 
         /// <summary>
@@ -669,15 +741,9 @@ namespace AgroPathogenMeterApp.Droid
         public void ValidateMethod(Method method, out bool isValidMethod, out List<string> errors)
         {
             if (_comm == null)
-            {
                 throw new NullReferenceException("Not connected to a device.");
-            }
-
             if (method == null)
-            {
                 throw new ArgumentNullException("The specified method cannot be null.");
-            }
-
             errors = new List<string>();
 
             //Get a list of method compatability warnings and errors for the connected device
@@ -688,29 +754,17 @@ namespace AgroPathogenMeterApp.Droid
 
             //Build a list of the warnings and errors
             foreach (MethodError error in methodErrors)
-            {
                 errors.Add($"{error.Parameter.ToString()}: {error.Message}");
-            }
         }
 
         /// <summary>
         /// Adds the active curve and its respective to the collection and subscribes to its events.
         /// </summary>
         /// <param name="activeCurve">The active curve.</param>
-        private void AddActiveCurve(Curve activeCurve)
+        private void OnSimpleCurveStartReceivingData(Curve activeCurve)
         {
             if (activeCurve == null)
-            {
                 return;
-            }
-
-            if (_activeCurves.ContainsKey(activeCurve))
-            {
-                return;
-            }
-
-            activeCurve.NewDataAdded += ActiveCurve_NewDataAdded;
-            activeCurve.Finished += ActiveCurve_Finished;
 
             SimpleCurve activeSimpleCurve = _activeSimpleMeasurement.SimpleCurveCollection.Where(sc => sc.Curve == activeCurve).FirstOrDefault();
 
@@ -720,42 +774,57 @@ namespace AgroPathogenMeterApp.Droid
                 _activeSimpleMeasurement.AddSimpleCurve(activeSimpleCurve);
             }
 
-            _activeCurves.Add(activeCurve, activeSimpleCurve);
             SimpleCurveStartReceivingData?.Invoke(this, activeSimpleCurve);
         }
 
         /// <summary>
-        /// Removes the active curve and its respective active simplecurve from the collection and unsubsscribes its events.
+        /// Safely run an Action delegate on the clientconnection.
         /// </summary>
-        /// <param name="activeCurve">The active curve.</param>
-        private void RemoveActiveCurve(Curve activeCurve)
+        /// <param name="action">The action.</param>
+        private void Run(Action action)
         {
-            if (activeCurve == null)
-            {
-                return;
-            }
-
-            activeCurve.NewDataAdded -= ActiveCurve_NewDataAdded;
-            activeCurve.Finished -= ActiveCurve_Finished;
-
-            if (!_activeCurves.ContainsKey(activeCurve))
-            {
-                return;
-            }
-
-            _activeCurves.Remove(activeCurve);
+            if (TaskScheduler.Current == _comm.ClientConnection.TaskScheduler)
+                throw new Exception("The device can only execute one command at a time. Dead lock detected");
+            _comm.ClientConnection.Semaphore.Wait();
+            try { action(); }
+            finally { _comm.ClientConnection.Semaphore.Release(); }
         }
 
         /// <summary>
-        /// Clears the all active curves and respective simplecurves.
+        /// Safely run a Function delegate on the clientconnection.
         /// </summary>
-        private void ClearActiveCurves()
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func">The function.</param>
+        /// <returns></returns>
+        private T Run<T>(Func<T> func)
         {
-            List<Curve> activeCurves = _activeCurves.Keys.ToList();
-            foreach (Curve activeCurve in activeCurves)
-            {
-                _activeCurves.Remove(activeCurve);
-            }
+            if (TaskScheduler.Current == _comm.ClientConnection.TaskScheduler)
+                throw new Exception("The device can only execute one command at a time. Dead lock detected");
+            _comm.ClientConnection.Semaphore.Wait();
+            try { return func(); }
+            finally { _comm.ClientConnection.Semaphore.Release(); }
+        }
+
+        /// <summary>
+        /// Runs an async Func delegate asynchronously on the clientconnections taskscheduler.
+        /// </summary>
+        /// <param name="func">The action.</param>
+        /// <returns></returns>
+        private async Task RunAsync(Func<Task> func)
+        {
+            await new SynchronizationContextRemover();
+            await _comm.ClientConnection.RunAsync(func);
+        }
+
+        /// <summary>
+        /// Runs an async Func delegate asynchronously on the clientconnections taskscheduler.
+        /// </summary>
+        /// <param name="func">The action.</param>
+        /// <returns></returns>
+        private async Task<T> RunAsync<T>(Func<Task<T>> func)
+        {
+            await new SynchronizationContextRemover();
+            return await _comm.ClientConnection.RunAsync(func);
         }
 
         #endregion Functions
@@ -776,16 +845,21 @@ namespace AgroPathogenMeterApp.Droid
         private void _comm_ReceiveStatus(object sender, StatusEventArgs e)
         {
             if (_platform == null)
-            {
                 throw new NullReferenceException("Platform not set.");
-            }
-
             if (_platform.InvokeIfRequired(new StatusEventHandler(_comm_ReceiveStatus), sender, e)) //Recast event to UI thread when necessary
-            {
                 return;
-            }
-
             ReceiveStatus?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Casts ReceiveStatus events coming from a different thread to the UI thread when necessary.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="StatusEventArgs" /> instance containing the device status.</param>
+        /// <exception cref="System.NullReferenceException">Platform not set.</exception>
+        private async Task _comm_ReceiveStatusAsync(object sender, StatusEventArgs e)
+        {
+            _comm_ReceiveStatus(sender, e);
         }
 
         /// <summary>
@@ -802,17 +876,21 @@ namespace AgroPathogenMeterApp.Droid
         private void _comm_BeginMeasurement(object sender, ActiveMeasurement newMeasurement)
         {
             if (_platform == null)
-            {
                 throw new NullReferenceException("Platform not set.");
-            }
-
             if (_platform.InvokeIfRequired(new CommManager.BeginMeasurementEventHandler(_comm_BeginMeasurement), sender, newMeasurement)) //Recast event to UI thread when necessary
-            {
                 return;
-            }
-
-            ActiveMeasurement = newMeasurement;
             MeasurementStarted?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Sets the ActiveMeasurement at the start of a measurement and casts BeginMeasurement events coming from a different thread to the UI thread when necessary.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The new measurement.</param>
+        /// <exception cref="System.NullReferenceException">Platform not set.</exception>
+        private async Task _comm_BeginMeasurementAsync(object sender, ActiveMeasurement e)
+        {
+            _comm_BeginMeasurement(sender, e);
         }
 
         /// <summary>
@@ -829,17 +907,22 @@ namespace AgroPathogenMeterApp.Droid
         private void _comm_EndMeasurement(object sender, EventArgs e)
         {
             if (_platform == null)
-            {
                 throw new NullReferenceException("Platform not set.");
-            }
-
             if (_platform.InvokeIfRequired(new EventHandler(_comm_EndMeasurement), sender, e)) //Recast event to UI thread when necessary
-            {
                 return;
-            }
-
             ActiveMeasurement = null;
             MeasurementEnded?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Sets the ActiveMeasurement to null at the end of the measurement and casts EndMeasurement events coming from a different thread to the UI thread when necessary.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <exception cref="System.NullReferenceException">Platform not set.</exception>
+        private async Task _comm_EndMeasurementAsync(object sender, EventArgs e)
+        {
+            _comm_EndMeasurement(sender, e);
         }
 
         /// <summary>
@@ -851,36 +934,10 @@ namespace AgroPathogenMeterApp.Droid
         private void _comm_BeginReceiveCurve(object sender, CurveEventArgs e)
         {
             if (_platform == null)
-            {
                 throw new NullReferenceException("Platform not set.");
-            }
-
             if (_platform.InvokeIfRequired(new CurveEventHandler(_comm_BeginReceiveCurve), sender, e)) //Recast event to UI thread when necessary
-            {
                 return;
-            }
-
-            AddActiveCurve(e.GetCurve());
-        }
-
-        /// <summary>
-        /// Adds the active EISData to the active SimpleMeasurement and casts BeginReceiveEISData events coming from a different thread to the UI thread when necessary.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eisdata">The eisdata.</param>
-        /// <exception cref="System.NullReferenceException">Platform not set.</exception>
-        private void _comm_BeginReceiveEISData(object sender, EISData eisdata)
-        {
-            if (_platform == null)
-            {
-                throw new NullReferenceException("Platform not set.");
-            }
-
-            if (_platform.InvokeIfRequired(new EISDataEventHandler(_comm_BeginReceiveEISData), sender, eisdata)) //Recast event to UI thread when necessary
-            {
-                return;
-            }
-            //AddActiveCurve(eisdata); //FIXME add support for impedance
+            OnSimpleCurveStartReceivingData(e.GetCurve());
         }
 
         /// <summary>
@@ -909,51 +966,61 @@ namespace AgroPathogenMeterApp.Droid
         private void _comm_StateChanged(object sender, CommManager.DeviceState CurrentState)
         {
             if (_platform == null)
-            {
                 throw new NullReferenceException("Platform not set.");
-            }
-
             if (_platform.InvokeIfRequired(new CommManager.StatusChangedEventHandler(_comm_StateChanged), sender, CurrentState)) //Recast event to UI thread when necessary
-            {
                 return;
-            }
-
             StateChanged?.Invoke(this, CurrentState);
         }
 
         /// <summary>
-        /// Raises the active curves new data added event when new data is added to the curve.
+        /// Casts StateChanged events coming from a different thread to the UI thread when necessary.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="PalmSens.Data.ArrayDataAddedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">State of the current.</param>
         /// <exception cref="System.NullReferenceException">Platform not set.</exception>
-        private void ActiveCurve_NewDataAdded(object sender, PalmSens.Data.ArrayDataAddedEventArgs e)
+        private async Task _comm_StateChangedAsync(object sender, CommManager.DeviceState e)
         {
-            if (_platform == null)
-            {
-                throw new NullReferenceException("Platform not set.");
-            }
-
-            if (_platform.InvokeIfRequired(new Curve.NewDataAddedEventHandler(ActiveCurve_NewDataAdded), sender, e)) //Recast event to UI thread when necessary
-            {
-                return;
-            }
-
-            SimpleCurve activeSimpleCurve;
-            if (_activeCurves.TryGetValue(sender as Curve, out activeSimpleCurve))
-            {
-                activeSimpleCurve.OnNewDataAdded(e);
-            }
+            _comm_StateChanged(sender, e);
         }
 
         /// <summary>
-        /// Removes an curve from the active curve collection when it is finished.
+        /// Occurs when a device is [disconnected].
+        /// </summary>
+        public event DisconnectedEventHandler Disconnected;
+
+        /// <summary>
+        /// Raises the Disconnected event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void ActiveCurve_Finished(object sender, EventArgs e)
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void _comm_Disconnected(object sender, EventArgs e)
         {
-            RemoveActiveCurve(sender as Curve);
+            if (_platform == null)
+                throw new NullReferenceException("Platform not set.");
+            if (_platform.InvokeIfRequired(new EventHandler(_comm_Disconnected), sender, e)) //Recast event to UI thread when necessary
+                return;
+            Disconnected?.Invoke(this, _commErrorException);
+            _commErrorException = null;
+        }
+
+        /// <summary>
+        /// The latest comm error exception, this is used for the disconnected event and is set back to null directly after it is raised
+        /// </summary>
+        private Exception _commErrorException = null;
+
+        /// <summary>
+        /// Comms the comm error occorred.
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void _comm_CommErrorOccurred(object sender, Exception exception)
+        {
+            if (_platform == null)
+                throw new NullReferenceException("Platform not set.");
+            if (_platform.InvokeIfRequired(new CommManager.EventHandlerCommErrorOccurred(_comm_CommErrorOccurred), sender, exception)) //Recast event to UI thread when necessary
+                return;
+            _commErrorException = exception;
         }
 
         #endregion events
@@ -962,7 +1029,21 @@ namespace AgroPathogenMeterApp.Droid
         {
             if (Connected)
                 _comm.Dispose();
+            _comm = null;
             ActiveMeasurement = null;
+            Disconnected = null;
+            MeasurementEnded = null;
+            MeasurementStarted = null;
+            ReceiveStatus = null;
+            StateChanged = null;
+            SimpleCurveStartReceivingData = null;
         }
     }
+
+    /// <summary>
+    /// Delegate for the Disconnected event
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="CommErrorException">The comm error exception, this is only available when device was disconnected due to a communication error.</param>
+    public delegate void DisconnectedEventHandler(Object sender, Exception CommErrorException);
 }

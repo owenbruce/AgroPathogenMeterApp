@@ -17,14 +17,10 @@ namespace AgroPathogenMeterApp.Droid
         public SimpleMeasurement(Measurement measurement)
         {
             if (measurement == null || measurement.Method == null)
-            {
                 throw new ArgumentNullException("Cannot create an instance of SimpleMeasurement when the specified Measurement or its Method is null");
-            }
-
             Measurement = measurement;
 
             MeasurementType = GetTypeFromMethod(Measurement.Method); //Determine the type of measurement
-            SetAvailableDataTypes();
             InitSimpleCurveCollection();
         }
 
@@ -66,7 +62,25 @@ namespace AgroPathogenMeterApp.Droid
         /// <summary>
         /// List of the available data types in the measurement
         /// </summary>
-        public readonly List<DataArrayType> AvailableDataTypes = new List<DataArrayType>();
+        public List<DataArrayType> AvailableDataTypes
+        {
+            get
+            {
+                List<DataArrayType> availableDataTypes = new List<DataArrayType>();
+                DataArray[] dataArrays = Measurement.DataSet.GetDataArrays();
+                foreach (DataArray array in dataArrays)
+                    availableDataTypes.Add((DataArrayType)array.ArrayType);
+                return availableDataTypes;
+            }
+        }
+
+        /// <summary>
+        /// Gets the channel that the measurement was measured on.
+        /// </summary>
+        /// <value>
+        /// The channel.
+        /// </value>
+        public int Channel { get { return Measurement.Channel; } internal set { Measurement.Channel = value; } }
 
         #endregion Properties
 
@@ -117,15 +131,19 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         /// <summary>
-        /// Sets the available data types.
+        /// Gets the raw data of the specified type from this measurement.
         /// </summary>
-        private void SetAvailableDataTypes()
+        /// <param name="arrayType">The data type of the array.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">This SimpleMeasurement does not contain data of the specified array type</exception>
+        public double[] GetRawData(DataArrayType arrayType)
         {
-            DataArray[] dataArrays = Measurement.DataSet.GetDataArrays();
-            foreach (DataArray array in dataArrays)
-            {
-                AvailableDataTypes.Add((DataArrayType)array.ArrayType);
-            }
+            if (!AvailableDataTypes.Contains(arrayType))
+                throw new ArgumentException("This SimpleMeasurement does not contain data of the specified array type");
+
+            DataArray[] dataArrays = Measurement.DataSet.GetDataArrays().Where(a => a.ArrayType == (int)arrayType).ToArray();
+
+            return dataArrays[0].GetValues();
         }
 
         #region Curve functions
@@ -137,9 +155,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             SimpleCurveCollection = new List<SimpleCurve>();
             foreach (Curve c in Measurement.GetCurveArray())
-            {
                 AddSimpleCurve(new SimpleCurve(c, this), true);
-            }
         }
 
         /// <summary>
@@ -170,14 +186,9 @@ namespace AgroPathogenMeterApp.Droid
         public List<SimpleCurve> NewSimpleCurve(DataArrayType xAxisArrayType, DataArrayType yAxisArrayType, string title = "", bool silent = false)
         {
             if (!AvailableDataTypes.Contains(xAxisArrayType))
-            {
                 throw new ArgumentException("This SimpleMeasurement does not contain the specified X-Axis array type");
-            }
-
             if (!AvailableDataTypes.Contains(yAxisArrayType))
-            {
                 throw new ArgumentException("This SimpleMeasurement does not contain the specified Y-Axis array type");
-            }
 
             List<SimpleCurve> simpleCurves = new List<SimpleCurve>();
             DataArray[] xDataArrays = Measurement.DataSet.GetDataArrays().Where(a => a.ArrayType == (int)xAxisArrayType).ToArray();
@@ -187,12 +198,9 @@ namespace AgroPathogenMeterApp.Droid
             {
                 for (int i = 0; i < xDataArrays.Length; i++)
                 {
-                    Curve c = new Curve(xDataArrays[i], yDataArrays[i], $"{xDataArrays[i].Description}:{title}");
+                    Curve c = new Curve(xDataArrays[i], yDataArrays[i], $"{xDataArrays[i].Description}:{title}", Measurement.DataSet.IsFinished);
                     if (Measurement.DataSet.IsFinished)
-                    {
                         c.Finish();
-                    }
-
                     simpleCurves.Add(new SimpleCurve(c, this));
                 }
             }
@@ -200,12 +208,9 @@ namespace AgroPathogenMeterApp.Droid
             {
                 for (int i = 0; i < xDataArrays.Length; i++)
                 {
-                    Curve c = new Curve(xDataArrays[i], yDataArrays[0], $"{xDataArrays[i].Description}:{title}");
+                    Curve c = new Curve(xDataArrays[i], yDataArrays[0], $"{xDataArrays[i].Description}:{title}", Measurement.DataSet.IsFinished);
                     if (Measurement.DataSet.IsFinished)
-                    {
                         c.Finish();
-                    }
-
                     simpleCurves.Add(new SimpleCurve(c, this));
                 }
             }
@@ -213,23 +218,17 @@ namespace AgroPathogenMeterApp.Droid
             {
                 for (int i = 0; i < yDataArrays.Length; i++)
                 {
-                    Curve c = new Curve(xDataArrays[0], yDataArrays[i], $"{yDataArrays[i].Description}:{title}");
+                    Curve c = new Curve(xDataArrays[0], yDataArrays[i], $"{yDataArrays[i].Description}:{title}", Measurement.DataSet.IsFinished);
                     if (Measurement.DataSet.IsFinished)
-                    {
                         c.Finish();
-                    }
-
                     simpleCurves.Add(new SimpleCurve(c, this));
                 }
             }
             else
             {
-                Curve c = new Curve(xDataArrays[0], yDataArrays[0], title);
+                Curve c = new Curve(xDataArrays[0], yDataArrays[0], title, Measurement.DataSet.IsFinished);
                 if (Measurement.DataSet.IsFinished)
-                {
                     c.Finish();
-                }
-
                 simpleCurves.Add(new SimpleCurve(c, this));
             }
 
@@ -247,32 +246,21 @@ namespace AgroPathogenMeterApp.Droid
         public void AddSimpleCurve(SimpleCurve simpleCurve, bool silent = false)
         {
             if (simpleCurve == null)
-            {
                 throw new ArgumentNullException("The specified SimpleCurve is null.");
-            }
-
             if (ContainsSimpleCurve(simpleCurve))
-            {
                 throw new ArgumentException("This SimpleMeasurement allready contains the specified SimpleCurve.");
-            }
 
             SimpleCurveCollection.Add(simpleCurve); //Add the SimpleCurve to this SimpleMeasurement.
             if (!Measurement.ContainsCurve(simpleCurve.Curve))
             {
                 if (!silent)
-                {
                     Measurement.AddCurve(simpleCurve.Curve); //Add the original Curve to the orginal Measurement.
-                }
                 else
-                {
                     Measurement.AddCurveSilent(simpleCurve.Curve); //Add the original Curve to the orginal Measurement without raising the curve added event.
-                }
             }
 
             if (!silent)
-            {
                 OnSimpleCurveAdded(simpleCurve);
-            }
         }
 
         /// <summary>
@@ -284,10 +272,7 @@ namespace AgroPathogenMeterApp.Droid
         public void AddSimpleCurves(List<SimpleCurve> simpleCurves, bool silent = false)
         {
             if (simpleCurves == null)
-            {
                 throw new ArgumentNullException("The list of specified SimpleCurves is null");
-            }
-
             AddSimpleCurves(simpleCurves.ToArray(), silent);
         }
 
@@ -300,14 +285,9 @@ namespace AgroPathogenMeterApp.Droid
         public void AddSimpleCurves(SimpleCurve[] simpleCurves, bool silent = false)
         {
             if (simpleCurves == null)
-            {
                 throw new ArgumentNullException("The array of specified SimpleCurves is null");
-            }
-
             foreach (SimpleCurve simpleCurve in simpleCurves)
-            {
                 AddSimpleCurve(simpleCurve, silent);
-            }
         }
 
         /// <summary>
@@ -320,22 +300,15 @@ namespace AgroPathogenMeterApp.Droid
         public void RemoveSimpleCurve(SimpleCurve simpleCurve, bool silent = false)
         {
             if (simpleCurve == null)
-            {
                 throw new ArgumentNullException("The specified SimpleCurve is null.");
-            }
-
             if (!ContainsSimpleCurve(simpleCurve))
-            {
                 throw new ArgumentException("This SimpleMeasurement does not contain the specified SimpleCurve");
-            }
 
             Measurement.RemoveCurve(simpleCurve.Curve); //Removes the original curve from the original measurement
             SimpleCurveCollection.Remove(simpleCurve); //Removes the SimpleCurve from the SimpleMeasurement
 
             if (!silent)
-            {
                 OnSimpleCurveRemoved(simpleCurve);
-            }
         }
 
         /// <summary>
@@ -347,10 +320,7 @@ namespace AgroPathogenMeterApp.Droid
         public void RemoveSimpleCurves(List<SimpleCurve> simpleCurves, bool silent = false)
         {
             if (simpleCurves == null)
-            {
                 throw new ArgumentNullException("The list of SimpleCurves cannot be null");
-            }
-
             RemoveSimpleCurves(simpleCurves.ToArray(), silent);
         }
 
@@ -363,14 +333,9 @@ namespace AgroPathogenMeterApp.Droid
         public void RemoveSimpleCurves(SimpleCurve[] simpleCurves, bool silent = false)
         {
             if (simpleCurves == null)
-            {
                 throw new ArgumentNullException("The array of SimpleCurves cannot be null");
-            }
-
             foreach (SimpleCurve simpleCurve in simpleCurves)
-            {
                 RemoveSimpleCurve(simpleCurve, silent);
-            }
         }
 
         #endregion Curve functions
