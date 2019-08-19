@@ -21,7 +21,7 @@ namespace AgroPathogenMeterApp
             MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
         }
 
-        public async Task NavigateFromMenu(int id)   //Set all of the bages to be accessed by each button in the hamburger menu
+        public async Task NavigateFromMenu(int id)   //Set all of the pages to be accessed by each button in the hamburger menu
         {
             if (!MenuPages.ContainsKey(id))
             {

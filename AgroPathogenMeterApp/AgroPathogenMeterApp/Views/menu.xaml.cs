@@ -19,20 +19,6 @@ namespace AgroPathogenMeterApp.Views
             });
         }
 
-        private async void OnInstrViewClicked(object sender, EventArgs e)   //Opens the instructions menu
-        {
-            await Navigation.PushAsync(new instr
-            {
-            });
-        }
-
-        private async void OnResultViewClicked(object sender, EventArgs e)   //Opens the dataview menu to view previous data
-        {
-            await Navigation.PushAsync(new dataview
-            {
-            });
-        }
-
         private async void OnRunTestClicked(object sender, EventArgs e)   //Opens the first test running menu
         {
             await Navigation.PushAsync(new run1

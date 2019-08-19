@@ -30,7 +30,7 @@ namespace AgroPathogenMeterApp.Views
             return false;
         }
 
-        private bool InFrequencyRange(double value)   //CHeck if the chosen frequency is within the possible range of the potentiostat
+        private bool InFrequencyRange(double value)   //Check if the chosen frequency is within the possible range of the potentiostat
         {
             if (value >= 1 && value <= 2000)
             {
