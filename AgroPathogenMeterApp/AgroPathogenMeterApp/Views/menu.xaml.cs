@@ -14,7 +14,7 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnDvlpClicked(object sender, EventArgs e)   //Opens developer menu (Button is not visible, but is in the lower right corner)
         {
-            await Navigation.PushAsync(new dvlp
+            await Navigation.PushAsync(new Dvlp
             {
             });
         }

@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AgroPathogenMeterApp.Views.rawData">
+             x:Class="AgroPathogenMeterApp.Views.RawData">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="View all of the numbers here!"

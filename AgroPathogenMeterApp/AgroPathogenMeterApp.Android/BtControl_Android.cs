@@ -45,6 +45,8 @@ namespace AgroPathogenMeterApp.Droid
 
             this._measurementEnded = new AutoResetEvent(false);
             psCommSimpleAndroid.MeasurementEnded += this.PsCommSimpleAndroid_MeasurementEnded;
+
+            psCommSimpleAndroid.Dispose();
         }
 
         #region Flags
@@ -103,6 +105,7 @@ namespace AgroPathogenMeterApp.Droid
         //Notifies when a measurement is finished, nothing currently implemented
         protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
+            /*
             FileHack instance = new FileHack();
 
             activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
@@ -137,6 +140,7 @@ namespace AgroPathogenMeterApp.Droid
 
             _database.PeakVoltage = peakHeight;
             await App.Database.SaveScanAsync(_database);   //Saves the current database
+            */
         }
 
         //Notifies when a measurement is started, nothing currently implemented
@@ -332,9 +336,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
-                //Thread.Sleep(10100);   //Pauses while the scan is running, temporary measure
-
-                this._measurementEnded.WaitOne(MaxWait);
+                psCommSimpleAndroid.Dispose();
             }
 
             //Runs a differential pulse voltammetric scan for testing
@@ -354,6 +356,7 @@ namespace AgroPathogenMeterApp.Droid
                 }
                 catch (Exception ex)
                 {
+                    psCommSimpleAndroid.Dispose();
                     Crashes.TrackError(ex);
                     return;
                 }
@@ -366,29 +369,17 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
-                running = true;
-
-                //Thread.Sleep(50000);   //Temporary workaround
-
-                this._measurementEnded.WaitOne(MaxWait);
-
-                /*
-                while (running == true)
-                {
-                    CheckRunning();
-                }
-
                 psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
                 List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
                 //Add in processing stuff here
-                //SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
+                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
 
-                FileHack instance = new FileHack();
+                //FileHack instance = new FileHack();
 
-                activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
+                //activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
 
-                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
+                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.NewSimpleCurve(DataArrayType.Current, DataArrayType.Potential);
 
                 SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
@@ -417,7 +408,6 @@ namespace AgroPathogenMeterApp.Droid
 
                 _database.PeakVoltage = peakHeight;
                 await App.Database.SaveScanAsync(_database);   //Saves the current database
-                */
             }
             else if (RunningNC || RunningPC || RunningBL)   //If a test scan is being run
             {

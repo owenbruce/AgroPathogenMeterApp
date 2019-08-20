@@ -6,9 +6,9 @@ using Xamarin.Forms.Xaml;
 namespace AgroPathogenMeterApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class dvlp : ContentPage   //The developer options menu page
+    public partial class Dvlp : ContentPage   //The developer options menu page
     {
-        public dvlp()
+        public Dvlp()
         {
             Analytics.TrackEvent("Developer opened");
             InitializeComponent();
@@ -21,7 +21,7 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnRawDataClicked(object sender, EventArgs e)   //Opens a file selecter to view raw data from a chosen test
         {
-            await Navigation.PushAsync(new rawData { });
+            await Navigation.PushAsync(new RawData { });
         }
 
         private async void OnTestingClicked(object sender, EventArgs e)   //Opens up a small test screen to test a positive result

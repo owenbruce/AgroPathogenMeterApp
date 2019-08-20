@@ -23,9 +23,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <exception cref="System.ArgumentNullException">Platform cannot be null</exception>
         public PSMultiCommSimple(IPlatformMulti platform)
         {
-            if (platform == null)
-                throw new ArgumentNullException("Platform cannot be null");
-            _platform = platform;
+            _platform = platform ?? throw new ArgumentNullException("Platform cannot be null");
         }
 
         #region Properties
@@ -182,9 +180,7 @@ namespace AgroPathogenMeterApp.Droid
         /// </returns>
         public bool[] IsValidMethod(Method method)
         {
-            bool[] valid;
-            List<string>[] errors;
-            ValidateMethod(method, out valid, out errors);
+            ValidateMethod(method, out bool[] valid, out List<string>[] errors);
             return valid;
         }
 
@@ -198,9 +194,7 @@ namespace AgroPathogenMeterApp.Droid
         /// </returns>
         public bool IsValidMethod(Method method, int channel)
         {
-            bool valid;
-            List<string> errors;
-            ValidateMethod(method, channel, out valid, out errors);
+            ValidateMethod(method, channel, out bool valid, out List<string> errors);
             return valid;
         }
 
@@ -214,9 +208,7 @@ namespace AgroPathogenMeterApp.Droid
         /// </returns>
         public bool[] IsValidMethod(Method method, int[] channels)
         {
-            bool[] valid;
-            List<string>[] errors;
-            ValidateMethod(method, channels, out valid, out errors);
+            ValidateMethod(method, channels, out bool[] valid, out List<string>[] errors);
             return valid;
         }
 
@@ -330,9 +322,7 @@ namespace AgroPathogenMeterApp.Droid
             copy.Ranging.SupportedCurrentRanges = Capabilities[channel].SupportedRanges;
 
             //Check whether method is compatible with the connected channel
-            bool isValidMethod;
-            List<string> errors;
-            ValidateMethod(copy, channel, out isValidMethod, out errors);
+            ValidateMethod(copy, channel, out bool isValidMethod, out List<string> errors);
             if (!isValidMethod)
                 throw new ArgumentException("Method is incompatible with the connected channel.");
 
@@ -346,8 +336,7 @@ namespace AgroPathogenMeterApp.Droid
                 simpleMeasurement.Title += $" Channel {commSender.ChannelIndex + 1}";
                 simpleMeasurement.Channel = commSender.ChannelIndex + 1;
                 _activeSimpleMeasurements.Add(commSender, simpleMeasurement);
-                ImpedimetricMeasurement eis = m as ImpedimetricMeasurement;
-                if (eis != null)
+                if (m is ImpedimetricMeasurement eis)
                     _activeSimpleMeasurements[commSender].NewSimpleCurve(PalmSens.Data.DataArrayType.ZRe, PalmSens.Data.DataArrayType.ZIm, "Nyquist", true); //Create a nyquist curve by default
 
                 _taskCompletionSources[commSender].SetResult(simpleMeasurement);
@@ -994,9 +983,7 @@ namespace AgroPathogenMeterApp.Droid
 
             for (int i = 0; i < n; i++)
             {
-                bool valid;
-                List<string> error;
-                ValidateMethod(method, channels[i], out valid, out error);
+                ValidateMethod(method, channels[i], out bool valid, out List<string> error);
                 isValidMethod[i] = valid;
                 errors[i] = error;
             }

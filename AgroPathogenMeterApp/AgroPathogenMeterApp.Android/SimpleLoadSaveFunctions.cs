@@ -67,6 +67,8 @@ namespace AgroPathogenMeterApp.Droid
                 foreach (Measurement measurement in session)
                     simpleMeasurements.Add(new SimpleMeasurement(measurement));
 
+            session.Dispose();
+
             return simpleMeasurements;
         }
 

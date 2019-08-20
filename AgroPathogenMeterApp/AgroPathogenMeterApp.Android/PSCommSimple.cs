@@ -23,9 +23,7 @@ namespace AgroPathogenMeterApp.Droid
         /// <exception cref="System.ArgumentNullException">Platform cannot be null</exception>
         public PSCommSimple(IPlatform platform)
         {
-            if (platform == null)
-                throw new ArgumentNullException("Platform cannot be null");
-            _platform = platform;
+            _platform = platform ?? throw new ArgumentNullException("Platform cannot be null");
         }
 
         #region Properties
@@ -173,9 +171,7 @@ namespace AgroPathogenMeterApp.Droid
         /// </returns>
         public bool IsValidMethod(Method method)
         {
-            bool valid;
-            List<string> errors;
-            ValidateMethod(method, out valid, out errors);
+            ValidateMethod(method, out bool valid, out List<string> errors);
             return valid;
         }
 
@@ -274,9 +270,7 @@ namespace AgroPathogenMeterApp.Droid
                 method.Ranging.SupportedCurrentRanges = Capabilities.SupportedRanges;
 
             //Check whether method is compatible with the connected device
-            bool isValidMethod;
-            List<string> errors;
-            ValidateMethod(method, out isValidMethod, out errors);
+            ValidateMethod(method, out bool isValidMethod, out List<string> errors);
             if (!isValidMethod)
                 throw new ArgumentException("Method is incompatible with the connected device.");
 
@@ -316,9 +310,7 @@ namespace AgroPathogenMeterApp.Droid
                 method.Ranging.SupportedCurrentRanges = Capabilities.SupportedRanges;
 
             //Check whether method is compatible with the connected device
-            bool isValidMethod;
-            List<string> errors;
-            ValidateMethod(method, out isValidMethod, out errors);
+            ValidateMethod(method, out bool isValidMethod, out List<string> errors);
             if (!isValidMethod)
                 throw new ArgumentException("Method is incompatible with the connected device.");
 
@@ -353,8 +345,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             _comm.BeginMeasurement -= GetActiveMeasurement;
             ActiveMeasurement = m;
-            ImpedimetricMethod eis = ActiveMeasurement.Method as ImpedimetricMethod;
-            if (eis != null)
+            if (ActiveMeasurement.Method is ImpedimetricMethod eis)
                 _activeSimpleMeasurement.NewSimpleCurve(PalmSens.Data.DataArrayType.ZRe, PalmSens.Data.DataArrayType.ZIm, "Nyquist", true); //Create a nyquist curve by default
             _taskCompletionSource.SetResult(_activeSimpleMeasurement);
         }
@@ -369,8 +360,7 @@ namespace AgroPathogenMeterApp.Droid
         {
             _comm.BeginMeasurementAsync -= GetActiveMeasurementAsync;
             ActiveMeasurement = m;
-            ImpedimetricMeasurement eis = ActiveMeasurement as ImpedimetricMeasurement;
-            if (eis != null)
+            if (ActiveMeasurement is ImpedimetricMeasurement eis)
                 _activeSimpleMeasurement.NewSimpleCurve(PalmSens.Data.DataArrayType.ZRe, PalmSens.Data.DataArrayType.ZIm, "Nyquist", true); //Create a nyquist curve by default
             _taskCompletionSource.SetResult(_activeSimpleMeasurement);
         }
