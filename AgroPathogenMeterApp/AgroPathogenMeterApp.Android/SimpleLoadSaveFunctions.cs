@@ -1,3 +1,4 @@
+using Microsoft.AppCenter.Crashes;
 using PalmSens;
 using PalmSens.Data;
 using PalmSens.DataFiles;
@@ -29,6 +30,7 @@ namespace AgroPathogenMeterApp.Droid
             try { session = LoadSaveHelperFunctions.LoadSessionFile(filepath); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
@@ -57,6 +59,7 @@ namespace AgroPathogenMeterApp.Droid
             try { session.Load(streamReader.BaseStream, ""); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file in the stream reader is valid");
             }
 
@@ -89,6 +92,7 @@ namespace AgroPathogenMeterApp.Droid
             try { LoadSaveHelperFunctions.SaveSessionFile(filepath, session); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }
@@ -117,6 +121,7 @@ namespace AgroPathogenMeterApp.Droid
             try { LoadSaveHelperFunctions.SaveSessionFile(filepath, session); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }
@@ -154,6 +159,7 @@ namespace AgroPathogenMeterApp.Droid
             try { method = LoadSaveHelperFunctions.LoadMethod(filepath); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
@@ -176,6 +182,7 @@ namespace AgroPathogenMeterApp.Droid
             try { method = MethodFile2.FromStream(streamReader); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while loading, please make sure the file path is correct and the file is valid");
             }
 
@@ -200,6 +207,7 @@ namespace AgroPathogenMeterApp.Droid
             try { LoadSaveHelperFunctions.SaveMethod(method, filepath); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new Exception("An error occured while saving, please make sure the file path is correct");
             }
         }

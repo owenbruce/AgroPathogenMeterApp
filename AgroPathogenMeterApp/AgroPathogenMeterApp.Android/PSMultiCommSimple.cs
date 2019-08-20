@@ -1,4 +1,5 @@
-﻿using PalmSens;
+﻿using Microsoft.AppCenter.Crashes;
+using PalmSens;
 using PalmSens.Comm;
 using PalmSens.Devices;
 using PalmSens.Plottables;
@@ -288,6 +289,7 @@ namespace AgroPathogenMeterApp.Droid
             try { await _platform.Disconnect(_comms); }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw new NullReferenceException("Not connected to any channels.");
             }
             Comms = null;

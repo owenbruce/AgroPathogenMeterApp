@@ -236,9 +236,9 @@ namespace AgroPathogenMeterApp.Droid
                 case "Alternating Current Voltammetry":   //Sets an alternating current voltammetric scan
                     using (ACVoltammetry acVoltammetry = instance.ACV(_database))
                     {
-                        acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
-                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                        acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
+                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
+                        acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
 
                         return acVoltammetry;
                     }
@@ -246,9 +246,9 @@ namespace AgroPathogenMeterApp.Droid
                 case "Cyclic Voltammetry":   //Sets a cyclic voltammetric scan
                     using (CyclicVoltammetry cVoltammetry = instance.CV(_database))
                     {
-                        cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
-                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                        cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
+                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
+                        cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
 
                         return cVoltammetry;
                     }
@@ -256,9 +256,9 @@ namespace AgroPathogenMeterApp.Droid
                 case "Differential Pulse Voltammetry":   //Sets a differential pulse voltammetric scan
                     using (DifferentialPulse differentialPulse = instance.DPV(_database))
                     {
-                        differentialPulse.Ranging.StartCurrentRange = new CurrentRange(3);   //Sets the range that the potentiostat will use to detect the current
-                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(3);
-                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(1);
+                        differentialPulse.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr1uA);   //Sets the range that the potentiostat will use to detect the current
+                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr1uA);
+                        differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr10nA);
 
                         return differentialPulse;
                     }
@@ -266,9 +266,9 @@ namespace AgroPathogenMeterApp.Droid
                 case "Linear Voltammetry":   //Sets a linear voltammetric scan
                     using (LinearSweep linSweep = instance.LinSweep(_database))
                     {
-                        linSweep.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
-                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                        linSweep.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
+                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
+                        linSweep.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
 
                         return linSweep;
                     }
@@ -276,9 +276,9 @@ namespace AgroPathogenMeterApp.Droid
                 case "Square Wave Voltammetry":   //Sets a square wave voltammetric scan
                     using (SquareWave squareWave = instance.SWV(_database))
                     {
-                        squareWave.Ranging.StartCurrentRange = new CurrentRange(5);   //Sets the range that the potentiostat will use to detect the current
-                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(6);
-                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(3);
+                        squareWave.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
+                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
+                        squareWave.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
 
                         return squareWave;
                     }
@@ -317,7 +317,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 try
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);   //Connect to the first palmsens found
+                    await psCommSimpleAndroid.Connect(devices[0]);   //Connect to the first palmsens found
                 }
                 catch (Exception ex)
                 {
@@ -350,7 +350,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 try
                 {
-                    psCommSimpleAndroid.Connect(devices[0]);   //Connects to the first palmsens found
+                    await psCommSimpleAndroid.Connect(devices[0]);   //Connects to the first palmsens found
                 }
                 catch (Exception ex)
                 {
