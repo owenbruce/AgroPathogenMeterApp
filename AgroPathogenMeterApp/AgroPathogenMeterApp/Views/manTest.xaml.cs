@@ -426,7 +426,7 @@ namespace AgroPathogenMeterApp.Views
 
             //File.Copy(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.db3"), DependencyService.Get<BtControl>().FilePath());
 
-            DependencyService.Get<IBtControl>().Connect(1, false, false, true, false);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
+            DependencyService.Get<IBtControl>().SimpleConnect(1, false, false, true, false);  //Runs the test on the APM, need to setup to run async, or move to RunFinal and run async on that page
 
             await Navigation.PushAsync(new RunFinal
             {

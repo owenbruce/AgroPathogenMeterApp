@@ -28,7 +28,7 @@ namespace AgroPathogenMeterApp.Views
             };
             await App.Database.SaveScanAsync(scan);
 
-            DependencyService.Get<IBtControl>().Connect(1, false, false, true, false);
+            DependencyService.Get<IBtControl>().SimpleConnect(1, false, false, true, false);
 
             await Navigation.PushAsync(new DuringRun
             {

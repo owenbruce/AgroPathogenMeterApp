@@ -35,7 +35,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
+                DependencyService.Get<IBtControl>().SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
+                DependencyService.Get<IBtControl>().SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
+                DependencyService.Get<IBtControl>().SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {
@@ -138,7 +138,7 @@ namespace AgroPathogenMeterApp.Views
             int fileNum = Convert.ToInt32(fileNumber.Text);
             try
             {
-                DependencyService.Get<IBtControl>().Connect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
+                DependencyService.Get<IBtControl>().SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
             }
             catch (Exception ex)
             {

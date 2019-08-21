@@ -31,7 +31,7 @@ namespace AgroPathogenMeterApp.Droid
 
         //Initializes the parameters required for the scan and processing
         private Curve _activeCurve;
-
+        private PSCommSimpleAndroid psCommSimpleAndroid;
         private SimpleCurve _activeSimpleCurve;
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
@@ -103,44 +103,9 @@ namespace AgroPathogenMeterApp.Droid
         }
 
         //Notifies when a measurement is finished, nothing currently implemented
-        protected virtual async void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
+        protected virtual void PsCommSimpleAndroid_MeasurementEnded(object sender, EventArgs e)
         {
-            /*
-            FileHack instance = new FileHack();
-
-            activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
-
-            List<SimpleCurve> simpleCurves = activeSimpleMeasurement.SimpleCurveCollection;
-
-            SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
-
-            SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
-
-            subtractedCurve.Dispose();   //Disposes of the subtracted curve
-
-            PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
-
-            baselineCurve.Dispose();   //Disposes of the baseline curve
-
-            Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
-            double peakLocation = mainPeak.PeakX;
-            double peakHeight = mainPeak.PeakValue;
-
-            List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
-            ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
-
-            if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
-            {
-                _database.IsInfected = true;
-            }
-            else
-            {
-                _database.IsInfected = false;
-            }
-
-            _database.PeakVoltage = peakHeight;
-            await App.Database.SaveScanAsync(_database);   //Saves the current database
-            */
+            psCommSimpleAndroid.Notify();
         }
 
         //Notifies when a measurement is started, nothing currently implemented
@@ -171,53 +136,6 @@ namespace AgroPathogenMeterApp.Droid
             return btDatabase;
         }
 
-        //Normal connection to the potentiostat, move to simple connect only if normal connect isn't necessary
-        public void Connect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
-        {
-            SimpleConnect(fileNum, RunningPC, RunningNC, RunningReal, RunningDPV);
-            return;
-
-            /*
-            Context context = Application.Context;
-            Device[] devices = new Device[0];
-            DeviceDiscoverer deviceDiscoverer = new DeviceDiscoverer(context);
-            devices = (await deviceDiscoverer.Discover(true, true)).ToArray();
-            deviceDiscoverer.Dispose();
-
-            CommManager comm;
-            Device device = devices[0];
-            try
-            {
-                device.Open();
-                comm = new CommManager(device, 5000);
-
-                comm.ReceiveStatus += Comm_ReceiveStatus;
-
-                comm.BeginMeasurement += Comm_BeginMeasurement;
-
-                comm.BeginReceiveCurve += Comm_BeginReceiveCurve;
-
-                Method m = await RunScan();
-                try
-                {
-                    comm.Measure(m);
-                }
-                catch (Exception ex)
-                {
-                    Crashes.TrackError(ex);
-                }
-
-                //After measurement
-
-                comm.Disconnect();
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-                device.Close();
-            }
-            */
-        }
 
         //Not needed currently, remove if obsolete
         public string FilePath()
@@ -303,6 +221,7 @@ namespace AgroPathogenMeterApp.Droid
         {
         }
 
+
         //Simple connection to the palmsens, currently the only one used
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
@@ -319,9 +238,11 @@ namespace AgroPathogenMeterApp.Droid
             //Runs a real scan depending on whatever parameters the person has set
             if (RunningReal)
             {
+
                 Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
-                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Uses a simple comm with the palmsens
+                psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
+                //Uses a simple comm with the palmsens
                 Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
                 try
@@ -340,6 +261,8 @@ namespace AgroPathogenMeterApp.Droid
                 Method runScan = await RunScan();   //Sets the scan parameters
 
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
+
+                psCommSimpleAndroid.Wait(11000);
 
                 psCommSimpleAndroid.Dispose();
 
@@ -392,9 +315,10 @@ namespace AgroPathogenMeterApp.Droid
                 using (StreamReader sr = new StreamReader(assetManager.Open("blank.pssession")))   //Loads a blank curve as a baseline to be subtracted
                     baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
+
                 Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
-                PSCommSimpleAndroid psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Initializes the palmsens comm
+                psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Initializes the palmsens comm
                 Device[] devices = await psCommSimpleAndroid.GetConnectedDevices();
 
                 try
@@ -416,9 +340,12 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
+                psCommSimpleAndroid.Wait(50000);
+
                 psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
                 List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
+
                 //Add in processing stuff here
                 SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
 

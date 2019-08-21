@@ -10,24 +10,25 @@ namespace AgroPathogenMeterApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DuringRun : ContentPage
     {
-        private bool isVisible = false;
+        private bool isEnabled = false;
 
         public DuringRun()   //Display progress of the scan while the scan is taking place
         {
             Analytics.TrackEvent("DuringRun Opened");
             InitializeComponent();
-            //ContinueRun();
+            ContinueRun();
         }
 
-        private async void ContinueRun()   //Make the next button invisible so the user cannot proceed until the scan has been completed
+        private void ContinueRun()   //Make the next button invisible so the user cannot proceed until the scan has been completed
         {
-            isVisible = await Visible();
-        }
+            for (double i = 0; i < 1; i += 0.001)
+            {
+                progressBar.Progress = i;
 
-        private async Task<bool> Visible()
-        {
-            Thread.Sleep(5000);
-            return await Task.FromResult<bool>(true);
+                Thread.Sleep(31);
+            }
+
+            isEnabled = true;
         }
 
         private async void OnContinueClicked(object sender, EventArgs e)   //Continue onto dataview to see the results of the scan
