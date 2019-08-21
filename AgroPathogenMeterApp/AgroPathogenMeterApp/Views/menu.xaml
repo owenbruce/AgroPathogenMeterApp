@@ -26,7 +26,8 @@
                         Clicked="OnDvlpClicked"
                         VerticalOptions="EndAndExpand"
                         HorizontalOptions="EndAndExpand"
-                        Opacity="0" />
+                        Opacity="0"
+                        IsEnabled="False"/>
             </Grid>
         </RelativeLayout>
     </ContentPage.Content>
