@@ -6,10 +6,34 @@
              mc:Ignorable="d"
              x:Class="AgroPathogenMeterApp.Views.RawData">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="View all of the numbers here!"
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Here is a complete list of all the information stored in each ScanDatabase entry."
                 VerticalOptions="Start"
                 HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+                <Label Text="{Binding Path=[ID]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[IsInfected]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[Date]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[ACPotential]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[AmountBacteria]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[Amplitude]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[ConcentrationBacteria]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[EndingPotential]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[EquilTime]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[Frequency]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[NegativeVertex]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[PeakVoltage]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[PositiveVertex]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[PotentialPulse]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[PotentialStep]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[ScanRate]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[StartingPotential]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[TimePulse]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[Name]}" FontSize="Medium" />
+                <Label Text="{Binding Path=[VoltamType]}" FontSize="Medium" />
+                <Button Text="Previous Sample" Clicked="OnPreviousClicked" />
+                <Button Text="Next Sample" Clicked="OnNextClicked" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

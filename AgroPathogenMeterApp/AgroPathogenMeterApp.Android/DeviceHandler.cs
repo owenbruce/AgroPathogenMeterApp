@@ -14,7 +14,7 @@ namespace AgroPathogenMeterApp.Droid
         {
         }
 
-        internal Context Context;
+        internal Context Context = Android.App.Application.Context;
         internal DeviceDiscoverer _deviceDiscoverer;
 
         internal bool EnableBluetooth = true;

@@ -240,6 +240,7 @@ namespace AgroPathogenMeterApp.Droid
                 case "Alternating Current Voltammetry":   //Sets an alternating current voltammetric scan
                     using (ACVoltammetry acVoltammetry = instance.ACV(_database))
                     {
+                        acVoltammetry.SmoothLevel = 0;
                         acVoltammetry.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
                         acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
                         acVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
@@ -250,6 +251,7 @@ namespace AgroPathogenMeterApp.Droid
                 case "Cyclic Voltammetry":   //Sets a cyclic voltammetric scan
                     using (CyclicVoltammetry cVoltammetry = instance.CV(_database))
                     {
+                        cVoltammetry.SmoothLevel = 0;
                         cVoltammetry.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
                         cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
                         cVoltammetry.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
@@ -260,6 +262,7 @@ namespace AgroPathogenMeterApp.Droid
                 case "Differential Pulse Voltammetry":   //Sets a differential pulse voltammetric scan
                     using (DifferentialPulse differentialPulse = instance.DPV(_database))
                     {
+                        differentialPulse.SmoothLevel = 0;
                         differentialPulse.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr1uA);   //Sets the range that the potentiostat will use to detect the current
                         differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr1uA);
                         differentialPulse.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr10nA);
@@ -270,6 +273,7 @@ namespace AgroPathogenMeterApp.Droid
                 case "Linear Voltammetry":   //Sets a linear voltammetric scan
                     using (LinearSweep linSweep = instance.LinSweep(_database))
                     {
+                        linSweep.SmoothLevel = 0;
                         linSweep.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
                         linSweep.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
                         linSweep.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
@@ -280,6 +284,7 @@ namespace AgroPathogenMeterApp.Droid
                 case "Square Wave Voltammetry":   //Sets a square wave voltammetric scan
                     using (SquareWave squareWave = instance.SWV(_database))
                     {
+                        squareWave.SmoothLevel = 0;
                         squareWave.Ranging.StartCurrentRange = new CurrentRange(CurrentRanges.cr10uA);   //Sets the range that the potentiostat will use to detect the current
                         squareWave.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100uA);
                         squareWave.Ranging.MaximumCurrentRange = new CurrentRange(CurrentRanges.cr100nA);
@@ -337,6 +342,48 @@ namespace AgroPathogenMeterApp.Droid
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
                 psCommSimpleAndroid.Dispose();
+
+                List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();   //Loads the current database
+                //Add in processing stuff here
+                SimpleLoadSaveFunctions.SaveMeasurement(activeSimpleMeasurement, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dpv" + allDb.Count + ".pssession"));
+
+                //FileHack instance = new FileHack();
+
+                //activeSimpleMeasurement = instance.HackDPV(activeSimpleMeasurement);
+
+                List<SimpleCurve> simpleCurves = activeSimpleMeasurement.NewSimpleCurve(DataArrayType.Current, DataArrayType.Potential);
+
+                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+
+                SimpleCurve movingAverageBaseline = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+
+                SimpleCurve baselineCurve = subtractedCurve.Subtract(movingAverageBaseline);
+
+                subtractedCurve.Dispose();   //Disposes of the subtracted curve
+
+                SimpleCurve smoothedCurve = baselineCurve.Smooth(SmoothLevel.VeryHigh);
+
+                smoothedCurve.DetectPeaks(0.1, 0, true, false, false);
+
+                double peakLocation = smoothedCurve.Peaks[smoothedCurve.Peaks.nPeaks - 1].PeakX;
+                double peakHeight = smoothedCurve.Peaks[smoothedCurve.Peaks.nPeaks - 1].PeakValue;
+
+                ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
+
+                if (peakLocation <= -0.3 && peakLocation >= -0.4)   //If the peak is between a certain range, the sample is infected, add in a minimum value once one is determined
+                {
+                    _database.IsInfected = true;
+                }
+                else
+                {
+                    _database.IsInfected = false;
+                }
+
+                _database.PeakVoltage = peakHeight;
+                await App.Database.SaveScanAsync(_database);   //Saves the current database
+                subtractedCurve.Dispose();
+                baselineCurve.Dispose();   //Disposes of the baseline curve
+                smoothedCurve.Dispose();
             }
 
             //Runs a differential pulse voltammetric scan for testing
@@ -383,13 +430,20 @@ namespace AgroPathogenMeterApp.Droid
 
                 SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
-                SimpleCurve baselineCurve = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+                SimpleCurve movingAverageBaseline = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+
+                SimpleCurve baselineCurve = subtractedCurve.Subtract(movingAverageBaseline);
 
                 subtractedCurve.Dispose();   //Disposes of the subtracted curve
 
-                PeakList peakList = baselineCurve.Peaks;   //Detects the peaks on the subtracted curve
+                SimpleCurve smoothedCurve = baselineCurve.Smooth(SmoothLevel.VeryHigh);
+
+                smoothedCurve.DetectPeaks(0.1, 0, true, false, false);
+
+                PeakList peakList = smoothedCurve.Peaks;   //Detects the peaks on the subtracted curve
 
                 baselineCurve.Dispose();   //Disposes of the baseline curve
+                smoothedCurve.Dispose();
 
                 Peak mainPeak = peakList[peakList.nPeaks - 1];   //Note, the proper peak is the last peak, not the first peak
                 double peakLocation = mainPeak.PeakX;

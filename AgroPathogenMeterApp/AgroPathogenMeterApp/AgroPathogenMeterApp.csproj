@@ -42,6 +42,9 @@
     <Compile Update="Views\dataview.xaml.cs">
       <DependentUpon>dataview.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\rawData.xaml.cs">
+      <DependentUpon>RawData.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -81,7 +84,7 @@
     <EmbeddedResource Update="Views\OptionsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\rawData.xaml">
+    <EmbeddedResource Update="Views\RawData.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\run1.xaml">
