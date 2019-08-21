@@ -13,7 +13,34 @@ namespace AgroPathogenMeterApp.Views
             InitializeComponent();
         }
 
-        private async void OnRunTestClicked(Object sender, EventArgs e)
+        private void OnFirstFinishedClicked(object sender, EventArgs e)
+        {
+            FirstInstr.TextColor = Color.Green;
+            FirstButton.IsVisible = false;
+            FirstButton.IsEnabled = false;
+            SecondInstr.IsVisible = true;
+            SecondButton.IsVisible = true;
+        }
+
+        private void OnSecondFinishedClicked(object sender, EventArgs e)
+        {
+            SecondInstr.TextColor = Color.Green;
+            SecondButton.IsVisible = false;
+            SecondButton.IsEnabled = false;
+            ThirdInstr.IsVisible = true;
+            ThirdButton.IsVisible = true;
+        }
+
+        private void OnThirdFinishedClicked(object sender, EventArgs e)
+        {
+            ThirdInstr.TextColor = Color.Green;
+            ThirdButton.IsVisible = false;
+            ThirdButton.IsEnabled = false;
+            FourthInstr.IsVisible = true;
+            FourthButton.IsVisible = true;
+        }
+
+        private async void OnRunTestClicked(object sender, EventArgs e)
         {
             //Setup the standard scan
             ScanDatabase scan = new ScanDatabase
@@ -34,5 +61,6 @@ namespace AgroPathogenMeterApp.Views
             {
             });
         }
+
     }
 }

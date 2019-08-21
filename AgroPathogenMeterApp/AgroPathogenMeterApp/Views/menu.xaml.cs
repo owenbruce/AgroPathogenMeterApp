@@ -21,7 +21,7 @@ namespace AgroPathogenMeterApp.Views
 
         private async void OnRunTestClicked(object sender, EventArgs e)   //Opens the first test running menu
         {
-            await Navigation.PushAsync(new run1
+            await Navigation.PushAsync(new Run3
             {
             });
         }
