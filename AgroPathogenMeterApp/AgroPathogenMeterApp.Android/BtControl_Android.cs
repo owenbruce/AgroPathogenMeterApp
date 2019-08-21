@@ -31,11 +31,13 @@ namespace AgroPathogenMeterApp.Droid
 
         //Initializes the parameters required for the scan and processing
         private Curve _activeCurve;
+
         private PSCommSimpleAndroid psCommSimpleAndroid;
         private SimpleCurve _activeSimpleCurve;
         private SimpleMeasurement activeSimpleMeasurement;
         private List<SimpleCurve> baselineCurves;
         private bool running;
+        private static object Lock = new object();
 
         public BtControl_Android()
         {
@@ -136,7 +138,6 @@ namespace AgroPathogenMeterApp.Droid
             return btDatabase;
         }
 
-
         //Not needed currently, remove if obsolete
         public string FilePath()
         {
@@ -221,7 +222,6 @@ namespace AgroPathogenMeterApp.Droid
         {
         }
 
-
         //Simple connection to the palmsens, currently the only one used
         public async void SimpleConnect(int fileNum, bool RunningPC, bool RunningNC, bool RunningReal, bool RunningDPV)
         {
@@ -238,7 +238,6 @@ namespace AgroPathogenMeterApp.Droid
             //Runs a real scan depending on whatever parameters the person has set
             if (RunningReal)
             {
-
                 Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
                 psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);
@@ -315,7 +314,6 @@ namespace AgroPathogenMeterApp.Droid
                 using (StreamReader sr = new StreamReader(assetManager.Open("blank.pssession")))   //Loads a blank curve as a baseline to be subtracted
                     baseline = SimpleLoadSaveFunctions.LoadMeasurements(sr)[0];
 
-
                 Context context = Application.Context;   //Loads the current android context
                 IAttributeSet attributeSet = null;
                 psCommSimpleAndroid = new PSCommSimpleAndroid(context, attributeSet);   //Initializes the palmsens comm
@@ -340,7 +338,7 @@ namespace AgroPathogenMeterApp.Droid
 
                 activeSimpleMeasurement = await psCommSimpleAndroid.Measure(runScan);   //Runs the scan on the potentiostat
 
-                psCommSimpleAndroid.Wait(50000);
+                Thread.Sleep(50000);
 
                 psCommSimpleAndroid.Dispose();   //Disposes of the comm when it is done being used
 
@@ -355,13 +353,13 @@ namespace AgroPathogenMeterApp.Droid
 
                 List<SimpleCurve> simpleCurves = activeSimpleMeasurement.NewSimpleCurve(DataArrayType.Current, DataArrayType.Potential);
 
-                SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
+                //SimpleCurve subtractedCurve = simpleCurves[0].Subtract(baselineCurves[0]);    //Note, replace simpleCurves[1] w/ the standard blank curve
 
-                SimpleCurve movingAverageBaseline = subtractedCurve.MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
+                SimpleCurve movingAverageBaseline = simpleCurves[0].MovingAverageBaseline();   //Subtracts the baseline from the subtracted curve
 
-                SimpleCurve baselineCurve = subtractedCurve.Subtract(movingAverageBaseline);
+                SimpleCurve baselineCurve = simpleCurves[0].Subtract(movingAverageBaseline);
 
-                subtractedCurve.Dispose();   //Disposes of the subtracted curve
+                //subtractedCurve.Dispose();   //Disposes of the subtracted curve
 
                 SimpleCurve smoothedCurve = baselineCurve.Smooth(SmoothLevel.VeryHigh);
 

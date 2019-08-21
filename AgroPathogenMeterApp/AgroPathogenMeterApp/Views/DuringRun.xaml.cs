@@ -1,7 +1,6 @@
 ﻿using Microsoft.AppCenter.Analytics;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
