@@ -8,7 +8,7 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Entry  Text="{Binding IsInfected}"
+            <Label  Text="{Binding IsInfected}"
                     HeightRequest="75" />
             <Button Text="Save data"
                     Margin="10"

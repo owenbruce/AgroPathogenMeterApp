@@ -21,7 +21,16 @@ namespace AgroPathogenMeterApp.Views
         {
             List<ScanDatabase> allDb = await App.Database.GetScanDatabasesAsync();
             ScanDatabase _database = await App.Database.GetScanAsync(allDb.Count);
-            BindingContext = _database;
+            String isInfected;
+            if (_database.IsInfected)
+            {
+                isInfected = "The sample is infected.";
+            }
+            else
+            {
+                isInfected = "The sample is not infected";
+            }
+            BindingContext = isInfected;
         }
 
         private async void OnSaveDataClicked(object sender, EventArgs e)   //Saves the data once you press the save button
