@@ -13,13 +13,13 @@
                     FontSize="Large"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand" />
-            <Label  x:Name="FirstInstr" Text="      First, collect the sample in one of the provided containers" FontSize="Medium" HorizontalOptions="Start"/>
-            <Button x:Name="FirstButton" Text="Next Step" Clicked="OnFirstFinishedClicked" HorizontalOptions="Start"/>
+            <Label  x:Name="FirstInstr" Text="      First, collect the sample in one of the provided containers" FontSize="Medium" HorizontalOptions="Start" />
+            <Button x:Name="FirstButton" Text="Next Step" Clicked="OnFirstFinishedClicked" HorizontalOptions="Start" />
             <Label  x:Name="SecondInstr" IsVisible="False" Text="      Second, place a drop of the sample onto an electrode." FontSize="Medium" HorizontalOptions="Start" />
-            <Button x:Name="SecondButton" IsVisible="False" Text="Next Step" Clicked="OnSecondFinishedClicked" HorizontalOptions="Start"/>
-            <Label  x:Name="ThirdInstr" IsVisible="False" Text="      Third, insert the electrode into the APM." FontSize="Medium" HorizontalOptions="Start"/>
-            <Button x:Name="ThirdButton" IsVisible="False" Text="Next Step" Clicked="OnThirdFinishedClicked" HorizontalOptions="Start"/>
-            <Label  x:Name="FourthInstr" IsVisible="False" Text="      Finally, press the button below to begin the test. It will take approximately 30 seconds." FontSize="Medium" HorizontalOptions="Start"/>
+            <Button x:Name="SecondButton" IsVisible="False" Text="Next Step" Clicked="OnSecondFinishedClicked" HorizontalOptions="Start" />
+            <Label  x:Name="ThirdInstr" IsVisible="False" Text="      Third, insert the electrode into the APM." FontSize="Medium" HorizontalOptions="Start" />
+            <Button x:Name="ThirdButton" IsVisible="False" Text="Next Step" Clicked="OnThirdFinishedClicked" HorizontalOptions="Start" />
+            <Label  x:Name="FourthInstr" IsVisible="False" Text="      Finally, press the button below to begin the test. It will take approximately 30 seconds." FontSize="Medium" HorizontalOptions="Start" />
             <Button x:Name="FourthButton" IsVisible="False" Text="Run Test" Clicked="OnRunTestClicked" HorizontalOptions="End" VerticalOptions="End" />
         </StackLayout>
     </ContentPage.Content>

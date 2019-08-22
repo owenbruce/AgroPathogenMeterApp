@@ -61,6 +61,5 @@ namespace AgroPathogenMeterApp.Views
             {
             });
         }
-
     }
 }
